@@ -74,7 +74,13 @@ p{margin:0}
 .hero .wrap{display:flex;flex-wrap:wrap;gap:56px;align-items:center;padding-top:72px;padding-bottom:88px}
 .hero-copy{flex:1 1 520px;min-width:0}
 .hero h1{font-size:clamp(36px,5.5vw,56px);letter-spacing:-.01em;margin-bottom:24px}
-.hero .sub{font-size:20px;color:var(--muted-on-dark);max-width:560px;margin-bottom:36px}
+.hero .sub{font-size:20px;color:var(--muted-on-dark);max-width:580px;margin-bottom:16px}
+.hero .sub-strong{color:#fff}
+.hero .hl{color:var(--accent)}
+.who{list-style:none;margin:20px 0 20px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.who li{font-size:15px;font-weight:600;color:#fff;border:1px solid var(--navy-line);background:var(--navy-2);border-radius:999px;padding:6px 14px}
+.cred{font-size:16px;color:var(--muted-on-dark);margin-bottom:32px;max-width:580px}
+.cred strong{color:var(--accent);font-weight:600}
 .cta-row{display:flex;flex-wrap:wrap;gap:16px}
 .hero-art{flex:1 1 440px;min-width:0;display:flex;justify-content:center}
 .reel{position:relative;margin:0;width:100%;max-width:620px;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#0B1730;box-shadow:0 0 0 3px var(--accent),0 30px 60px rgba(0,0,0,.4)}
@@ -184,10 +190,15 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
   <div class="wrap">
     <div class="hero-copy">
       <p class="eyebrow">Veteran-owned · Hodgenville, Kentucky</p>
-      <h1>Training videos and online courses your people will actually finish.</h1>
-      <p class="sub">I'm Andrew Krayenhagen. For 25+ years I've turned complicated Army training into clear, watchable lessons. Now I do the same for local businesses and nonprofits — so your team learns it once and gets it right.</p>
+      <h1>Tired of explaining the same thing <span class="hl">over and over?</span></h1>
+      <p class="sub">New hire on Monday. Another one next month. Volunteers who never got the full story. And a community that still doesn't know what makes you special.</p>
+      <p class="sub sub-strong">I turn what's in your head into short videos and simple online lessons &mdash; so your people get it right the first time, and your customers see why you're worth choosing.</p>
+      <ul class="who" aria-label="Who I work with">
+        <li>Restaurants</li><li>Shops</li><li>Contractors</li><li>Churches</li><li>Nonprofits</li>
+      </ul>
+      <p class="cred">25+ years making U.S. Army training clear and watchable. <strong>Now it works for Main Street.</strong></p>
       <div class="cta-row">
-        <a class="btn btn-accent" href="#contact">Book a free 20-minute call</a>
+        <a class="btn btn-accent" href="#contact">Get a free 20-minute game plan</a>
         <a class="btn btn-ghost" href="#work">See my work</a>
       </div>
     </div>
