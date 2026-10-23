@@ -130,8 +130,10 @@ a.work:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(15,27,45,.12
 
 /* about */
 .about .wrap{display:flex;flex-wrap:wrap;gap:56px;align-items:center}
-.portrait{flex:1 1 300px;min-width:0;aspect-ratio:1/1;max-width:400px;border-radius:16px;background:var(--navy);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.portrait{flex:1 1 300px;min-width:0;aspect-ratio:1/1;max-width:400px;border-radius:16px;background:radial-gradient(circle at 50% 42%,#FFFFFF 0%,var(--mist) 65%,#DCE3EE 100%);display:flex;align-items:center;justify-content:center;overflow:hidden}
 .portrait img{width:100%;height:100%;object-fit:cover}
+.portrait img.portrait-owl{width:78%;height:auto;object-fit:contain}
+.portrait{box-shadow:0 0 0 4px var(--accent)}
 .monogram{font-family:var(--display);font-weight:800;font-size:120px;color:var(--accent)}
 .about-copy{flex:2 1 480px;min-width:0}
 .about-copy p{color:var(--ink-body);margin-bottom:16px}
@@ -178,7 +180,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
       <span class="brand-name">AKRA TECHNOLOGIES</span>
     </a>
     <nav class="nav" aria-label="Main">
-      <a class="plain" href="#services">How can I help?</a>
+      <a class="plain" href="#services">Services</a>
       <a class="plain" href="#work">Work</a>
       <a class="plain" href="#about">About</a>
       <a class="btn btn-accent" href="tel:+17197929018">
@@ -209,7 +211,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
       <p class="cred"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>Built on 25+ years producing training and media for the U.S. Army. <strong>Now working for Main Street.</strong></span></p>
       <div class="cta-row">
         <a class="btn btn-accent" href="#contact">Get a free 20-minute game plan</a>
-        <a class="btn btn-ghost" href="#work">See my work</a>
+        <a class="btn btn-ghost" href="#work">See our work</a>
       </div>
     </div>
     <div class="hero-art">
@@ -227,15 +229,15 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
     <div class="proof-item"><span class="proof-big">25+</span><span>years in multimedia &amp;<br>instructional design</span></div>
     <div class="proof-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>U.S. Army veteran,<br>veteran-owned LLC</span></div>
     <div class="proof-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span>Builds training for U.S. Army<br>Recruiting Command today</span></div>
-    <div class="proof-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Local — I'll come<br>to your shop</span></div>
+    <div class="proof-item"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Local — we come<br>to your shop</span></div>
   </div>
 </section>
 
 <section id="services" class="section">
   <div class="wrap">
     <p class="eyebrow">Educate · Illuminate · Inspire</p>
-    <h2 class="h2">What I can do for you</h2>
-    <p class="lede">One person, start to finish. You talk to the guy who plans it, shoots it, edits it and hands it over.</p>
+    <h2 class="h2">What we can do for you</h2>
+    <p class="lede">One local team, start to finish. The same people plan it, shoot it, edit it and hand it over &mdash; no agencies, no runaround.</p>
     <div class="grid3">
       <div class="card">
         <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M8 22h8M12 18v4"/><path d="M10 9l5 2-5 2z"/></svg>
@@ -333,7 +335,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
         <div class="work-body">
           <p class="tag">Learning web app</p>
           <h3>Reading Helper</h3>
-          <p class="body">A simple practice app built from scratch — proof I can build custom learning tools, not just videos.</p>
+          <p class="body">A simple practice app built from scratch — proof we build custom learning tools, not just videos.</p>
           <p class="go">Try the app →</p>
         </div>
       </a>
@@ -354,23 +356,23 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
   <div class="wrap">
     <h2 id="how-h" class="h2" style="margin-bottom:48px">How it works</h2>
     <ol class="steps">
-      <li><span class="step-num">01</span><h3>Free 20-minute call</h3><p>Tell me what you need. No pitch, no pressure.</p></li>
+      <li><span class="step-num">01</span><h3>Free 20-minute call</h3><p>Tell us what you need. No pitch, no pressure.</p></li>
       <li><span class="step-num">02</span><h3>Plan &amp; fixed quote</h3><p>You get a one-page plan and one price, in writing.</p></li>
-      <li><span class="step-num">03</span><h3>I build it</h3><p>Filming, writing, editing. You review drafts along the way.</p></li>
-      <li><span class="step-num">04</span><h3>You own it</h3><p>Final files are yours, and I'll show you how to use them.</p></li>
+      <li><span class="step-num">03</span><h3>We build it</h3><p>Filming, writing, editing. You review drafts along the way.</p></li>
+      <li><span class="step-num">04</span><h3>You own it</h3><p>Final files are yours, and we'll show you how to use them.</p></li>
     </ol>
   </div>
 </section>
 
 <section id="about" class="section about">
   <div class="wrap">
-    <div class="portrait"><span class="monogram" aria-hidden="true">AK</span></div>
+    <div class="portrait"><img src="assets/owl-512.png" alt="Akra Technologies owl logo" width="512" height="512" class="portrait-owl"></div>
     <div class="about-copy">
       <p class="eyebrow">About</p>
-      <h2 class="h2" style="margin-bottom:20px">Hi, I'm Andrew.</h2>
-      <p>I started in the U.S. Army as a Multimedia Illustrator and never stopped making things that help people learn. Today I build training for U.S. Army Recruiting Command — lessons, graphics and videos that turn complicated processes into something clear.</p>
-      <p>Akra Technologies is how I bring that same skill home to Hodgenville. If your business or nonprofit needs to explain something — to customers, new hires or volunteers — I'd love to help you tell it well.</p>
-      <p style="font-weight:600;color:var(--navy)">— Andrew Krayenhagen, Owner</p>
+      <h2 class="h2" style="margin-bottom:20px">Real experience. Right here at home.</h2>
+      <p>Akra Technologies is a veteran-owned company founded by Andrew Krayenhagen, who began his career in the U.S. Army as a Multimedia Illustrator. For more than 25 years he has produced training, graphics and video for the Army &mdash; including current work for U.S. Army Recruiting Command &mdash; turning complicated processes into lessons people understand.</p>
+      <p>Akra Technologies brings that same standard home to Hodgenville. If your business or nonprofit needs to explain something &mdash; to customers, new hires or volunteers &mdash; we'll help you tell it clearly and tell it well.</p>
+      <p style="font-weight:600;color:var(--navy)">Educate. Illuminate. Inspire.</p>
     </div>
   </div>
 </section>
@@ -379,7 +381,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
   <div class="wrap">
     <div class="contact-copy">
       <h2>Let's talk about your project.</h2>
-      <p class="sub">Call, text or send a note. I usually reply within one business day.</p>
+      <p class="sub">Call, text or send a note. We usually reply within one business day.</p>
       <a class="phone-big" href="tel:+17197929018">719-792-9018</a>
       <a class="email" href="mailto:andrew.krayenhagen@akratechnologies.com">andrew.krayenhagen@akratechnologies.com</a>
       <p style="color:var(--muted-on-dark)">Hodgenville, KY · Serving local businesses and nonprofits</p>
@@ -398,7 +400,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
           <option>Not sure yet — let's talk</option>
         </select>
       </div>
-      <div class="field"><label for="f-msg">Tell me a little about it</label><textarea id="f-msg" name="message" rows="4"></textarea></div>
+      <div class="field"><label for="f-msg">Tell us a little about it</label><textarea id="f-msg" name="message" rows="4"></textarea></div>
       <button class="btn btn-accent" type="submit" style="justify-content:center">Send message</button>
       <p class="form-note">This opens your email app with your note filled in. Prefer to talk? Call or text 719-792-9018.</p>
     </form>
