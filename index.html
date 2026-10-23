@@ -11,13 +11,20 @@
 <meta property="og:title" content="Akra Technologies — Training videos and online courses">
 <meta property="og:description" content="Veteran-owned video production and online training for local businesses and nonprofits in Hodgenville, KY.">
 <meta property="og:url" content="https://www.akratechnologies.com/">
-<meta name="twitter:card" content="summary">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:image" content="https://www.akratechnologies.com/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Akra Technologies owl logo — Educate. Illuminate. Inspire.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://www.akratechnologies.com/assets/og-image.png">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Akra Technologies LLC","url":"https://www.akratechnologies.com/","telephone":"+1-719-792-9018","email":"andrew.krayenhagen@akratechnologies.com","address":{"@type":"PostalAddress","addressLocality":"Hodgenville","addressRegion":"KY","addressCountry":"US"},"slogan":"Educate. Illuminate. Inspire.","founder":{"@type":"Person","name":"Andrew Krayenhagen"}}
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Akra Technologies LLC","url":"https://www.akratechnologies.com/","telephone":"+1-719-792-9018","email":"andrew.krayenhagen@akratechnologies.com","address":{"@type":"PostalAddress","addressLocality":"Hodgenville","addressRegion":"KY","addressCountry":"US"},"slogan":"Educate. Illuminate. Inspire.","logo":"https://www.akratechnologies.com/assets/owl-512.png","image":"https://www.akratechnologies.com/assets/og-image.png","founder":{"@type":"Person","name":"Andrew Krayenhagen"}}
 </script>
 <style>
 :root{
@@ -56,7 +63,8 @@ p{margin:0}
 .site-head .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
 .brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
 .brand:hover{color:#fff}
-.brand-mark{width:40px;height:40px;border-radius:8px;background:var(--accent);color:var(--navy);font-family:var(--display);font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center}
+.brand-mark{width:48px;height:48px;border-radius:50%;background:var(--mist);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--accent)}
+.brand-mark img{width:40px;height:40px}
 .brand-name{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em}
 .nav{display:flex;flex-wrap:wrap;align-items:center;gap:24px;font-weight:600;font-size:16px}
 .nav a.plain{color:#fff;text-decoration:none} .nav a.plain:hover{color:var(--accent)}
@@ -68,14 +76,9 @@ p{margin:0}
 .hero h1{font-size:clamp(36px,5.5vw,56px);letter-spacing:-.01em;margin-bottom:24px}
 .hero .sub{font-size:20px;color:var(--muted-on-dark);max-width:560px;margin-bottom:36px}
 .cta-row{display:flex;flex-wrap:wrap;gap:16px}
-.hero-art{flex:1 1 400px;min-width:0}
-.screen{background:var(--navy-2);border:1px solid var(--navy-line);border-radius:16px;padding:16px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
-.screen-bar{display:flex;gap:6px;margin-bottom:12px} .screen-bar span{width:10px;height:10px;border-radius:50%;background:var(--navy-line)}
-.screen-body{aspect-ratio:16/10;border-radius:10px;background:linear-gradient(180deg,#22385A,#13233A);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;position:relative;overflow:hidden}
-.play{width:84px;height:84px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center}
-.screen-words{font-family:var(--display);font-weight:800;font-size:clamp(16px,2vw,22px);letter-spacing:.1em;color:#fff}
-.screen-track{position:absolute;left:20px;right:20px;bottom:18px;height:6px;border-radius:3px;background:rgba(255,255,255,.18)}
-.screen-track i{display:block;width:38%;height:100%;border-radius:3px;background:var(--accent)}
+.hero-art{flex:1 1 400px;min-width:0;display:flex;justify-content:center}
+.owl-emblem{width:min(420px,100%);aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle at 50% 42%,#FFFFFF 0%,var(--mist) 62%,#DCE3EE 100%);box-shadow:0 0 0 6px rgba(242,179,61,.9),0 30px 60px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
+.owl-emblem img{width:82%;height:auto;margin-top:2%}
 
 /* proof strip */
 .proof{border-bottom:1px solid var(--line)}
@@ -158,7 +161,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
 <header class="site-head">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Akra Technologies home">
-      <span class="brand-mark" aria-hidden="true">A</span>
+      <span class="brand-mark"><img src="assets/owl-160.png" alt="" width="40" height="40"></span>
       <span class="brand-name">AKRA TECHNOLOGIES</span>
     </a>
     <nav class="nav" aria-label="Main">
@@ -186,14 +189,9 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
         <a class="btn btn-ghost" href="#work">See my work</a>
       </div>
     </div>
-    <div class="hero-art" aria-hidden="true">
-      <div class="screen">
-        <div class="screen-bar"><span></span><span></span><span></span></div>
-        <div class="screen-body">
-          <div class="play"><svg width="34" height="34" viewBox="0 0 24 24" fill="#0F1B2D"><path d="M8 5v14l11-7z"/></svg></div>
-          <div class="screen-words">EDUCATE · ILLUMINATE · INSPIRE</div>
-          <div class="screen-track"><i></i></div>
-        </div>
+    <div class="hero-art">
+      <div class="owl-emblem">
+        <img src="assets/owl-512.png" alt="Akra Technologies owl logo" width="512" height="512">
       </div>
     </div>
   </div>
