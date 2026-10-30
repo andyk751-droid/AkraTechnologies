@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interactive Training Games for Small Business | Akra Technologies</title>
+<meta name="description" content="Custom training games your staff and volunteers play on their phone. Turn your handbook, safety rules or onboarding into a 5-minute game. From $750. Veteran-owned. We work with businesses anywhere.">
+<link rel="canonical" href="https://www.akratechnologies.com/training/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Akra Technologies">
+<meta property="og:title" content="Training your team will actually finish">
+<meta property="og:description" content="Custom training games for small businesses, churches and nonprofits. Play a free demo.">
+<meta property="og:url" content="https://www.akratechnologies.com/training/">
+<meta property="og:image" content="https://www.akratechnologies.com/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="../favicon-64.png" sizes="64x64" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{
+  --navy:#0F1B2D; --navy-2:#1B2B44; --navy-line:#3B5277; --ink-soft:#4A5568; --ink-body:#2D3748;
+  --mist:#F3F5F9; --line:#E2E7EF; --muted-on-dark:#C9D3E3; --accent:#F2B33D; --accent-text:#8A5A00;
+  --display:'Archivo',system-ui,sans-serif; --body:'Source Sans 3',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--navy);font-family:var(--body);font-size:18px;line-height:1.55}
+a{color:var(--navy)} a:hover{color:#2B4570}
+img,svg{display:block}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.1;margin:0}
+p{margin:0}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.section{padding:96px 0}
+.mist{background:var(--mist)}
+.dark{background:var(--navy);color:#fff}
+.eyebrow{font-weight:600;font-size:15px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text);margin-bottom:12px}
+.dark .eyebrow{color:var(--accent)}
+.h2{font-size:40px;margin-bottom:16px}
+.lede{max-width:640px;color:var(--ink-soft);margin-bottom:48px}
+.btn{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:16px 26px;border-radius:8px;font-weight:600;font-size:18px;text-decoration:none;border:2px solid transparent;cursor:pointer;font-family:inherit}
+.btn-accent{background:var(--accent);color:var(--navy)} .btn-accent:hover{color:var(--navy);filter:brightness(1.06)}
+.btn-ghost{color:#fff;border-color:var(--navy-line)} .btn-ghost:hover{color:#fff;border-color:#fff}
+.btn-outline{color:var(--navy);border-color:var(--navy);justify-content:center} .btn-outline:hover{background:var(--navy);color:#fff}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px}
+.card{border:1px solid var(--line);border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:12px;background:#fff}
+.card p.body{color:var(--ink-soft)}
+.tag{font-weight:600;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent-text)}
+.skip{position:absolute;left:-9999px} .skip:focus{left:16px;top:16px;background:#fff;padding:8px 12px;z-index:10}
+
+/* header */
+.site-head{background:var(--navy);color:#fff;border-bottom:1px solid #22324A;position:sticky;top:0;z-index:5}
+.site-head .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:14px;padding-bottom:14px}
+.brand{display:flex;align-items:center;gap:12px;color:#fff;text-decoration:none}
+.brand:hover{color:#fff}
+.brand-mark{width:48px;height:48px;border-radius:50%;background:var(--mist);display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px var(--accent)}
+.brand-mark img{width:40px;height:40px}
+.brand-name{font-family:var(--display);font-weight:800;font-size:20px;letter-spacing:.02em}
+.nav{display:flex;flex-wrap:wrap;align-items:center;gap:24px;font-weight:600;font-size:16px}
+.nav a.plain{color:#fff;text-decoration:none} .nav a.plain:hover{color:var(--accent)}
+.nav .btn{padding:10px 16px;font-size:16px}
+
+/* hero */
+.hero .wrap{display:flex;flex-wrap:wrap;gap:56px;align-items:center;padding-top:72px;padding-bottom:88px}
+.hero-copy{flex:1 1 520px;min-width:0}
+.hero h1{font-size:clamp(36px,5.5vw,56px);letter-spacing:-.01em;margin-bottom:24px}
+.hero .sub{font-size:20px;color:var(--muted-on-dark);max-width:580px;margin-bottom:16px}
+.hero .sub-strong{color:#fff}
+.hero .hl{color:var(--accent)}
+.who{list-style:none;margin:20px 0 20px;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.who li{font-size:15px;font-weight:600;color:#fff;border:1px solid var(--navy-line);background:var(--navy-2);border-radius:999px;padding:6px 14px}
+.hero .sub-strong strong{color:var(--accent);font-weight:600}
+.offer{list-style:none;margin:20px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:18px;color:#fff;max-width:580px}
+.offer li{display:flex;gap:12px;align-items:flex-start}
+.offer svg{flex:none;margin-top:4px;color:var(--accent)}
+.cred{font-size:16px;color:var(--muted-on-dark);margin-bottom:32px;max-width:580px;display:flex;gap:10px;align-items:flex-start}
+.cred svg{flex:none;margin-top:3px;color:var(--accent)}
+.cred strong{color:var(--accent);font-weight:600}
+.cta-row{display:flex;flex-wrap:wrap;gap:16px}
+.hero-art{flex:1 1 440px;min-width:0;display:flex;justify-content:center}
+.reel{position:relative;margin:0;width:100%;max-width:620px;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#0B1730;box-shadow:0 0 0 3px var(--accent),0 30px 60px rgba(0,0,0,.4)}
+.reel video{display:block;width:100%;height:100%;object-fit:cover}
+.owl-emblem{width:min(420px,100%);aspect-ratio:1/1;border-radius:50%;background:radial-gradient(circle at 50% 42%,#FFFFFF 0%,var(--mist) 62%,#DCE3EE 100%);box-shadow:0 0 0 6px rgba(242,179,61,.9),0 30px 60px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center}
+.owl-emblem img{width:82%;height:auto;margin-top:2%}
+
+/* proof strip */
+.proof{border-bottom:1px solid var(--line)}
+.proof .wrap{display:flex;flex-wrap:wrap;gap:24px 48px;justify-content:space-between;padding-top:28px;padding-bottom:28px;font-weight:600;font-size:17px}
+.proof-item{display:flex;align-items:center;gap:12px}
+.proof-big{font-family:var(--display);font-weight:800;font-size:30px}
+
+/* packages */
+.pkg{gap:16px}
+.pkg h3{font-size:24px}
+.price{font-family:var(--display);font-weight:800;font-size:34px}
+.pkg ul{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.pkg .btn{margin-top:auto}
+.pkg.featured{background:var(--navy);color:#fff;border-color:var(--navy)}
+.pkg.featured p.body{color:var(--muted-on-dark)}
+.badge{align-self:flex-start;background:var(--accent);color:var(--navy);font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+
+/* work */
+.work{padding:0;overflow:hidden;text-decoration:none;color:var(--navy);gap:0;transition:transform .15s ease,box-shadow .15s ease}
+a.work:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(15,27,45,.12);color:var(--navy)}
+.thumb{height:200px;display:flex;align-items:center;justify-content:center}
+.thumb-img{background:#E9EDF4;overflow:hidden}
+.thumb-img img,.thumb-img video{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.thumb.t1{background:linear-gradient(135deg,#2E5E4E,#183A30)}
+.thumb.t2{background:linear-gradient(135deg,#2B4570,#16253D)}
+.thumb.t3{background:linear-gradient(135deg,#8A5A00,#4D3300)}
+.thumb.t4{background:linear-gradient(135deg,#5B3F8C,#2E1F4D)}
+.work-body{padding:24px;display:flex;flex-direction:column;gap:8px}
+.work-body h3{font-size:22px}
+.go{font-weight:600}
+.free{font-size:15px;font-weight:600;color:#1E6B45;background:#E3F4EA;border-radius:999px;padding:4px 12px;align-self:flex-start}
+
+/* steps */
+.steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.steps li{display:flex;flex-direction:column;gap:10px}
+.step-num{font-family:var(--display);font-weight:800;font-size:44px;color:var(--accent-text)}
+.steps h3{font-size:22px}
+.steps p{color:var(--ink-soft)}
+
+/* about */
+.about .wrap{display:flex;flex-wrap:wrap;gap:56px;align-items:center}
+.portrait{flex:1 1 300px;min-width:0;aspect-ratio:1/1;max-width:400px;border-radius:16px;background:radial-gradient(circle at 50% 42%,#FFFFFF 0%,var(--mist) 65%,#DCE3EE 100%);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.portrait img{width:100%;height:100%;object-fit:cover}
+.portrait img.portrait-owl{width:78%;height:auto;object-fit:contain}
+.portrait{box-shadow:0 0 0 4px var(--accent)}
+.monogram{font-family:var(--display);font-weight:800;font-size:120px;color:var(--accent)}
+.about-copy{flex:2 1 480px;min-width:0}
+.about-copy p{color:var(--ink-body);margin-bottom:16px}
+
+/* contact */
+.contact .wrap{display:flex;flex-wrap:wrap;gap:56px}
+.contact-copy{flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:20px}
+.contact-copy h2{font-size:44px}
+.contact-copy .sub{color:var(--muted-on-dark);font-size:20px}
+.phone-big{color:#fff;text-decoration:none;font-family:var(--display);font-weight:800;font-size:28px} .phone-big:hover{color:var(--accent)}
+.email{color:var(--accent);font-weight:600;word-break:break-all} .email:hover{color:#fff}
+form{flex:1 1 420px;min-width:0;background:#fff;color:var(--navy);border-radius:16px;padding:32px;display:flex;flex-direction:column;gap:18px}
+.row{display:flex;flex-wrap:wrap;gap:16px}
+.field{display:flex;flex-direction:column;gap:6px}
+.row .field{flex:1 1 180px}
+label{font-weight:600;font-size:16px}
+input,select,textarea{font:inherit;padding:12px;border:1px solid #B8C3D6;border-radius:8px;min-height:44px;background:#fff;color:var(--navy);width:100%}
+input:focus,select:focus,textarea:focus{outline:3px solid var(--accent);outline-offset:1px;border-color:var(--navy)}
+textarea{resize:vertical}
+.form-note{font-size:15px;color:var(--ink-soft)}
+
+footer{background:#0A1322;color:#9FB0CA;font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;padding-top:32px;padding-bottom:32px}
+footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
+.motto{font-weight:600;letter-spacing:.08em}
+
+@media (max-width:640px){
+  .section{padding:64px 0}
+  .h2{font-size:32px}
+  .contact-copy h2{font-size:34px}
+  .nav{gap:16px}
+  .nav a.plain{display:none}
+  form{padding:24px}
+}
+/* training page */
+.demo-wrap{display:flex;flex-wrap:wrap;gap:40px;align-items:center}
+.phone{flex:0 1 300px;margin:0 auto;border-radius:36px;background:#0A1322;padding:14px;box-shadow:0 0 0 3px var(--accent),0 30px 60px rgba(0,0,0,.4)}
+.phone-screen{border-radius:24px;background:var(--navy);padding:18px 14px;color:#fff}
+.ph-card{background:#fff;color:var(--navy);border-radius:14px;padding:14px;font-size:15px}
+.ph-from{font-size:13px;color:var(--ink-soft);margin-bottom:6px}
+.ph-bubble{background:#EEF1F6;border-radius:14px 14px 14px 4px;padding:10px 12px;margin-bottom:12px}
+.ph-bubble mark{background:#FFE08A;border-radius:3px}
+.ph-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ph-btns span{border:2px solid;border-radius:10px;text-align:center;padding:8px 0;font-family:var(--display);font-weight:800}
+.ph-safe{color:#1E6B45} .ph-scam{color:#B42318}
+.ph-hud{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:10px;color:var(--muted-on-dark)}
+.ph-hud b{color:var(--accent)}
+.demo-copy{flex:1 1 380px;min-width:0}
+.demo-copy p.sub{color:var(--muted-on-dark);font-size:20px;margin-bottom:24px}
+.checks{list-style:none;padding:0;margin:0 0 28px;display:flex;flex-direction:column;gap:10px}
+.checks li{display:flex;gap:12px;align-items:flex-start}
+.checks svg{flex:none;margin-top:4px;color:var(--accent)}
+.why .card h3{font-size:22px}
+.topics{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}
+.topic{border:1px solid var(--line);border-radius:16px;padding:28px;background:#fff}
+.topic h3{font-size:22px;margin-bottom:12px;display:flex;gap:10px;align-items:center}
+.topic .em{font-size:26px}
+.topic ul{margin:0;padding-left:20px;color:var(--ink-body);display:flex;flex-direction:column;gap:6px}
+.topic.any{background:var(--navy);color:#fff;border-color:var(--navy)}
+.topic.any ul{color:var(--muted-on-dark)}
+.note{margin-top:28px;font-size:16px;color:var(--ink-soft);max-width:760px}
+.faq{max-width:820px;display:flex;flex-direction:column;gap:12px}
+.faq details{border:1px solid var(--line);border-radius:12px;background:#fff;padding:18px 22px}
+.faq summary{font-weight:600;cursor:pointer;font-size:19px}
+.faq details p{margin-top:10px;color:var(--ink-soft)}
+.crumb{color:var(--muted-on-dark);font-size:15px;margin-bottom:16px}
+.crumb a{color:var(--muted-on-dark)} .crumb a:hover{color:#fff}
+.pkg .per{font-size:18px;font-family:var(--body);font-weight:600}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="../" aria-label="Akra Technologies home">
+      <span class="brand-mark"><img src="../assets/owl-160.png" alt="" width="40" height="40"></span>
+      <span class="brand-name">AKRA TECHNOLOGIES</span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a class="plain" href="../#services">Services</a>
+      <a class="plain" href="./" aria-current="page" style="color:var(--accent)">Training Games</a>
+      <a class="plain" href="../#work">Work</a>
+      <a class="plain" href="../#about">About</a>
+      <a class="btn btn-accent" href="tel:+17197929018">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg>
+        719-792-9018
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero dark">
+  <div class="wrap demo-wrap">
+    <div class="demo-copy">
+      <p class="crumb"><a href="../">Home</a> / Training Games</p>
+      <p class="eyebrow">Interactive training games</p>
+      <h1>Training your team will <span class="hl">actually finish.</span></h1>
+      <p class="sub">We turn your handbook, safety rules or "how we do things here" into a short game your staff and volunteers play on their phone. No software to buy. No logins. Just a link.</p>
+      <ul class="checks">
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>5–10 minutes to play, built from <b>your</b> real situations</span></li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Points, streaks and instant feedback, so it sticks</span></li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Your logo and colors. Text the link to every new hire.</span></li>
+        <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg><span>Anywhere in the U.S. We work by phone, email and video call.</span></li>
+      </ul>
+      <div class="cta-row">
+        <a class="btn btn-accent" href="../demos/spot-the-scam/">▶ Play the 3-minute demo</a>
+        <a class="btn btn-ghost" href="#contact-cta">Get a free game plan</a>
+      </div>
+    </div>
+    <a class="phone" href="../demos/spot-the-scam/" aria-label="Play the Spot the Scam demo game">
+      <div class="phone-screen">
+        <div class="ph-hud"><span>Spot the Scam</span><span>Score <b>350</b> · 🔥 3</span></div>
+        <div class="ph-card">
+          <p class="ph-from">💬 Text message · 1 of 8</p>
+          <div class="ph-bubble">Your package is on hold. Pay the <mark>$1.99 fee</mark> <mark>within 12 hours</mark> or it will be returned…</div>
+          <div class="ph-btns"><span class="ph-safe">✅ Safe</span><span class="ph-scam">🚩 Scam</span></div>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="section why" aria-labelledby="why-h">
+  <div class="wrap">
+    <p class="eyebrow">Why a game?</p>
+    <h2 id="why-h" class="h2">Nobody remembers the binder.</h2>
+    <p class="lede">People learn by doing, not by reading page 14. A game puts them in the real moment and lets them make the call, before it happens on the job.</p>
+    <div class="grid3">
+      <div class="card">
+        <p class="tag">Fast</p>
+        <h3>Done in a coffee break</h3>
+        <p class="body">5 to 10 minutes on any phone. New hires can play it before their first shift, and anyone can replay it as a refresher.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Simple</p>
+        <h3>Nothing to install</h3>
+        <p class="body">No training software, no accounts, no IT headaches. It's a private web link you text, email or post on a QR code in the break room.</p>
+      </div>
+      <div class="card">
+        <p class="tag">Yours</p>
+        <h3>Your rules, your words</h3>
+        <p class="body">Built from your actual procedures and the mistakes you're tired of fixing. Need a change next year? It's a quick update, not a rebuild.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section mist" aria-labelledby="pkg-h">
+  <div class="wrap">
+    <h2 id="pkg-h" class="h2">Simple packages. Fixed prices.</h2>
+    <p class="lede">You know the cost before we start. You own the game when we're done.</p>
+    <div class="grid3">
+      <div class="card pkg">
+        <h3>Quick-Start Training Game</h3>
+        <p class="price">From $750</p>
+        <p class="body">One focused topic, turned into a short game like the demo.</p>
+        <ul>
+          <li>8–12 real-life scenarios from your business</li>
+          <li>Points, streaks and instant feedback</li>
+          <li>Your logo and colors</li>
+          <li>Hosted link + QR code for the break room</li>
+          <li>1 round of changes</li>
+        </ul>
+        <a class="btn btn-outline" href="#contact-cta">Ask about this</a>
+      </div>
+      <div class="card pkg featured">
+        <p class="badge">Best for new hires</p>
+        <h3>Onboarding Kit</h3>
+        <p class="price">From $1,500</p>
+        <p class="body">Everything a new hire or volunteer needs before day one.</p>
+        <ul>
+          <li>Short welcome video from you, filmed on-site</li>
+          <li>Interactive training game</li>
+          <li>Printable new-hire checklist</li>
+          <li>Professional narration</li>
+          <li>2 rounds of changes</li>
+        </ul>
+        <a class="btn btn-accent" style="justify-content:center" href="#contact-cta">Ask about this</a>
+      </div>
+      <div class="card pkg">
+        <h3>Keep It Current</h3>
+        <p class="price">$150<span class="per"> / month</span></p>
+        <p class="body">For businesses that want their training to grow with them.</p>
+        <ul>
+          <li>Hosting for all your games</li>
+          <li>Content updates when rules change</li>
+          <li>One new mini-scenario each quarter</li>
+          <li>Cancel anytime</li>
+        </ul>
+        <a class="btn btn-outline" href="#contact-cta">Ask about this</a>
+      </div>
+    </div>
+    <p class="note">Need a full multi-lesson course with video and progress tracking? See our <a href="../#services">Starter and Full Training packages</a>.</p>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="topics-h">
+  <div class="wrap">
+    <p class="eyebrow">Ideas</p>
+    <h2 id="topics-h" class="h2">What could your game teach?</h2>
+    <p class="lede">If you've said it more than three times to a new hire, it's a good topic. Here's what businesses like yours use them for.</p>
+    <div class="topics">
+      <div class="topic any">
+        <h3><span class="em" aria-hidden="true">⭐</span>Any business</h3>
+        <ul>
+          <li>"Your first week here" onboarding</li>
+          <li>Spotting scams and phishing</li>
+          <li>Handling an upset customer</li>
+          <li>Fire, storm and emergency steps</li>
+          <li>Using AI tools safely at work</li>
+        </ul>
+      </div>
+      <div class="topic">
+        <h3><span class="em" aria-hidden="true">🍳</span>Restaurants &amp; cafés</h3>
+        <ul>
+          <li>Food safety basics</li>
+          <li>Allergy orders done right</li>
+          <li>Opening and closing checklist</li>
+        </ul>
+      </div>
+      <div class="topic">
+        <h3><span class="em" aria-hidden="true">🛒</span>Shops &amp; retail</h3>
+        <ul>
+          <li>Cash handling and register</li>
+          <li>Returns and refunds</li>
+          <li>Theft prevention</li>
+        </ul>
+      </div>
+      <div class="topic">
+        <h3><span class="em" aria-hidden="true">🏨</span>Tourism &amp; hospitality</h3>
+        <ul>
+          <li>Front desk and check-in</li>
+          <li>Local area know-how for visitors</li>
+          <li>Five-star guest service</li>
+        </ul>
+      </div>
+      <div class="topic">
+        <h3><span class="em" aria-hidden="true">🦷</span>Offices &amp; clinics</h3>
+        <ul>
+          <li>Front-desk procedures</li>
+          <li>Protecting customer and patient info</li>
+          <li>Phone and scheduling standards</li>
+        </ul>
+      </div>
+      <div class="topic">
+        <h3><span class="em" aria-hidden="true">🔧</span>Contractors, shops &amp; farms</h3>
+        <ul>
+          <li>Shop and equipment safety</li>
+          <li>Job-site do's and don'ts</li>
+          <li>Talking to customers on-site</li>
+        </ul>
+      </div>
+      <div class="topic">
+        <h3><span class="em" aria-hidden="true">⛪</span>Churches</h3>
+        <ul>
+          <li>Nursery and kids' volunteer onboarding</li>
+          <li>Check-in and pick-up procedures</li>
+          <li>Greeter and usher training</li>
+        </ul>
+      </div>
+      <div class="topic">
+        <h3><span class="em" aria-hidden="true">🎖️</span>Nonprofits &amp; veteran groups</h3>
+        <ul>
+          <li>Volunteer onboarding</li>
+          <li>New board member orientation</li>
+          <li>Event-day roles and procedures</li>
+        </ul>
+      </div>
+    </div>
+    <p class="note">Training games are built for practice and reinforcement. They don't replace legally required certifications (like OSHA or state food-handler cards), but they're a great way to help people remember them.</p>
+  </div>
+</section>
+
+<section class="section mist" aria-labelledby="how-h">
+  <div class="wrap">
+    <h2 id="how-h" class="h2" style="margin-bottom:48px">How it works</h2>
+    <ol class="steps">
+      <li><span class="step-num">01</span><h3>Free 20-minute call</h3><p>Tell us what your people keep getting wrong. No pitch, no pressure.</p></li>
+      <li><span class="step-num">02</span><h3>Plan &amp; fixed quote</h3><p>A one-page plan with your topic, scenarios and one price, in writing.</p></li>
+      <li><span class="step-num">03</span><h3>Play the draft</h3><p>You get a link to try it on your phone and tell us what to change.</p></li>
+      <li><span class="step-num">04</span><h3>Send it out</h3><p>Final link and a QR code. Text it to your team and you're done.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="faq-h">
+  <div class="wrap">
+    <h2 id="faq-h" class="h2" style="margin-bottom:32px">Common questions</h2>
+    <div class="faq">
+      <details><summary>How long does it take?</summary><p>Most Quick-Start games are ready to review in about two weeks once we have your material.</p></details>
+      <details><summary>What do I need to give you?</summary><p>Whatever you have: a handbook, a checklist, a few photos, or just a conversation about what goes wrong. We do the writing.</p></details>
+      <details><summary>Do my employees need an account or an app?</summary><p>No. It's a web link that opens on any phone, tablet or computer.</p></details>
+      <details><summary>Is it private?</summary><p>Your game lives at a link only you share. It isn't listed anywhere or searchable.</p></details>
+      <details><summary>Can it go in our existing training system?</summary><p>Yes. If you already use a learning system, ask about our Starter and Full Training packages, which can be packaged for it.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="contact-cta" class="section dark contact">
+  <div class="wrap">
+    <div class="contact-copy">
+      <p class="eyebrow">Let's build yours</p>
+      <h2>What do you wish every new hire already knew?</h2>
+      <p class="sub">Tell us in a quick call or a short note. We'll send back a free one-page game plan. We work with businesses anywhere, entirely by phone and video call.</p>
+      <a class="phone-big" href="tel:+17197929018">719-792-9018</a>
+      <a class="email" href="mailto:andrew.krayenhagen@akratechnologies.com?subject=Training%20game%20for%20my%20business">andrew.krayenhagen@akratechnologies.com</a>
+      <div class="cta-row" style="margin-top:8px">
+        <a class="btn btn-accent" href="../?need=game#contact">Send a message</a>
+        <a class="btn btn-ghost" href="../demos/spot-the-scam/">Play the demo first</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© <span id="yr">2026</span> Akra Technologies LLC · Veteran-owned small business</p>
+    <p class="motto">EDUCATE. ILLUMINATE. INSPIRE.</p>
+    <a href="https://www.linkedin.com/in/andrew-krayenhagen-24bb3312" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</footer>
+<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+</body>
+</html>

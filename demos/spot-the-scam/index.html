@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spot the Scam | Training Game Demo | Akra Technologies</title>
+<meta name="description" content="Play a 3-minute scam-awareness training game. A demo of the custom training games Akra Technologies builds for small businesses.">
+<link rel="canonical" href="https://www.akratechnologies.com/demos/spot-the-scam/">
+<meta property="og:title" content="Spot the Scam — can you beat it?">
+<meta property="og:description" content="A 3-minute training game: 8 real-world messages. Safe or scam?">
+<meta property="og:image" content="https://www.akratechnologies.com/assets/og-image.png">
+<link rel="icon" href="../../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{
+  --navy:#0F1B2D; --navy-2:#1B2B44; --navy-line:#3B5277; --ink-soft:#4A5568;
+  --mist:#F3F5F9; --line:#E2E7EF; --muted-on-dark:#C9D3E3; --accent:#F2B33D;
+  --good:#1E6B45; --good-bg:#E3F4EA; --bad:#B42318; --bad-bg:#FDECEA; --flag:#FFE08A;
+  --display:'Archivo',system-ui,sans-serif; --body:'Source Sans 3',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--navy);color:var(--navy);font-family:var(--body);font-size:18px;line-height:1.5;min-height:100vh}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.1;margin:0}
+p{margin:0}
+button{font:inherit;cursor:pointer}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;color:#fff;max-width:640px;margin:0 auto}
+.top a{color:var(--muted-on-dark);text-decoration:none;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
+.top a:hover{color:#fff}
+.top img{width:28px;height:28px;border-radius:50%;background:var(--mist);padding:2px}
+.hud{display:flex;gap:14px;font-weight:600;font-size:15px}
+.hud b{font-family:var(--display);color:var(--accent);font-size:18px}
+.stage{max-width:640px;margin:0 auto;padding:0 16px 40px}
+.panel{background:#fff;border-radius:16px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.bar{height:8px;background:var(--navy-2);border-radius:99px;overflow:hidden;margin:4px 0 16px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .4s ease}
+.eyebrow{font-weight:600;font-size:14px;letter-spacing:.12em;text-transform:uppercase;color:#8A5A00;margin-bottom:8px}
+.intro h1{font-size:clamp(32px,8vw,44px);margin-bottom:12px}
+.intro p{color:var(--ink-soft);margin-bottom:12px}
+.rules{list-style:none;padding:0;margin:16px 0 24px;display:flex;flex-direction:column;gap:10px}
+.rules li{display:flex;gap:12px;align-items:flex-start;background:var(--mist);border-radius:10px;padding:12px 14px}
+.rules span.ic{flex:none;font-size:22px;line-height:1.2}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:52px;padding:14px 24px;border-radius:10px;font-weight:600;font-size:18px;border:2px solid transparent;text-decoration:none}
+.btn-accent{background:var(--accent);color:var(--navy)} .btn-accent:hover{filter:brightness(1.06)}
+.btn-outline{background:#fff;color:var(--navy);border-color:var(--navy)} .btn-outline:hover{background:var(--navy);color:#fff}
+.btn-wide{width:100%}
+.qmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-weight:600;font-size:15px;color:var(--ink-soft)}
+.kind{display:inline-flex;align-items:center;gap:6px;background:var(--mist);border-radius:99px;padding:4px 12px;color:var(--navy)}
+/* message mockups */
+.msg{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-bottom:20px}
+.msg-head{background:var(--mist);padding:12px 16px;font-size:15px;border-bottom:1px solid var(--line)}
+.msg-head .row{display:flex;gap:8px;flex-wrap:wrap}
+.msg-head .lab{color:var(--ink-soft);min-width:52px}
+.msg-head .val{font-weight:600;word-break:break-all}
+.msg-body{padding:16px;white-space:pre-line}
+.msg-body a,.fake-link{color:#1A56DB;text-decoration:underline;word-break:break-all}
+.sms{background:#EEF1F6;padding:16px}
+.sms .from{text-align:center;font-size:14px;color:var(--ink-soft);margin-bottom:10px;font-weight:600}
+.bubble{background:#fff;border-radius:18px 18px 18px 4px;padding:12px 16px;max-width:88%;box-shadow:0 1px 2px rgba(0,0,0,.08);white-space:pre-line}
+.call{background:var(--navy-2);color:#fff;padding:20px;text-align:center}
+.call .who{font-family:var(--display);font-size:22px;margin:6px 0 2px}
+.call .num{color:var(--muted-on-dark);font-size:15px;margin-bottom:14px}
+.call .vm{background:rgba(255,255,255,.08);border-radius:10px;padding:14px;text-align:left;font-style:italic}
+mark.f{background:transparent;color:inherit;border-radius:4px;transition:background .3s}
+.reveal mark.f{background:var(--flag);box-shadow:0 0 0 2px var(--flag)}
+.reveal.safe-msg mark.f{background:#C9EED8;box-shadow:0 0 0 2px #C9EED8}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.choice{min-height:64px;border-radius:12px;font-weight:800;font-family:var(--display);font-size:22px;border:2px solid var(--navy);background:#fff;color:var(--navy);display:flex;align-items:center;justify-content:center;gap:10px}
+.choice:hover{background:var(--mist)}
+.choice:focus-visible,.btn:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.choice.scam{border-color:var(--bad);color:var(--bad)}
+.choice.safe{border-color:var(--good);color:var(--good)}
+.choice[disabled]{opacity:.45;cursor:default}
+.feedback{border-radius:12px;padding:18px;margin-top:16px;display:none}
+.feedback.show{display:block;animation:pop .25s ease}
+.feedback.right{background:var(--good-bg)}
+.feedback.wrong{background:var(--bad-bg)}
+.feedback h3{font-size:22px;margin-bottom:6px}
+.feedback.right h3{color:var(--good)} .feedback.wrong h3{color:var(--bad)}
+.feedback ul{margin:10px 0;padding-left:22px;display:flex;flex-direction:column;gap:4px}
+.do{background:#fff;border-radius:10px;padding:12px 14px;margin:12px 0 16px;font-size:16px}
+.do b{color:var(--navy)}
+.pts{font-family:var(--display);font-weight:800;color:var(--good)}
+@keyframes pop{from{transform:translateY(6px);opacity:0}to{transform:none;opacity:1}}
+/* results */
+.result{text-align:center}
+.badge{width:120px;height:120px;border-radius:50%;margin:8px auto 16px;background:radial-gradient(circle at 50% 40%,#fff,var(--mist) 70%);box-shadow:0 0 0 5px var(--accent);display:flex;align-items:center;justify-content:center;font-size:56px}
+.result h2{font-size:34px;margin-bottom:6px}
+.big{font-family:var(--display);font-weight:800;font-size:48px;color:var(--navy)}
+.result .sub{color:var(--ink-soft);margin-bottom:20px}
+.keep{text-align:left;background:var(--mist);border-radius:12px;padding:16px 18px;margin:16px 0 20px}
+.keep h3{font-size:18px;margin-bottom:8px}
+.keep ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px}
+.btns{display:flex;flex-direction:column;gap:12px}
+.pitch{margin-top:20px;background:var(--navy);color:#fff;border-radius:14px;padding:20px;text-align:left}
+.pitch h3{font-size:22px;margin-bottom:6px}
+.pitch p{color:var(--muted-on-dark);margin-bottom:14px}
+.foot{color:var(--muted-on-dark);text-align:center;font-size:14px;padding:8px 16px 24px}
+.sr{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<header class="top">
+  <a href="../../training/" aria-label="Back to Akra Technologies training games"><img src="../../assets/owl-160.png" alt="">Akra Technologies</a>
+  <div class="hud" id="hud" hidden><span>Score <b id="score">0</b></span><span>Streak <b id="streak">0</b></span></div>
+</header>
+
+<main class="stage">
+  <div class="bar" id="barWrap" hidden><i id="bar"></i></div>
+  <div id="app" class="panel" aria-live="polite"></div>
+</main>
+<p class="foot">Demo game · Main Street Hardware &amp; Feed is a made-up business · Built by Akra Technologies</p>
+
+<script>
+(function(){
+  // Each scenario: type email|sms|call, answer scam|safe, flags shown after answering, action tip.
+  var Q = [
+    {type:'sms', answer:'scam',
+     from:'+1 (844) 555-0193',
+     body:'ParcelPoint: Your package is on hold due to an unpaid <mark class="f">$1.99 redelivery fee</mark>. Pay <mark class="f">within 12 hours</mark> or it will be returned: <mark class="f"><span class="fake-link">parcelpoint-redeliver.co/pay</span></mark>',
+     flags:['A fee you weren\'t expecting','A countdown to make you rush','A link that isn\'t the shipper\'s real website'],
+     tip:'Don\'t tap the link. If you are expecting a package, look it up in the shipper\'s app or the site you ordered from.'},
+    {type:'email', answer:'scam',
+     from:'Dale (Owner) &lt;<mark class="f">dale.mainstreethw@gmail-mail.com</mark>&gt;', subject:'Quick favor',
+     body:'Hey, are you at the store right now? I\'m stuck in a meeting.\n\nI need you to grab <mark class="f">5 gift cards ($100 each)</mark> for a customer appreciation thing. <mark class="f">Keep it between us</mark> for now, it\'s a surprise. Send me photos of the backs of the cards when you have them.\n\nDale',
+     flags:['The boss\'s name, but a strange email address','Gift cards are the #1 thing scammers ask for','"Keep it quiet" is a classic pressure trick'],
+     tip:'Call or text the owner at the number you already have. Never buy gift cards because of an email.'},
+    {type:'email', answer:'safe',
+     from:'Brenda Hollis &lt;<mark class="f">billing@ridgelinesupply.com</mark>&gt;', subject:'October invoice #4471',
+     body:'Hi team,\n\nAttached is your <mark class="f">October invoice, same as every month</mark>. Terms are net 30 as usual.\n\nQuestions? <mark class="f">Call me at the number on your account.</mark>\n\nThanks,\nBrenda\nRidgeline Supply Co.',
+     flags:['Matches the supplier you already work with','Nothing new or urgent is being asked','Points you to contact info you already have'],
+     tip:'Still smart: if the amount looks off, call Brenda at the number you already have on file.'},
+    {type:'email', answer:'scam',
+     from:'IT Help Desk &lt;<mark class="f">support@mail-verify-login.net</mark>&gt;', subject:'<mark class="f">ACTION REQUIRED: Mailbox full</mark>',
+     body:'Your mailbox is 99% full. You will <mark class="f">stop receiving email in 24 hours</mark>.\n\n<mark class="f">Sign in here to keep your account active:</mark>\n<span class="fake-link">mail-verify-login.net/keep-active</span>\n\nIT Help Desk',
+     flags:['Scary warning in ALL CAPS','A deadline to make you panic','Asks you to sign in from a link'],
+     tip:'Never sign in from an email link. Tell your manager or whoever handles your computers.'},
+    {type:'sms', answer:'safe',
+     from:'Jess (Shift Lead)',
+     body:'Hey! <mark class="f">Can you cover Saturday 8-2?</mark> Mike\'s out sick. <mark class="f">No worries if not</mark>, just let me know 👍',
+     flags:['From a contact already saved in your phone','A normal work request','No links, no money, no pressure'],
+     tip:'Normal message. Reply like you usually would.'},
+    {type:'call', answer:'scam',
+     from:'First Hometown Bank', num:'(270) 555-0148',
+     body:'"Hi, this is the fraud department at First Hometown Bank. We stopped a suspicious charge on the store\'s card. To cancel it, <mark class="f">read me the 6-digit code we just texted you</mark>. Please hurry, <mark class="f">the charge goes through in 10 minutes</mark>."',
+     flags:['Banks never ask you to read them a code','Caller ID names can be faked','Heavy time pressure'],
+     tip:'Hang up. Call the bank using the number on the back of the card or on their real website.'},
+    {type:'email', answer:'safe',
+     from:'First Hometown Bank &lt;<mark class="f">alerts@firsthometownbank.com</mark>&gt;', subject:'Your statement is ready',
+     body:'Your October statement is now available.\n\nTo view it, <mark class="f">open our app or go to the website you normally use.</mark>\n\n<mark class="f">We will never ask for your password, PIN, or a code by email or phone.</mark>',
+     flags:['No link to click','Sends you to the app or site you already use','Reminds you they never ask for passwords'],
+     tip:'Good message. You can still open the app yourself instead of trusting any email.'},
+    {type:'email', answer:'scam',
+     from:'Brenda Hollis &lt;<mark class="f">billing@ridgeline-supply.co</mark>&gt;', subject:'Updated payment info',
+     body:'Hi team,\n\n<mark class="f">We changed banks this month.</mark> Please send October\'s payment to our <mark class="f">new account</mark> below instead of the old one. <mark class="f">Please process today</mark> so there is no late fee.\n\nRouting: 0000-DEMO\nAccount: 0000-DEMO\n\nBrenda',
+     flags:['Look closely: ridgeline-supply.co, not ridgelinesupply.com','"New bank account" is a top business scam','Rush to pay today'],
+     tip:'Call Brenda at the number you already have before changing any payment info. This scam costs small businesses thousands.'}
+  ];
+
+  var app=document.getElementById('app'), hud=document.getElementById('hud'),
+      scoreEl=document.getElementById('score'), streakEl=document.getElementById('streak'),
+      bar=document.getElementById('bar'), barWrap=document.getElementById('barWrap');
+  var i=0, score=0, streak=0, best=0, right=0;
+
+  function intro(){
+    hud.hidden=true; barWrap.hidden=true;
+    app.innerHTML=
+      '<div class="intro">'+
+      '<p class="eyebrow">Training game demo · 3 minutes</p>'+
+      '<h1>Spot the Scam</h1>'+
+      '<p>It\'s your first week at <b>Main Street Hardware &amp; Feed</b>. Your phone and inbox are about to light up.</p>'+
+      '<p>Some messages are real. Some are scams trying to get money or passwords out of you.</p>'+
+      '<ul class="rules">'+
+      '<li><span class="ic" aria-hidden="true">📩</span><span><b>8 messages.</b> Emails, texts and a phone call.</span></li>'+
+      '<li><span class="ic" aria-hidden="true">⚖️</span><span>Decide: <b>Safe</b> or <b>Scam</b>?</span></li>'+
+      '<li><span class="ic" aria-hidden="true">🔥</span><span>100 points each. <b>Streaks</b> earn bonus points.</span></li>'+
+      '</ul>'+
+      '<button class="btn btn-accent btn-wide" id="go">Start my shift</button>'+
+      '</div>';
+    document.getElementById('go').onclick=start;
+  }
+
+  function start(){ i=0; score=0; streak=0; best=0; right=0; hud.hidden=false; barWrap.hidden=false; show(); }
+
+  function msgHTML(q){
+    if(q.type==='email') return '<div class="msg" id="m"><div class="msg-head">'+
+      '<div class="row"><span class="lab">From</span><span class="val">'+q.from+'</span></div>'+
+      '<div class="row"><span class="lab">Subject</span><span class="val">'+q.subject+'</span></div>'+
+      '</div><div class="msg-body">'+q.body+'</div></div>';
+    if(q.type==='sms') return '<div class="msg sms" id="m"><p class="from">'+q.from+'</p><div class="bubble">'+q.body+'</div></div>';
+    return '<div class="msg call" id="m"><div aria-hidden="true" style="font-size:30px">📞</div><p class="who">'+q.from+'</p><p class="num">'+q.num+' · Voicemail</p><div class="vm">'+q.body+'</div></div>';
+  }
+
+  function show(){
+    var q=Q[i];
+    var label={email:'📧 Email',sms:'💬 Text message',call:'📞 Phone call'}[q.type];
+    bar.style.width=(i/Q.length*100)+'%';
+    app.innerHTML=
+      '<div class="qmeta"><span class="kind">'+label+'</span><span>'+(i+1)+' of '+Q.length+'</span></div>'+
+      msgHTML(q)+
+      '<div class="choices" id="choices">'+
+      '<button class="choice safe" data-a="safe"><span aria-hidden="true">✅</span>Safe</button>'+
+      '<button class="choice scam" data-a="scam"><span aria-hidden="true">🚩</span>Scam</button>'+
+      '</div><div class="feedback" id="fb"></div>';
+    app.querySelectorAll('.choice').forEach(function(b){ b.onclick=function(){ answer(b.getAttribute('data-a')); }; });
+    app.querySelector('.choice').focus({preventScroll:true});
+    window.scrollTo({top:0});
+  }
+
+  function answer(a){
+    var q=Q[i], ok=(a===q.answer), gained=0;
+    app.querySelectorAll('.choice').forEach(function(b){ b.disabled=true; });
+    var m=document.getElementById('m'); m.classList.add('reveal'); if(q.answer==='safe') m.classList.add('safe-msg');
+    if(ok){ streak++; right++; gained=100+(streak>1?(streak-1)*25:0); score+=gained; best=Math.max(best,streak); }
+    else { streak=0; }
+    scoreEl.textContent=score; streakEl.textContent=streak;
+    var title= ok ? (q.answer==='scam'?'Nice catch! That\'s a scam.':'Correct! That one\'s safe.')
+                  : (q.answer==='scam'?'Gotcha. That was a scam.':'Actually, that one was safe.');
+    var lead = q.answer==='scam' ? 'Red flags (highlighted above):' : 'Why it\'s OK (highlighted above):';
+    var fb=document.getElementById('fb');
+    fb.className='feedback show '+(ok?'right':'wrong');
+    fb.innerHTML='<h3>'+title+'</h3>'+
+      (ok?'<p class="pts">+'+gained+' points'+(streak>1?' · '+streak+' in a row!':'')+'</p>':'')+
+      '<p style="margin-top:8px;font-weight:600">'+lead+'</p><ul>'+q.flags.map(function(f){return '<li>'+f+'</li>';}).join('')+'</ul>'+
+      '<p class="do"><b>What to do:</b> '+q.tip+'</p>'+
+      '<button class="btn btn-accent btn-wide" id="next">'+(i<Q.length-1?'Next message →':'See my results')+'</button>';
+    var n=document.getElementById('next'); n.onclick=function(){ i++; i<Q.length?show():done(); };
+    setTimeout(function(){ fb.scrollIntoView({behavior:'smooth',block:'nearest'}); n.focus({preventScroll:true}); },60);
+  }
+
+  function done(){
+    bar.style.width='100%';
+    var rank = right===Q.length ? ['🦉','Scam Buster','Perfect shift. Nobody\'s getting past you.']
+             : right>=6 ? ['🛡️','Sharp Eye','You caught most of them. A couple slipped through.']
+             : ['🔍','Scam Spotter in Training','Scammers are good at this. Play again and beat your score.'];
+    app.innerHTML='<div class="result">'+
+      '<p class="eyebrow">Shift complete</p>'+
+      '<div class="badge" aria-hidden="true">'+rank[0]+'</div>'+
+      '<h2>'+rank[1]+'</h2>'+
+      '<p class="sub">'+rank[2]+'</p>'+
+      '<p class="big">'+score+'</p><p class="sub">points · '+right+' of '+Q.length+' right · best streak '+best+'</p>'+
+      '<div class="keep"><h3>Take these 3 rules back to work</h3><ol>'+
+      '<li><b>Slow down.</b> Rushing you is the scammer\'s main tool.</li>'+
+      '<li><b>Don\'t use their link or number.</b> Go to the app, site or phone number you already have.</li>'+
+      '<li><b>Gift cards, codes, new bank info?</b> Stop and check with someone first.</li>'+
+      '</ol></div>'+
+      '<div class="btns"><button class="btn btn-outline btn-wide" id="again">Play again</button></div>'+
+      '<div class="pitch"><h3>Want one built for your business?</h3>'+
+      '<p>Your rules, your logo, your real situations. Your staff plays it on their phone in a few minutes.</p>'+
+      '<a class="btn btn-accent btn-wide" href="../../training/#contact-cta">Get a free 20-minute game plan</a></div>'+
+      '</div>';
+    document.getElementById('again').onclick=start;
+    window.scrollTo({top:0});
+  }
+
+  intro();
+})();
+</script>
+</body>
+</html>

@@ -184,6 +184,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
     </a>
     <nav class="nav" aria-label="Main">
       <a class="plain" href="#services">Services</a>
+      <a class="plain" href="training/">Training Games</a>
       <a class="plain" href="#work">Work</a>
       <a class="plain" href="#about">About</a>
       <a class="btn btn-accent" href="tel:+17197929018">
@@ -267,7 +268,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
 <section class="section mist" aria-labelledby="pkg-h">
   <div class="wrap">
     <h2 id="pkg-h" class="h2">Simple packages. Fixed prices.</h2>
-    <p class="lede">No hourly meter running. You know the cost before we start.</p>
+    <p class="lede">No hourly meter running. You know the cost before we start. Want something smaller? <a href="training/">Training games start at $750 &rarr;</a></p>
     <div class="grid3">
       <div class="card pkg">
         <h3>Local Spotlight Video</h3>
@@ -316,6 +317,16 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
     <h2 class="h2">Recent work</h2>
     <p class="lede">A few projects you can click on right now.</p>
     <div class="grid4">
+      <a class="card work" href="demos/spot-the-scam/">
+        <div class="thumb t2" style="flex-direction:column;gap:10px;color:#fff;text-align:center;padding:16px"><span style="font-size:48px" aria-hidden="true">🚩</span><span style="font-family:var(--display);font-weight:800;font-size:26px">Spot the Scam</span><span style="font-size:15px;color:var(--muted-on-dark)">Safe or scam? 8 messages</span></div>
+        <div class="work-body">
+          <p class="tag">Business training game</p>
+          <h3>Spot the Scam</h3>
+          <p class="body">A 3-minute demo of the training games we build for businesses &mdash; teaching staff to catch phishing and payment scams.</p>
+          <p class="free">Free demo</p>
+          <p class="go">Play the demo →</p>
+        </div>
+      </a>
       <a class="card work" href="https://youtu.be/VOmQVfQxn8w" target="_blank" rel="noopener">
         <div class="thumb thumb-img"><video autoplay muted loop playsinline preload="metadata" poster="assets/homeplace-poster.jpg" aria-label="Aerial drone footage of barns, a silo and fields at Homeplace on Green River"><source src="assets/homeplace-highlight.mp4" type="video/mp4"></video></div>
         <div class="work-body">
@@ -402,6 +413,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
         <select id="f-need" name="need">
           <option>A promo or marketing video</option>
           <option>Training or onboarding course</option>
+          <option>A training game</option>
           <option>Graphics or photography</option>
           <option>Not sure yet — let's talk</option>
         </select>
@@ -432,6 +444,7 @@ footer a{color:var(--muted-on-dark)} footer a:hover{color:#fff}
   document.querySelectorAll('[data-need]').forEach(function(a){
     a.addEventListener('click', function(){ need.value = a.getAttribute('data-need'); });
   });
+  if (/[?&]need=game/.test(location.search)) need.value = 'A training game';
   document.getElementById('contact-form').addEventListener('submit', function(e){
     e.preventDefault();
     var f = e.target;
