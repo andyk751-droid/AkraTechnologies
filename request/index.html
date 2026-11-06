@@ -1,0 +1,708 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Start a Training Project | Akra Technologies</title>
+<meta name="description" content="Tell Akra Technologies what your team needs to learn and see a price estimate right away. Custom courses, training games, simulators, videos and live classes.">
+<link rel="canonical" href="https://www.akratechnologies.com/request/">
+<meta property="og:title" content="Start a Training Project | Akra Technologies">
+<meta property="og:image" content="https://www.akratechnologies.com/assets/og-image.png">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+.sitebar{background:#0F1B2D;color:#fff}
+.sitebar .in{max-width:1220px;margin:0 auto;display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between;padding-block:12px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sitebar a{color:#fff;text-decoration:none;font-weight:600;font-size:15px}
+.sitebar a:hover{color:#F2B33D}
+.sitebar .b{display:flex;align-items:center;gap:10px;font-family:"Archivo",system-ui,sans-serif;font-weight:800;letter-spacing:.02em;font-size:18px}
+.sitebar nav{display:flex;flex-wrap:wrap;gap:18px}
+.sitefoot{background:#0A1322;color:#9FB0CA;font-size:15px;padding-block:20px;text-align:center;padding-bottom:calc(20px + 70px)}
+.sitefoot p{margin:4px 0}
+@media (min-width:921px){.sitefoot{padding-bottom:20px}}
+</style>
+</head>
+<body>
+<header class="sitebar"><div class="in">
+  <a class="b" href="../"><img src="../assets/owl-160.png" alt="" width="32" height="32">AKRA TECHNOLOGIES</a>
+  <nav aria-label="Main"><a href="../#services">Services</a><a href="../training/">Training Games</a><a href="../#about">About</a><a href="tel:+17197929018">719-792-9018</a></nav>
+</div></header>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: guided request form on the left, a live estimate "receipt" pinned on the right; owner desk (#owner) appears below for Andrew */
+:root{
+  --bg:#F3F5F9; --surface:#ffffff; --ink:#0F1B2D; --muted:#4A5568; --line:#E2E7EF;
+  --navy:#0F1B2D; --navy-ink:#ffffff; --gold:#8A5A00; --gold-soft:#FDF3DE; --soft:#EEF2F8;
+  --ok:#1E6B45; --warn:#9A3B12; --warn-soft:#FBEEE6;
+  --f-display:"Archivo",system-ui,sans-serif;
+  --f-body:"Source Sans 3",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5}
+.wrap{max-width:1220px;margin:0 auto;padding-block:28px 110px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;justify-content:space-between;
+  border-bottom:3px solid var(--navy);padding-bottom:16px;margin-bottom:26px}
+.brand{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:500}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(30px,4.6vw,44px);line-height:1.05;margin:6px 0 8px;letter-spacing:-.01em;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:62ch}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+button{font:inherit;cursor:pointer}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:8px 14px;border-radius:6px;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--navy)}
+.btn.primary{background:var(--navy);color:var(--navy-ink);border-color:var(--navy)}
+.btn.gold{background:#F2B33D;color:#0F1B2D;border-color:#F2B33D;font-size:16px;padding:12px 18px}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+.grid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.9fr);gap:30px;align-items:start}
+@media (max-width:920px){.grid{grid-template-columns:minmax(0,1fr)}}
+
+.exnote{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--gold-soft);border:1px solid var(--gold);color:var(--ink);
+  border-radius:8px;padding:10px 14px;margin-bottom:18px;font-size:14px}
+.exnote b{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+
+section.step{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px}
+.step h2{font-family:var(--f-display);font-weight:700;font-size:21px;margin:0 0 2px;display:flex;align-items:baseline;gap:10px}
+.step h2 .n{font-family:var(--f-mono);font-size:13px;color:var(--gold);font-weight:500}
+.step .sub{margin:0 0 14px;color:var(--muted);font-size:14px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 16px}
+@media (max-width:560px){.fields{grid-template-columns:minmax(0,1fr)}}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field.full{grid-column:1/-1}
+.field label,.lbl{font-weight:600;font-size:14px}
+.opt{font-weight:400;color:var(--muted);font-size:13px}
+.hint{font-size:13px;color:var(--muted);margin:0}
+input[type=text],input[type=email],input[type=tel],input[type=date],textarea,select{width:100%;font:inherit;font-size:15px;color:var(--ink);
+  background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px}
+textarea{min-height:68px;resize:vertical}
+
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.card{position:relative;display:flex;flex-direction:column;gap:3px;border:1px solid var(--line);border-radius:8px;padding:12px 12px 12px 14px;cursor:pointer;background:var(--surface)}
+.card:hover{border-color:var(--navy)}
+.card:has(input:checked){border-color:var(--navy);background:var(--soft);box-shadow:inset 3px 0 0 var(--gold)}
+.card input{position:absolute;opacity:0;pointer-events:none}
+.card:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+.card strong{font-size:15px}
+.card span{font-size:13px;color:var(--muted)}
+.card em{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--gold)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chk{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:7px 11px;font-size:14px;cursor:pointer}
+.chk:has(input:checked){border-color:var(--navy);background:var(--soft)}
+.chk input{accent-color:var(--navy);margin:0}
+
+aside.out{position:sticky;top:max(16px,env(safe-area-inset-top,0px));display:flex;flex-direction:column;gap:14px}
+@media (max-width:920px){aside.out{position:static}}
+.receipt{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.r-head{background:var(--navy);color:var(--navy-ink);padding:14px 18px}
+.r-head .k{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.r-price{font-family:var(--f-display);font-weight:800;font-size:clamp(28px,3.6vw,38px);line-height:1.1;font-variant-numeric:tabular-nums;margin-top:4px}
+.r-body{padding:16px 18px;display:flex;flex-direction:column;gap:12px}
+.pkg{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:10px}
+.pkg b{font-family:var(--f-display);font-size:18px}
+.pill{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;background:var(--gold-soft);color:var(--gold);padding:3px 8px;border-radius:4px;border:1px solid var(--gold)}
+.drivers{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.drivers li{display:flex;justify-content:space-between;gap:10px}
+.drivers li span:last-child{font-family:var(--f-mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:14px}
+.meta div{background:var(--soft);border-radius:6px;padding:8px 10px}
+.meta small{display:block;font-family:var(--f-mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.fine{font-size:12px;color:var(--muted);margin:0}
+.send{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:10px}
+.send h3{font-family:var(--f-display);font-size:18px;margin:0}
+.addr{font-family:var(--f-mono);font-size:14px;user-select:all;background:var(--soft);padding:6px 10px;border-radius:6px;overflow-wrap:anywhere}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.toast{font-size:13px;color:var(--ok);font-weight:600;min-height:1.2em}
+.missing{font-size:13px;color:var(--warn)}
+
+/* Owner desk */
+#ownerDesk{margin-top:40px;border-top:3px solid var(--gold);padding-top:22px}
+#ownerDesk h2.title{font-family:var(--f-display);font-weight:800;font-size:28px;margin:0 0 4px}
+.desk{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:16px}
+@media (max-width:920px){.desk{grid-template-columns:minmax(0,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;min-width:0}
+.panel.full{grid-column:1/-1}
+.panel h3{font-family:var(--f-display);font-size:18px;margin:0 0 10px}
+.panel p{margin:0 0 10px}
+table.hrs{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+table.hrs td{padding:6px 4px;border-bottom:1px solid var(--line)}
+table.hrs td:last-child{text-align:right;font-family:var(--f-mono)}
+table.hrs tr.tot td{font-weight:700;border-bottom:0}
+.flags{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.flags li{border-left:4px solid var(--warn);background:var(--warn-soft);padding:8px 10px;border-radius:4px;font-size:14px}
+.flags li.ok{border-color:var(--ok);background:var(--soft)}
+ol.outline,ol.qs{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:6px;font-size:15px}
+pre.prompt{margin:0;padding:14px;background:var(--soft);border-radius:8px;font-family:var(--f-mono);font-size:13px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere;max-height:460px;overflow:auto}
+.loadbox{display:flex;flex-direction:column;gap:8px}
+
+.mbar{display:none}
+@media (max-width:920px){
+  .mbar{display:flex;gap:10px;align-items:center;justify-content:space-between;position:fixed;left:0;right:0;bottom:0;z-index:5;background:var(--navy);color:var(--navy-ink);
+    padding-top:10px;padding-bottom:calc(10px + env(safe-area-inset-bottom,0px));
+    padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .mbar b{font-family:var(--f-display);font-size:20px;font-variant-numeric:tabular-nums}
+  .mbar .btn{background:#F2B33D;color:#0F1B2D;border-color:#F2B33D}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div>
+      <div class="brand">Veteran-owned · Hodgenville, KY</div>
+      <h1>Start a Training Project</h1>
+      <p class="lede">Tell me what your team needs to learn. You'll see a price estimate as you go, then send the request to me. I'll follow up within two business days with questions and a firm quote.</p>
+    </div>
+    <div class="toolbar">
+      <button class="btn" id="loadEx" type="button">Show an example</button>
+      <button class="btn" id="clearAll" type="button">Start fresh</button>
+    </div>
+  </header>
+
+  <div class="grid">
+    <form id="form" autocomplete="on" novalidate>
+      <div class="exnote" id="exNote"><b>Example</b> This form is filled in with a made-up food pantry so you can see how it works. Select <strong>Start fresh</strong> to enter your own project.</div>
+
+      <section class="step">
+        <h2><span class="n">1</span>What do you need?</h2>
+        <p class="sub">Pick the closest fit. "Not sure" is fine.</p>
+        <div class="cards" id="typeCards"></div>
+      </section>
+
+      <section class="step" data-for="course game sim video workshop unsure">
+        <h2><span class="n">2</span>Topic and goal</h2>
+        <p class="sub">What should people be able to do when they finish?</p>
+        <div class="fields">
+          <div class="field full"><label for="topic">Topic or working title</label><input type="text" id="topic" placeholder="e.g., New Volunteer Orientation"></div>
+          <div class="field full"><label for="goal">After the training, people will be able to…</label><textarea id="goal" placeholder="e.g., check in a client, follow food safety rules, and know who to call"></textarea></div>
+          <div class="field full"><label for="why">Why now? <span class="opt">(optional)</span></label><textarea id="why" placeholder="What problem are you trying to solve?"></textarea></div>
+        </div>
+      </section>
+
+      <section class="step">
+        <h2><span class="n">3</span>Your learners</h2>
+        <p class="sub">Who will take it?</p>
+        <div class="fields">
+          <div class="field full"><label for="audience">Who are they?</label><input type="text" id="audience" placeholder="e.g., Weekend volunteers, mostly retirees and high school students"></div>
+          <div class="field"><label for="count">How many people?</label>
+            <select id="count"><option value="">Select…</option><option>1–10</option><option>11–50</option><option>51–200</option><option>200+</option></select></div>
+          <div class="field"><label for="tech">Comfort with computers</label>
+            <select id="tech"><option value="">Select…</option><option value="low">Low: keep it very simple</option><option value="mid">Average</option><option value="high">High</option></select></div>
+        </div>
+      </section>
+
+      <section class="step" data-for="course game sim unsure">
+        <h2><span class="n">4</span>Size and style</h2>
+        <p class="sub">These two choices affect the price the most.</p>
+        <div class="fields">
+          <div class="field full"><span class="lbl">About how long should it take a learner?</span>
+            <div class="chips" id="lenChips"></div></div>
+          <div class="field full"><span class="lbl">How hands-on should it be?</span>
+            <div class="cards" id="levelCards"></div></div>
+        </div>
+      </section>
+
+      <section class="step" data-for="video">
+        <h2><span class="n">4</span>Video length</h2>
+        <p class="sub">Short videos work best. Most training videos run 2 to 5 minutes.</p>
+        <div class="chips" id="vlenChips"></div>
+      </section>
+
+      <section class="step" data-for="workshop">
+        <h2><span class="n">4</span>Class details</h2>
+        <p class="sub">Live classes run on Zoom or in person in central Kentucky.</p>
+        <div class="fields">
+          <div class="field full"><span class="lbl">Class length</span><div class="chips" id="wlenChips"></div></div>
+          <div class="field full"><span class="lbl">Include</span><div class="chips">
+            <label class="chk"><input type="checkbox" name="wx" value="handouts">Custom slides and handouts</label>
+            <label class="chk"><input type="checkbox" name="wx" value="inperson">In person (instead of Zoom)</label></div></div>
+        </div>
+      </section>
+
+      <section class="step" data-for="course game sim video unsure">
+        <h2><span class="n">5</span>Extras</h2>
+        <p class="sub">Check anything you want included.</p>
+        <div class="chips" id="mediaChips"></div>
+        <div class="fields" style="margin-top:14px" data-for="course game sim unsure">
+          <div class="field full"><label for="assess">Testing</label>
+            <select id="assess"><option value="none">No test</option><option value="quiz">Short quiz (about 5 questions)</option><option value="final">Scored final test with a passing score</option></select></div>
+        </div>
+      </section>
+
+      <section class="step" data-for="course game sim video workshop unsure">
+        <h2><span class="n">6</span>Your content</h2>
+        <p class="sub">What do you have today?</p>
+        <div class="cards" id="readyCards"></div>
+        <div class="fields" style="margin-top:14px">
+          <div class="field full"><span class="lbl">Is there someone who knows the subject well and can review drafts?</span>
+            <div class="chips"><label class="chk"><input type="radio" name="sme" value="yes">Yes</label><label class="chk"><input type="radio" name="sme" value="no">No</label></div></div>
+        </div>
+      </section>
+
+      <section class="step" data-for="course game sim unsure rai">
+        <h2><span class="n">7</span>How will people open it?</h2>
+        <div class="cards" id="deliveryCards"></div>
+        <div class="fields" style="margin-top:14px">
+          <div class="field full"><label for="lms">Your LMS name <span class="opt">(if you have one)</span></label><input type="text" id="lms" placeholder="e.g., TalentLMS, Moodle, Canvas"></div>
+        </div>
+      </section>
+
+      <section class="step" data-for="rai">
+        <h2><span class="n">2</span>Responsible AI at Work</h2>
+        <p class="sub">A 35-minute course that teaches your staff and volunteers to use AI safely and honestly. I customize it with your name, examples and AI rules. It includes a starter AI policy, a Do's and Don'ts card and certificates.</p>
+        <div class="chips"><label class="chk"><input type="checkbox" name="raiWs" value="yes">Add a live 60-minute workshop (+$300)</label>
+          <label class="chk"><input type="radio" name="raiPolicy" value="have">We have AI rules already</label>
+          <label class="chk"><input type="radio" name="raiPolicy" value="need">We need a starter policy</label></div>
+      </section>
+
+      <section class="step">
+        <h2><span class="n">8</span>Timing and budget</h2>
+        <div class="fields">
+          <div class="field"><label for="when">When do you need it?</label>
+            <select id="when"><option value="flex">Flexible</option><option value="6wk">Within 6 weeks</option><option value="rush">Rush: under 3 weeks</option></select></div>
+          <div class="field"><label for="date">Target date <span class="opt">(optional)</span></label><input type="date" id="date"></div>
+          <div class="field full"><label for="budget">Budget you have in mind <span class="opt">(optional)</span></label>
+            <select id="budget"><option value="">Prefer not to say</option><option value="u1">Under $1,000</option><option value="1-25">$1,000 to $2,500</option><option value="25-5">$2,500 to $5,000</option><option value="5p">Over $5,000</option></select></div>
+        </div>
+      </section>
+
+      <section class="step">
+        <h2><span class="n">9</span>About you</h2>
+        <div class="fields">
+          <div class="field"><label for="name">Your name</label><input type="text" id="name" autocomplete="name"></div>
+          <div class="field"><label for="org">Organization</label><input type="text" id="org" autocomplete="organization"></div>
+          <div class="field"><label for="email">Email</label><input type="email" id="email" autocomplete="email"></div>
+          <div class="field"><label for="phone">Phone <span class="opt">(optional)</span></label><input type="tel" id="phone" autocomplete="tel"></div>
+          <div class="field full"><label for="orgType">Type of organization</label>
+            <select id="orgType"><option value="">Select…</option><option value="nonprofit">Nonprofit</option><option value="church">Church or faith group</option><option value="smallbiz">Small business</option><option value="school">School or education</option><option value="gov">Local government or public agency</option><option value="other">Other</option></select></div>
+          <div class="field full"><label for="notes">Anything else I should know? <span class="opt">(optional)</span></label><textarea id="notes"></textarea></div>
+        </div>
+      </section>
+    </form>
+
+    <aside class="out" id="outPanel">
+      <div class="receipt">
+        <div class="r-head"><div class="k">Your estimate</div><div class="r-price" id="price">$0</div></div>
+        <div class="r-body">
+          <div class="pkg"><b id="pkgName">—</b><span class="pill" id="founding" hidden>Founding Client price</span></div>
+          <p class="fine" id="pkgNote"></p>
+          <ul class="drivers" id="drivers"></ul>
+          <div class="meta"><div><small>Typical timeline</small><span id="weeks">—</span></div><div><small>Format</small><span id="fmt">—</span></div></div>
+          <p class="fine">This is a ballpark, not a quote. Your firm price comes after a short call about your project.</p>
+        </div>
+      </div>
+      <div class="send" id="sendBox">
+        <h3>Send your request</h3>
+        <p class="fine">Your request goes straight to Andrew Krayenhagen at:</p>
+        <div class="addr" id="addr">kray1075@hotmail.com</div>
+        <button class="btn gold" id="sendReq" type="button">Send my request</button>
+        <p class="fine">Or send it yourself:</p>
+        <div class="row">
+          <button class="btn" id="copyReq" type="button">Copy my request</button>
+          <a class="btn" id="mailLink" href="#">Open in email</a>
+        </div>
+        <div class="missing" id="missing"></div>
+        <div class="toast" id="toast" role="status" aria-live="polite"></div>
+        <p class="fine">Prefer to talk? Call 719-792-9018.</p>
+      </div>
+    </aside>
+  </div>
+
+  <div id="ownerDesk" hidden>
+    <div class="brand">Owner desk · for Andrew</div>
+    <h2 class="title">Job Brief</h2>
+    <p class="lede">Paste a request email (or just its request code) to load it into the form. Everything below updates from the form.</p>
+    <div class="desk">
+      <div class="panel full loadbox">
+        <label class="lbl" for="codeIn">Load a request</label>
+        <textarea id="codeIn" class="nosave" placeholder="Paste the whole email here. The tool finds the line that starts with AKRA1:"></textarea>
+        <div class="row"><button class="btn primary" id="loadCode" type="button">Load request</button><span class="toast" id="loadMsg"></span></div>
+      </div>
+      <div class="panel full"><h3>Overview</h3><div id="ovw"></div></div>
+      <div class="panel"><h3>Likely structure</h3><ol class="outline" id="outline"></ol></div>
+      <div class="panel"><h3>Effort and pricing</h3><table class="hrs" id="hrsTbl"></table><p class="fine" id="rateNote" style="margin-top:8px"></p></div>
+      <div class="panel"><h3>Watch for</h3><ul class="flags" id="flags"></ul></div>
+      <div class="panel"><h3>Questions for the discovery call</h3><ol class="qs" id="qs"></ol></div>
+      <div class="panel full"><h3 style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center">AI build prompt <button class="btn primary" id="copyPrompt" type="button">Copy prompt</button></h3>
+        <p class="fine" style="margin-bottom:10px">Paste into Claude, Gemini or ChatGPT with the client's source files attached. Review every fact before it goes to the client.</p>
+        <pre class="prompt" id="prompt"></pre></div>
+    </div>
+  </div>
+</div>
+
+<div class="mbar"><div><small style="display:block;font-size:11px;opacity:.8">Estimate</small><b id="mPrice">$0</b></div><button class="btn" id="jump" type="button">Review and send</button></div>
+
+<script>
+/* ===== Pricing settings: edit these to change every estimate ===== */
+const RATE = 50;                 // dollars per build hour
+const OWNER_EMAIL = "kray1075@hotmail.com";
+const CC_EMAIL = "andrew.krayenhagen@akratechnologies.com";
+const SUBMIT_URL = "https://formsubmit.co/ajax/" + OWNER_EMAIL;   // FormSubmit: free form-to-email service
+const FOUNDING = {on:true, until:"December 31, 2026"};
+const PACKAGES = {
+  qs:{name:"Quick Start", price:1200, founding:600, note:"One short module (10 to 15 min) with voiceover and a 5-question quiz."},
+  st:{name:"Starter", price:2000, founding:950, note:"A full course with an assessment."},
+  pro:{name:"Professional", price:5000, founding:null, note:"A larger custom project with branching scenarios, simulations, video or accessibility work."},
+  rai:{name:"Responsible AI at Work", price:500, founding:250, note:"35-minute course customized for your organization, plus a starter AI policy, a Do's and Don'ts card and certificates."},
+  video:{name:"Training Video", note:"Script, narration, graphics and editing."},
+  ws:{name:"Live Class", note:"Taught live by Andrew, on Zoom or in person."}
+};
+
+const TYPES = [
+  {v:"course", t:"Online course", d:"Self-paced lessons with activities and a quiz"},
+  {v:"game", t:"Training game", d:"Learn by playing: points, levels and challenges"},
+  {v:"sim", t:"Software simulator", d:"Practice in a mock version of a system your team uses"},
+  {v:"video", t:"Training video", d:"A short narrated how-to or welcome video"},
+  {v:"workshop", t:"Live class", d:"A class taught live on Zoom or in person"},
+  {v:"rai", t:"Responsible AI at Work", d:"Ready-made AI safety course for your team", e:"$500"},
+  {v:"unsure", t:"Not sure yet", d:"Describe the problem and I'll suggest an approach"}
+];
+const LENS = [{v:"5",t:"5–10 min",m:8},{v:"15",t:"10–15 min",m:13},{v:"30",t:"15–30 min",m:22},{v:"60",t:"30–60 min",m:45},{v:"90",t:"Over an hour",m:75}];
+const VLENS = [{v:"2",t:"1–2 min",m:2},{v:"4",t:"3–5 min",m:4},{v:"8",t:"5–10 min",m:8}];
+const WLENS = [{v:"60",t:"60 min",usd:300},{v:"90",t:"90 min",usd:450},{v:"120",t:"2 hours",usd:600},{v:"240",t:"Half day",usd:1000}];
+const LEVELS = [
+  {v:"basic", t:"Simple", d:"Read, watch and click through, with knowledge checks"},
+  {v:"interactive", t:"Interactive", d:"Real-life scenarios, sorting activities, \"spot the mistake\""},
+  {v:"immersive", t:"Immersive", d:"Choices with consequences, simulations, game scoring"}
+];
+const FACTOR = {course:{basic:1.0,interactive:1.4,immersive:2.4}, unsure:{basic:1.0,interactive:1.4,immersive:2.4},
+  game:{basic:1.6,interactive:2.0,immersive:2.8}, sim:{basic:1.4,interactive:1.8,immersive:2.4}};
+const MEDIA = [
+  {v:"vo", t:"Professional voiceover"},
+  {v:"gfx", t:"Custom illustrations"},
+  {v:"vid", t:"Video segments", not:["video"]},
+  {v:"a11y", t:"Captions and accessibility (508)"},
+  {v:"cert", t:"Certificate of completion", not:["video"]},
+  {v:"brand", t:"Our logo and colors"}
+];
+const READY = [
+  {v:"ready", t:"Ready", d:"We have documents, slides or a manual"},
+  {v:"partial", t:"Partly ready", d:"Notes and bits that need organizing"},
+  {v:"scratch", t:"Starting fresh", d:"We need you to research and write it"}
+];
+const DELIVERY = [
+  {v:"html", t:"Web file", d:"Opens in any browser. Share it by link or email."},
+  {v:"scorm", t:"Our LMS (SCORM 1.2)", d:"Tracks who finished and their scores"},
+  {v:"unsure", t:"Not sure", d:"I'll help you pick"}
+];
+
+const EXAMPLE = {type:"course", topic:"New Volunteer Orientation", goal:"Check in a client, follow basic food safety rules, protect client privacy, and know who to call with a problem",
+  why:"We train every new volunteer one-on-one on Saturdays, and it takes our coordinator away from the floor",
+  audience:"Weekend volunteers, mostly retirees and high school students", count:"51–200", tech:"low",
+  len:"15", level:"interactive", media:["vo","cert","brand"], assess:"quiz", ready:"partial", sme:"yes", delivery:"html", lms:"",
+  when:"6wk", date:"", budget:"1-25", name:"Pat Example", org:"Lincoln Trail Food Pantry (example)", email:"pat@example.org", phone:"", orgType:"nonprofit",
+  notes:"Our volunteer handbook is 12 pages. Many volunteers will use a phone.", wlen:"90", vlen:"4", wx:[], raiWs:[], raiPolicy:""};
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const money = n => "$"+Math.round(n).toLocaleString("en-US");
+const r50 = n => Math.round(n/50)*50;
+const find = (arr,v) => arr.find(x=>x.v===v);
+
+function cardHTML(name,o){return `<label class="card"><input type="radio" name="${name}" value="${o.v}"><strong>${esc(o.t)}</strong>${o.d?`<span>${esc(o.d)}</span>`:""}${o.e?`<em>${esc(o.e)}</em>`:""}</label>`;}
+function chipHTML(name,o,type="radio"){return `<label class="chk" data-not="${(o.not||[]).join(" ")}"><input type="${type}" name="${name}" value="${o.v}">${esc(o.t)}</label>`;}
+$("#typeCards").innerHTML = TYPES.map(o=>cardHTML("type",o)).join("");
+$("#lenChips").innerHTML = LENS.map(o=>chipHTML("len",o)).join("");
+$("#vlenChips").innerHTML = VLENS.map(o=>chipHTML("vlen",o)).join("");
+$("#wlenChips").innerHTML = WLENS.map(o=>chipHTML("wlen",o)).join("");
+$("#levelCards").innerHTML = LEVELS.map(o=>cardHTML("level",o)).join("");
+$("#mediaChips").innerHTML = MEDIA.map(o=>chipHTML("media",o,"checkbox")).join("");
+$("#readyCards").innerHTML = READY.map(o=>cardHTML("ready",o)).join("");
+$("#deliveryCards").innerHTML = DELIVERY.map(o=>cardHTML("delivery",o)).join("");
+
+const TEXT_IDS = ["topic","goal","why","audience","count","tech","assess","lms","when","date","budget","name","org","email","phone","orgType","notes"];
+const RADIOS = ["type","len","vlen","wlen","level","ready","sme","delivery","raiPolicy"];
+const CHECKS = ["media","wx","raiWs"];
+
+function collect(){
+  const d={};
+  TEXT_IDS.forEach(id=>d[id]=document.getElementById(id).value.trim());
+  RADIOS.forEach(n=>{const el=document.querySelector(`input[name="${n}"]:checked`);d[n]=el?el.value:"";});
+  CHECKS.forEach(n=>d[n]=[...document.querySelectorAll(`input[name="${n}"]:checked`)].map(i=>i.value));
+  return d;
+}
+function apply(d){
+  TEXT_IDS.forEach(id=>{const el=document.getElementById(id);el.value=d[id]||"";if(el.tagName==="SELECT"&&el.selectedIndex<0)el.selectedIndex=0;});
+  RADIOS.forEach(n=>document.querySelectorAll(`input[name="${n}"]`).forEach(i=>i.checked=i.value===d[n]));
+  CHECKS.forEach(n=>document.querySelectorAll(`input[name="${n}"]`).forEach(i=>i.checked=(d[n]||[]).includes(i.value)));
+}
+
+/* ===== Estimate ===== */
+function estimate(d){
+  const t=d.type||"unsure"; const items=[]; let usd=0; let pkg=null;
+  const add=(label,hrs,driver=true)=>{if(hrs>0)items.push({label,hrs,driver});};
+  const has=v=>(d.media||[]).includes(v);
+  if(t==="rai"){
+    pkg="rai"; const base=FOUNDING.on?PACKAGES.rai.founding:PACKAGES.rai.price;
+    const lines=[{label:"Responsible AI at Work, customized",usd:PACKAGES.rai.price}];
+    if((d.raiWs||[]).includes("yes"))lines.push({label:"Live 60-minute workshop",usd:300});
+    const full=lines.reduce((n,l)=>n+l.usd,0); const fnd=full-PACKAGES.rai.price+PACKAGES.rai.founding;
+    return {fixed:true,pkg,lines,full,founding:FOUNDING.on?fnd:null,low:full,high:full,hrs:10+((d.raiWs||[]).includes("yes")?3:0),weeks:"2–3 weeks",items:[{label:"Customize examples, rules and branding",hrs:6},{label:"Policy, card and certificates",hrs:2},{label:"Testing and delivery",hrs:2}]};
+  }
+  if(t==="workshop"){
+    const w=find(WLENS,d.wlen)||WLENS[0]; const lines=[{label:`Live class, ${w.t}`,usd:w.usd}];
+    if((d.wx||[]).includes("handouts"))lines.push({label:"Custom slides and handouts",usd:250});
+    if((d.wx||[]).includes("inperson"))lines.push({label:"In-person delivery and travel",usd:150});
+    if(d.when==="rush")lines.push({label:"Rush scheduling",usd:100});
+    const full=lines.reduce((n,l)=>n+l.usd,0);
+    return {fixed:true,pkg:"ws",lines,full,founding:null,low:full,high:full,hrs:Math.round(full/RATE),weeks:d.when==="rush"?"1–2 weeks":"2–4 weeks",
+      items:lines.map(l=>({label:l.label,hrs:l.usd/RATE}))};
+  }
+  let build=0;
+  if(t==="video"){
+    const m=(find(VLENS,d.vlen)||VLENS[1]).m;
+    add("Project setup, reviews and revisions",5,false);
+    add(`Script, narration and editing (${m} min)`,m*3);
+    if(has("gfx"))add("Custom illustrations and motion graphics",3+m*0.5);
+    if(has("a11y"))add("Captions and accessibility",1+m*0.2);
+    if(has("brand"))add("Your logo and colors",1);
+    build=m*3; pkg="video";
+  } else {
+    const L=find(LENS,d.len)||LENS[1]; const lvl=d.level||"basic"; const f=(FACTOR[t]||FACTOR.course)[lvl];
+    build=L.m*f;
+    add("Project setup, reviews and revisions",6,false);
+    add(`Design and build (${L.t}, ${find(LEVELS,lvl).t.toLowerCase()})`,build);
+    if(has("vo"))add("Voiceover narration",L.m*0.15);
+    if(has("gfx"))add("Custom illustrations",4+L.m*0.1);
+    if(has("vid"))add("Video segments",10);
+    if(d.assess==="quiz")add("Short quiz",2); else if(d.assess==="final")add("Scored final test",4);
+    if(has("cert"))add("Certificate of completion",1);
+    if(d.delivery==="scorm")add("SCORM 1.2 packaging and LMS testing",2);
+    if(has("brand"))add("Your logo and colors",1);
+  }
+  if(d.ready==="partial")add("Organizing your content",build*0.2);
+  else if(d.ready==="scratch")add("Research and writing",build*0.45);
+  let sub=items.reduce((n,i)=>n+i.hrs,0);
+  if(has("a11y")&&t!=="video")add("Accessibility (508) review",sub*0.15);
+  sub=items.reduce((n,i)=>n+i.hrs,0);
+  if(d.when==="rush")add("Rush schedule",sub*0.25);
+  const hrs=items.reduce((n,i)=>n+i.hrs,0);
+  const full=hrs*RATE;
+  if(!pkg){
+    const L=find(LENS,d.len)||LENS[1];
+    if(L.m<=13&&d.level!=="immersive"&&!has("vid")&&t!=="game")pkg="qs";
+    else if(full<=3200&&d.level!=="immersive"&&!has("vid"))pkg="st";
+    else pkg="pro";
+  }
+  const P=PACKAGES[pkg]; let founding=null;
+  if(FOUNDING.on&&P.founding){founding=r50(full*(P.founding/P.price));}
+  const wk=Math.max(2,Math.ceil(hrs/10)+1);
+  return {fixed:false,pkg,items,hrs,full,low:r50(full*0.9),high:r50(full*1.15),founding,weeks:`${wk}–${wk+2} weeks`};
+}
+
+/* ===== Customer side ===== */
+function renderEstimate(d,E){
+  const P=PACKAGES[E.pkg];
+  const priceTxt=E.fixed?money(E.full):`${money(E.low)} – ${money(E.high)}`;
+  $("#price").textContent=priceTxt; $("#mPrice").textContent=E.fixed?money(E.full):money(E.low)+"+";
+  $("#pkgName").textContent=E.fixed?P.name:`Closest package: ${P.name}`;
+  $("#founding").hidden=!E.founding;
+  let note=P.note;
+  if(E.founding)note+=` Founding Client price: about ${money(E.founding)} for the first 3 clients through ${FOUNDING.until}.`;
+  $("#pkgNote").textContent=note;
+  let drv;
+  if(E.fixed)drv=E.lines.map(l=>`<li><span>${esc(l.label)}</span><span>${money(l.usd)}</span></li>`);
+  else{const top=E.items.filter(i=>i.driver).sort((a,b)=>b.hrs-a.hrs).slice(0,5);const tot=E.items.reduce((n,i)=>n+i.hrs,0);
+    drv=top.map(i=>`<li><span>${esc(i.label)}</span><span>${Math.round(i.hrs/tot*100)}% of work</span></li>`);}
+  $("#drivers").innerHTML=drv.join("");
+  $("#weeks").textContent=E.weeks;
+  const t=d.type;
+  $("#fmt").textContent=t==="workshop"?((d.wx||[]).includes("inperson")?"In person":"Zoom"):t==="video"?"MP4 video":d.delivery==="scorm"?"SCORM 1.2":d.delivery==="html"?"Web file (HTML)":"To decide";
+}
+
+function encode(d){const j=JSON.stringify(d);return "AKRA1:"+btoa(unescape(encodeURIComponent(j)));}
+function decode(text){const m=String(text).match(/AKRA1:([A-Za-z0-9+/=\s]+)/);if(!m)return null;
+  try{return JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/\s+/g,"")))));}catch(e){return null;}}
+
+function requestText(d,E){
+  const T=find(TYPES,d.type); const L=[];
+  L.push("AKRA TECHNOLOGIES – TRAINING REQUEST","");
+  L.push(`Name: ${d.name||"-"}`,`Organization: ${d.org||"-"}`,`Email: ${d.email||"-"}`); if(d.phone)L.push(`Phone: ${d.phone}`);
+  L.push("",`Project: ${T?T.t:"Not sure yet"}`);
+  if(d.type!=="rai"){if(d.topic)L.push(`Topic: ${d.topic}`);if(d.goal)L.push(`Goal: ${d.goal}`);}
+  if(d.audience)L.push(`Learners: ${d.audience}${d.count?` (${d.count})`:""}`);
+  if(d.when)L.push(`Timing: ${({flex:"Flexible","6wk":"Within 6 weeks",rush:"Rush, under 3 weeks"})[d.when]}${d.date?`, target ${d.date}`:""}`);
+  L.push(`Estimate shown: ${E.fixed?money(E.full):money(E.low)+" – "+money(E.high)} (${PACKAGES[E.pkg].name})`);
+  if(d.notes)L.push(`Notes: ${d.notes}`);
+  L.push("","Please keep the line below. It loads my answers into Akra's estimator.",encode(d));
+  return L.join("\n");
+}
+function missingFields(d){
+  const m=[]; if(!d.type)m.push("what you need"); if(!d.name)m.push("your name"); if(!d.email)m.push("your email");
+  if(["course","game","sim","unsure"].includes(d.type)&&!d.len)m.push("length");
+  return m;
+}
+
+/* ===== Owner side ===== */
+function owner(d,E){
+  const T=find(TYPES,d.type)||TYPES[6]; const L=find(LENS,d.len); const lvl=find(LEVELS,d.level);
+  const ready=find(READY,d.ready); const has=v=>(d.media||[]).includes(v);
+  const orgT={nonprofit:"a nonprofit",church:"a church or faith group",smallbiz:"a small business",school:"a school",gov:"a local government or public agency",other:"an organization"}[d.orgType]||"an organization";
+  let size="";
+  if(["course","game","sim","unsure"].includes(d.type))size=`${L?L.t:"length not given"}, ${lvl?lvl.t.toLowerCase():"style not given"}`;
+  if(d.type==="video")size=(find(VLENS,d.vlen)||{t:"length not given"}).t;
+  if(d.type==="workshop")size=(find(WLENS,d.wlen)||{t:"length not given"}).t;
+  if(d.type==="rai")size="35 minutes, customized";
+  $("#ovw").innerHTML=`<p><strong>${esc(d.org||"Unnamed organization")}</strong> (${orgT}) wants a <strong>${esc(T.t.toLowerCase())}</strong>${size?` (${esc(size)})`:""}${d.topic&&d.type!=="rai"?` on <strong>${esc(d.topic)}</strong>`:""}.</p>
+    ${d.goal&&d.type!=="rai"?`<p><strong>Goal:</strong> ${esc(d.goal)}</p>`:""}
+    ${d.why?`<p><strong>Why now:</strong> ${esc(d.why)}</p>`:""}
+    <p><strong>Learners:</strong> ${esc(d.audience||"not described")}${d.count?`, ${esc(d.count)} people`:""}${d.tech?`, ${({low:"low",mid:"average",high:"high"})[d.tech]} computer comfort`:""}.</p>
+    <p><strong>Content:</strong> ${ready?esc(ready.t)+" ("+esc(ready.d.toLowerCase())+")":"not stated"}. Subject expert to review: ${d.sme==="yes"?"yes":d.sme==="no"?"no":"not stated"}.</p>
+    <p><strong>Contact:</strong> ${esc(d.name||"-")} · ${esc(d.email||"-")}${d.phone?" · "+esc(d.phone):""}</p>`;
+
+  // outline
+  const out=[];
+  if(["course","game","sim","unsure"].includes(d.type)){
+    const mins=L?L.m:13; const n=Math.max(1,Math.round(mins/8)); const each=Math.max(3,Math.round((mins-(d.assess==="none"?0:3))/n));
+    const acts={basic:"click-to-reveal content and knowledge checks",interactive:"a real-life scenario, a sorting activity and a \"spot the mistake\" check",immersive:"a branching scenario where choices have consequences"}[d.level||"basic"];
+    if(d.type==="sim"){out.push("Watch mode: a coach panel demonstrates the task step by step");out.push("Guided practice: learner does it with pulsing hints and a coach panel");out.push("Try it yourself: no hints, mistakes get feedback");out.push("Check: timed scenario with a score");}
+    else if(d.type==="game"){out.push("Story setup and the learner's role (1 min)");for(let i=1;i<=n;i++)out.push(`Level ${i}: a challenge built from one learning goal, with points and instant feedback (~${each} min)`);out.push("Boss round: mixed scenario questions, final score and badge");}
+    else{out.push("Welcome: why this matters to your work (1 min)");for(let i=1;i<=n;i++)out.push(`Module ${i} (~${each} min): one key idea, then ${acts}`);}
+    if(d.assess==="quiz")out.push("Short quiz, about 5 questions");
+    if(d.assess==="final")out.push("Scored final test (10 questions, 80% to pass)");
+    if(has("cert"))out.push("Certificate of completion");
+  } else if(d.type==="video"){out.push("Hook: the problem in the learner's words (10–15 sec)","Show the steps, one idea per scene","Recap and where to get help","Optional: 2-question check placed after the video");}
+  else if(d.type==="workshop"){out.push("Welcome and quick poll of what people already know","Demo, then hands-on practice in small steps","Common mistakes and how to avoid them","Q&A and a take-home job aid");}
+  else if(d.type==="rai"){out.push("Modules 1–5: standard Responsible AI content","Module 6: their AI rules ("+(d.raiPolicy==="have"?"they have rules: get a copy":d.raiPolicy==="need"?"use the Akra starter policy":"ask if they have rules")+")","Swap in examples from their world","Final check, certificate, Do's and Don'ts card");}
+  $("#outline").innerHTML=out.map(x=>`<li>${esc(x)}</li>`).join("");
+
+  // hours table
+  let rows=E.items.map(i=>`<tr><td>${esc(i.label)}</td><td>${i.hrs.toFixed(1)} h</td></tr>`).join("");
+  rows+=`<tr class="tot"><td>Total effort</td><td>${E.hrs.toFixed(1)} h</td></tr>`;
+  if(E.fixed)rows+=`<tr class="tot"><td>Price</td><td>${money(E.full)}</td></tr>`;
+  else rows+=`<tr class="tot"><td>At ${money(RATE)}/hr</td><td>${money(E.full)}</td></tr><tr><td>Range shown to client</td><td>${money(E.low)} – ${money(E.high)}</td></tr>`;
+  if(E.founding)rows+=`<tr><td>Founding Client estimate</td><td>${money(E.founding)}</td></tr>`;
+  $("#hrsTbl").innerHTML=rows;
+  $("#rateNote").textContent=`At about 6 hours a week of part-time work, this is roughly ${Math.ceil(E.hrs/6)} weeks of your time.`;
+
+  // flags
+  const F=[];
+  if(d.orgType==="gov"||/army|fort knox|military|defense|dod|recruit/i.test([d.org,d.notes,d.topic].join(" ")))F.push("Confirm this is not a military, Fort Knox or defense-contractor client (conflict of interest).");
+  const bud={u1:1000,"1-25":2500,"25-5":5000,"5p":Infinity}[d.budget];
+  const price=E.founding||E.low;
+  if(bud&&price>bud)F.push(`Their budget tops out near ${money(bud)}, under the ${money(price)} estimate. Offer a smaller first phase.`);
+  if(d.when==="rush")F.push("Rush timeline. Check it against your full-time job before you say yes.");
+  if(d.ready==="scratch"&&d.sme!=="yes")F.push("No content and no subject expert. You'd be writing it alone, so the accuracy risk is yours.");
+  if(d.delivery==="scorm"&&!d.lms)F.push("SCORM requested but no LMS named. Ask which one, and test there.");
+  if(d.delivery==="unsure")F.push("Delivery format undecided. Default to a web file.");
+  if(d.tech==="low")F.push("Learners have low computer comfort. Big buttons, few steps, test on a phone.");
+  if((d.count==="200+"||d.count==="51–200")&&d.delivery!=="scorm"&&["course","game","sim"].includes(d.type))F.push("Many learners but no LMS. Ask how they'll track who finished.");
+  if(has("a11y"))F.push("Accessibility requested. Plan captions, alt text, keyboard use and contrast checks.");
+  if(!F.length)F.push("Nothing unusual. Looks like a clean job.");
+  $("#flags").innerHTML=F.map((x,i)=>`<li class="${F.length===1&&x.startsWith("Nothing")?"ok":""}">${esc(x)}</li>`).join("");
+
+  // questions
+  const Q=["What does success look like 30 days after people finish?","Who signs off on the final version, and how many review rounds do you expect?"];
+  if(d.ready!=="scratch")Q.push("Can you send the source documents before we talk?");
+  if(d.type==="sim")Q.push("Can you share screenshots of every screen in the task, with private data removed?");
+  if(d.type==="game")Q.push("Should the game feel competitive, cooperative or story-driven?");
+  if(d.type==="video")Q.push("Will you appear on camera, or should it be narration over graphics?");
+  if(d.type==="rai")Q.push("Which AI tools does your team use now, and what private information do they handle?");
+  if(d.delivery==="scorm")Q.push(`Can I get a test account in ${d.lms||"your LMS"}?`);
+  Q.push("Will you want updates later? I offer a support plan for changes.");
+  $("#qs").innerHTML=Q.map(x=>`<li>${esc(x)}</li>`).join("");
+
+  $("#prompt").textContent=buildPrompt(d,E,out);
+}
+
+function buildPrompt(d,E,outline){
+  const T=find(TYPES,d.type)||TYPES[6]; const L=find(LENS,d.len); const lvl=find(LEVELS,d.level);
+  const what={course:"a storyboard for a self-paced e-learning course",unsure:"a storyboard for a self-paced e-learning course",game:"a game design document for a training game",sim:"a design document and step list for an interactive software simulator with Watch, Guided and Try-it modes",video:"a narration script and shot list for a training video",workshop:"a facilitator guide, slide outline and handout for a live class",rai:"customized content for Module 6 (Our AI Rules) and swap-in examples for Modules 1 to 5 of the Responsible AI at Work course"}[d.type||"unsure"];
+  const o=[]; const add=(k,v)=>{if(v)o.push(`- ${k}: ${v}`);};
+  o.push(`You are an expert instructional designer. Build ${what}${d.topic&&d.type!=="rai"?` titled "${d.topic}"`:""} for ${d.org||"my client"}, using the source files I've attached.`);
+  o.push("Use ONLY the content in the attached files. If you add anything from outside them, flag it clearly so I can check it.");
+  o.push("If you can't open or read any attached file, tell me which one before you start.");
+  o.push("","## Project");
+  add("Goal: learners will be able to",d.type==="rai"?"use AI safely and follow their organization's AI rules":d.goal);
+  add("Why it matters",d.why);
+  add("Audience",[d.audience,d.count&&`${d.count} people`,d.tech&&({low:"low computer comfort, keep every step simple",mid:"average computer comfort",high:"comfortable with computers"})[d.tech]].filter(Boolean).join("; "));
+  if(L&&["course","game","sim","unsure"].includes(d.type))add("Length",`about ${L.m} minutes of learner time`);
+  if(d.type==="video")add("Length",`${(find(VLENS,d.vlen)||{t:""}).t}, about 140 spoken words per minute`);
+  if(d.type==="workshop")add("Length",(find(WLENS,d.wlen)||{t:""}).t);
+  if(lvl&&["course","game","sim","unsure"].includes(d.type))add("Interaction style",`${lvl.t}: ${lvl.d}`);
+  add("Delivery",d.type==="video"?"MP4 video":d.delivery==="scorm"?`SCORM 1.2 package${d.lms?` for ${d.lms}`:""}`:d.delivery==="html"?"single self-contained HTML file that works on phones":"");
+  o.push("","## Structure to start from");
+  outline.forEach((x,i)=>o.push(`${i+1}. ${x}`));
+  o.push("","## For each screen or scene, give me");
+  if(d.type==="video")o.push("- Narration text, what's on screen, and any on-screen text");
+  else o.push("- On-screen text (short, plain language)","- Narration script"+((d.media||[]).includes("vo")?"":" (optional)"),"- The interaction and its feedback for right and wrong answers","- An image idea I can generate");
+  if(d.assess==="quiz")o.push("- A 5-question quiz with an answer key and why each answer is right");
+  if(d.assess==="final")o.push("- A 10-question scenario-based final test with an answer key");
+  if((d.media||[]).includes("a11y"))o.push("- Alt text for every image and captions for all audio");
+  o.push("","## Rules","- Write at about an 8th-grade reading level.","- Map each part back to the learning goal.","- Don't invent policies, laws, or statistics.");
+  o.push("","## Before you write","- First, list anything in my files that is unclear, missing, or contradictory.","- Then ask me up to 5 clarifying questions and wait for my answers before drafting.");
+  return o.join("\n");
+}
+
+/* ===== Wiring ===== */
+function visibility(t){
+  document.querySelectorAll("[data-for]").forEach(el=>el.hidden=!(t?el.dataset.for.split(" ").includes(t):el.dataset.for.includes("unsure")));
+  document.querySelectorAll("#mediaChips .chk").forEach(el=>el.hidden=t&&el.dataset.not.split(" ").includes(t));
+}
+let isExample=false;
+function update(save=true){
+  const d=collect(); visibility(d.type);
+  const E=estimate(d); renderEstimate(d,E);
+  const miss=missingFields(d);
+  $("#missing").textContent=miss.length?`Still needed: ${miss.join(", ")}.`:"";
+  const txt=requestText(d,E);
+  $("#mailLink").href=`mailto:${OWNER_EMAIL}?subject=${encodeURIComponent("Training request: "+(d.org||"new project"))}&body=${encodeURIComponent(txt)}`;
+  $("#exNote").hidden=!isExample;
+  if(!$("#ownerDesk").hidden)owner(d,E);
+  if(save){try{localStorage.setItem("akra-req",JSON.stringify({d,isExample}));}catch(e){}}
+}
+function toast(el,m){el.textContent=m;clearTimeout(el.t);el.t=setTimeout(()=>el.textContent="",2600);}
+function copyText(text,msgEl,ok,fallbackEl){
+  const fb=()=>{if(fallbackEl){const r=document.createRange();r.selectNodeContents(fallbackEl);const s=getSelection();s.removeAllRanges();s.addRange(r);}toast(msgEl,"Copy didn't work here. Select the text and copy it yourself.");};
+  try{navigator.clipboard.writeText(text).then(()=>toast(msgEl,ok),fb);}catch(e){fb();}
+}
+$("#copyReq").onclick=()=>{const d=collect();const miss=missingFields(d);
+  copyText(requestText(d,estimate(d)),$("#toast"),miss.length?"Copied. Add the missing items before you send.":"Copied. Paste it into an email to "+OWNER_EMAIL+".");};
+let sending=false;
+$("#sendReq").onclick=async()=>{
+  const d=collect(); const miss=missingFields(d);
+  if(miss.length){toast($("#toast"),"");$("#missing").textContent=`Please add ${miss.join(", ")} before sending.`;return;}
+  if(sending)return; sending=true; const btn=$("#sendReq"); btn.textContent="Sending…"; btn.disabled=true;
+  const E=estimate(d);
+  const payload={_subject:`Training request: ${d.org||d.name}`,_cc:CC_EMAIL,_template:"box",_captcha:"false",_honey:"",
+    name:d.name,email:d.email,organization:d.org,phone:d.phone,project:(find(TYPES,d.type)||{t:""}).t,
+    estimate:E.fixed?money(E.full):`${money(E.low)} – ${money(E.high)} (${PACKAGES[E.pkg].name})`,
+    request:requestText(d,E)};
+  try{
+    const r=await fetch(SUBMIT_URL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)});
+    const j=await r.json().catch(()=>({}));
+    if(r.ok&&String(j.success)==="true"){
+      $("#missing").textContent="";btn.textContent="Request sent ✓";
+      $("#toast").textContent=`Thanks, ${d.name.split(" ")[0]}! Andrew will reply to ${d.email} within two business days.`;
+      sending=false; return;
+    }
+    throw new Error(j.message||"not sent");
+  }catch(e){
+    btn.textContent="Send my request"; btn.disabled=false; sending=false;
+    $("#missing").textContent="Sending didn't go through. Please use Copy my request and email it to "+OWNER_EMAIL+".";
+  }
+};
+$("#copyPrompt").onclick=()=>copyText($("#prompt").textContent,$("#loadMsg"),"Prompt copied.",$("#prompt"));
+$("#loadCode").onclick=()=>{const d=decode($("#codeIn").value);if(!d){toast($("#loadMsg"),"No request code found. Look for the line that starts with AKRA1:");return;}
+  apply(d);isExample=false;update();toast($("#loadMsg"),`Loaded ${d.org||"request"}.`);};
+$("#form").addEventListener("input",()=>{isExample=false;update();});
+$("#form").addEventListener("change",()=>{isExample=false;update();});
+$("#form").addEventListener("submit",e=>e.preventDefault());
+$("#loadEx").onclick=()=>{apply(EXAMPLE);isExample=true;update();window.scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});};
+$("#clearAll").onclick=()=>{apply({when:"flex",assess:"none"});isExample=false;update();};
+$("#jump").onclick=()=>$("#outPanel").scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+function route(){$("#ownerDesk").hidden=location.hash!=="#owner";update(false);}
+window.addEventListener("hashchange",route);
+
+let saved=null; try{saved=JSON.parse(localStorage.getItem("akra-req")||"null");}catch(e){}
+if(saved&&saved.d&&!saved.isExample){apply(saved.d);isExample=false;}else{apply({when:"flex",assess:"none"});isExample=false;}
+route();
+</script>
+
+<footer class="sitefoot"><p>© 2026 Akra Technologies LLC · Veteran-owned small business</p><p style="letter-spacing:.08em;font-weight:600">EDUCATE. ILLUMINATE. INSPIRE.</p></footer>
+</body>
+</html>
