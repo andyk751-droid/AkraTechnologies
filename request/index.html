@@ -680,10 +680,13 @@ $("#sendReq").onclick=async()=>{
       $("#toast").textContent=`Thanks, ${d.name.split(" ")[0]}! Andrew will reply to ${d.email} within two business days.`;
       sending=false; return;
     }
-    throw new Error(j.message||"not sent");
+    throw new Error(j.message||("HTTP "+r.status));
   }catch(e){
+    if(e instanceof TypeError)e=new Error("could not reach the email service");
     btn.textContent="Send my request"; btn.disabled=false; sending=false;
-    $("#missing").textContent="Sending didn't go through. Please use Copy my request and email it to "+OWNER_EMAIL+".";
+    const why=String(e&&e.message||"");
+    if(/activat/i.test(why))$("#missing").textContent="Almost ready: this form needs a one-time activation. Check "+OWNER_EMAIL+" (and Junk) for the FormSubmit email, click Activate Form, then send again.";
+    else $("#missing").textContent="Sending didn't go through"+(why&&why!=="not sent"?" ("+why+")":"")+". Please use Copy my request and email it to "+OWNER_EMAIL+".";
   }
 };
 $("#copyPrompt").onclick=()=>copyText($("#prompt").textContent,$("#loadMsg"),"Prompt copied.",$("#prompt"));
