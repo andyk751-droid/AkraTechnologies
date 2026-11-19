@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Orbit's Sky Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#121A3E;--navy2:#0D1330;--cobalt:#2F4BDB;--cobalt2:#1F35A8;
+  --gold:#E39A00;--gold2:#FFC23D;--mint:#12936F;--coral:#E06A00;--pink:#D93E75;--teal:#0E8FA8;--violet:#7A5AF0;
+  --bg:#EAF0F8;--card:#fff;--ink:#1B2540;--muted:#56637F;--line:#D3DBE8;--r:22px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%}
+body{font-family:"Nunito","Trebuchet MS",Verdana,system-ui,sans-serif;font-weight:800;color:var(--ink);background:var(--navy);font-size:20px;line-height:1.4}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+#shell{display:flex;min-height:100vh}
+/* sidebar */
+#side{width:104px;background:var(--navy);display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px;flex:none;position:sticky;top:0;height:100vh}
+#side .logo{font-size:12px;color:var(--gold2);text-align:center;line-height:1.1;margin-bottom:10px;font-weight:900;letter-spacing:.5px;display:flex;flex-direction:column;align-items:center;gap:6px}#side .logo img{width:78px;height:78px;border-radius:20px;box-shadow:0 0 0 3px var(--gold)}
+.nav{width:92px;padding:10px 4px;border-radius:18px;color:#9fb0e8;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:14px}
+.nav .i{font-size:30px;line-height:1}
+.nav.on{background:rgba(255,255,255,.12);color:#fff}
+.nav:focus-visible{outline:4px solid var(--gold2)}
+/* main */
+#main{flex:1;min-width:0;background:var(--bg);border-radius:34px 0 0 34px;overflow:hidden;display:flex;flex-direction:column}
+#hd{background:linear-gradient(120deg,var(--gold) 0%,var(--gold2) 100%);padding:16px 22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between}
+.me{display:flex;align-items:center;gap:14px}
+.avatar{width:76px;height:76px;border-radius:50%;background:var(--navy);border:4px solid #fff;overflow:hidden;display:flex;align-items:center;justify-content:center;flex:none}
+.avatar img,.avatar svg{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.nameplate{background:var(--navy);color:#fff;border-radius:16px;padding:6px 16px}
+.nameplate b{font-size:24px;display:block;line-height:1.1}.nameplate span{font-size:15px;color:var(--gold2)}
+.xpbar{margin-top:6px;height:22px;border-radius:12px;background:#fff;position:relative;overflow:hidden;min-width:200px}
+.xpbar i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,var(--cobalt),#6b86ff);border-radius:12px}
+.xpbar span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--navy)}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{background:#fff;border-radius:999px;padding:8px 16px;font-size:18px;color:var(--navy);display:flex;gap:8px;align-items:center;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+#screen{padding:18px 22px 40px;flex:1;min-width:0}
+h1{font-size:30px;margin:6px 0 12px;color:var(--navy)}
+h2{font-size:24px;margin:20px 0 10px;color:var(--navy)}
+.tabs{display:flex;gap:26px;border-bottom:2px solid var(--line);margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:10px 4px;font-size:21px;color:#8a96b2;border-bottom:5px solid transparent;margin-bottom:-2px}
+.tab.on{color:var(--cobalt);border-bottom-color:var(--cobalt)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:16px}
+.row-scroll{display:grid;grid-auto-flow:column;grid-auto-columns:210px;gap:16px;overflow-x:auto;padding-bottom:10px}
+.cardx{background:var(--card);border-radius:18px;overflow:hidden;box-shadow:0 4px 14px rgba(18,26,62,.12);text-align:left;display:flex;flex-direction:column;position:relative;width:100%}
+.cardx:active{transform:translateY(2px)}
+.thumb{height:104px;display:flex;align-items:center;justify-content:center;font-size:54px;position:relative}
+.tag{position:absolute;left:0;bottom:0;color:#fff;font-size:14px;padding:3px 12px;border-radius:0 12px 0 0}
+.done-mark{position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;background:var(--mint);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;border:3px solid #fff}
+.cb{padding:10px 12px 12px}
+.cb b{display:block;font-size:19px;line-height:1.2;min-height:46px}
+.cb small{color:var(--muted);font-size:15px}
+.spk{position:absolute;right:8px;bottom:8px;background:var(--navy);color:#fff;border-radius:50%;width:38px;height:38px;font-size:18px}
+.t-video{background:linear-gradient(135deg,#1F35A8,#2F4BDB)}.t-challenge{background:linear-gradient(135deg,#E06A00,#FFB347)}
+.t-lesson{background:linear-gradient(135deg,#0D1330,#2a3a8f)}.t-fact{background:linear-gradient(135deg,#E39A00,#FFC23D)}
+.t-trivia{background:linear-gradient(135deg,#0E8FA8,#3ed0c0)}.t-ask{background:linear-gradient(135deg,#7A5AF0,#a08bff)}
+.tg-video{background:#C23B3B}.tg-challenge{background:var(--coral)}.tg-lesson{background:var(--navy)}.tg-fact{background:var(--gold);color:#2b2100}.tg-trivia{background:var(--teal)}.tg-ask{background:var(--violet)}
+.cats{display:flex;gap:12px;flex-wrap:wrap}
+.cat{border-radius:16px;padding:12px 18px;color:#fff;font-size:20px;display:flex;gap:10px;align-items:center;box-shadow:0 4px 0 rgba(0,0,0,.2)}
+.btn{background:var(--cobalt);color:#fff;border-radius:18px;padding:14px 22px;font-size:22px;box-shadow:0 5px 0 var(--cobalt2);display:inline-flex;align-items:center;gap:10px}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 var(--cobalt2)}
+.btn.gold{background:var(--gold2);color:var(--navy);box-shadow:0 5px 0 var(--gold)}
+.btn.mint{background:var(--mint);box-shadow:0 5px 0 #0b6b52}
+.btn.ghost{background:#fff;color:var(--navy);box-shadow:0 5px 0 var(--line)}
+.btn[disabled]{opacity:.5}
+.btn:focus-visible,.cardx:focus-visible,.opt:focus-visible,.step:focus-visible,.tab:focus-visible,.cat:focus-visible{outline:5px solid var(--gold2);outline-offset:2px}
+.panel{background:#fff;border-radius:var(--r);padding:20px 22px;box-shadow:0 4px 14px rgba(18,26,62,.1);margin-bottom:16px}
+.bighead{background:linear-gradient(120deg,var(--cobalt2),var(--cobalt));color:#fff;border-radius:var(--r);padding:16px 22px;margin-bottom:16px}
+.bighead h1{color:#fff;margin:0 0 8px}
+.pills{display:flex;gap:12px;flex-wrap:wrap}
+.pill{background:rgba(255,255,255,.18);border-radius:999px;padding:6px 14px;font-size:17px}
+.fact{font-size:30px}
+.mats{display:flex;gap:10px;flex-wrap:wrap}
+.mat{background:#fff;border-radius:14px;padding:10px 14px;text-align:center;box-shadow:0 3px 10px rgba(18,26,62,.12);min-width:96px}.mat .e{font-size:34px;display:block}.mat span{font-size:15px}
+.step{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#f1f4fb;border-radius:16px;padding:10px 12px;margin-bottom:10px;font-size:21px}
+.step .n{font-size:26px;color:var(--cobalt);width:34px;flex:none;text-align:center}
+.step .tx{flex:1}
+.step.on{background:var(--mint);color:#fff}.step.on .n{color:#fff}
+.mini{background:var(--navy);color:#fff;border-radius:50%;width:42px;height:42px;font-size:20px;flex:none}
+.opts{display:grid;gap:12px;margin-top:12px}
+.opt{background:#fff;border:3px solid var(--line);border-radius:999px;padding:14px 22px;font-size:23px;text-align:left}
+.opt.good{background:var(--mint);border-color:var(--mint);color:#fff}.opt.bad{background:#f6d4d9;border-color:#d96a7f}
+textarea,input[type=text]{width:100%;font:inherit;font-size:22px;border-radius:999px;border:3px solid var(--line);padding:12px 20px;background:#fff;color:var(--ink)}
+textarea{border-radius:22px;min-height:76px}
+.msgs{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.m{max-width:92%;padding:12px 16px;border-radius:20px;font-size:23px}
+.m.me{align-self:flex-end;background:var(--cobalt);color:#fff;border-bottom-right-radius:6px}
+.m.orb{align-self:flex-start;background:#fff;box-shadow:0 3px 10px rgba(18,26,62,.12);border-bottom-left-radius:6px}
+.dots::after{content:"…";animation:bl 1s infinite}@keyframes bl{50%{opacity:.2}}
+.hint{color:var(--muted);font-size:16px}
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.badge{background:#fff;border-radius:18px;padding:14px;text-align:center;box-shadow:0 3px 10px rgba(18,26,62,.1)}.badge .e{font-size:44px;display:block}.badge.off{opacity:.35;filter:grayscale(1)}
+.hidden{display:none!important}
+/* orbit guide */
+#body{display:flex;flex:1;min-width:0;align-items:flex-start}
+#guide{cursor:pointer;width:260px;flex:none;position:sticky;top:12px;margin:16px 18px 0 0;background:#fff;border-radius:26px;box-shadow:0 6px 18px rgba(18,26,62,.15);padding:16px 14px;display:flex;flex-direction:column;align-items:center;gap:12px}
+#orb{width:210px;height:250px;flex:none;opacity:1;animation:fl 3.2s ease-in-out infinite}
+#orb img,#orb svg{width:100%;height:100%;object-fit:contain}
+#orb .ow,#startOrb .ow{position:relative;width:100%;height:100%}
+#orb .ow img,#startOrb .ow img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.owing{transform-origin:78.9% 47%}
+.waving .owing{animation:wv 2.4s ease-in-out 1}
+#startOrb .owing{animation:wv 2.4s ease-in-out infinite}
+@keyframes wv{0%{transform:rotate(0)}15%{transform:rotate(-45deg)}28%{transform:rotate(-62deg)}41%{transform:rotate(-40deg)}54%{transform:rotate(-62deg)}67%{transform:rotate(-40deg)}80%{transform:rotate(-55deg)}100%{transform:rotate(0)}}
+.talking .owing{animation:fl2 .5s ease-in-out infinite}@keyframes fl2{50%{transform:rotate(-8deg)}}
+.cheering .owing{opacity:0}
+@media (prefers-reduced-motion:reduce){.owing{animation:none!important}}
+
+@keyframes fl{50%{transform:translateY(-7px)}}
+#orb.talking{animation:fl .5s ease-in-out infinite}
+#orb.talking .mouth{animation:tk .25s steps(2) infinite}@keyframes tk{50%{transform:scaleY(.3)}}.mouth{transform-origin:60px 78px}
+#say{background:var(--bg);border-radius:20px;padding:12px 16px;font-size:20px;color:var(--navy);width:100%;text-align:center}
+#vol{position:fixed;right:14px;top:12px;z-index:6}
+#startov{position:fixed;inset:0;background:var(--navy);z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#fff;text-align:center;padding:20px}
+#startov h1{color:var(--gold2);font-size:40px;margin:0}
+#startov .big{width:230px;height:270px;flex:none}
+#startOrb img,#startOrb svg{width:100%;height:100%;object-fit:contain;display:block}
+#startov{overflow:auto}
+.t-design{background:linear-gradient(135deg,#7A5AF0,#B49BFF)}.tg-design{background:var(--violet)}
+.dopt{background:#fff;border:3px solid var(--line);border-radius:16px;padding:10px 16px;font-size:20px;color:var(--navy);box-shadow:0 3px 0 rgba(0,0,0,.12)}
+.dopt.on{border-color:var(--cobalt);background:#E7EDFF;box-shadow:0 3px 0 var(--cobalt)}
+.swatch{width:46px;height:46px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line),0 3px 0 rgba(0,0,0,.15)}
+.swatch.on{box-shadow:0 0 0 4px var(--cobalt),0 3px 0 rgba(0,0,0,.15)}
+.planeview svg{width:100%;max-width:560px;display:block;margin:0 auto;border-radius:16px}
+@media print{body.printing #side,body.printing #hd,body.printing #guide,body.printing #startov{display:none!important}body.printing #screen>*:not(.printable){display:none!important}body.printing{background:#fff}}
+.gp.sel>circle:first-child{stroke:#FFC23D;stroke-width:6}
+.gp{cursor:pointer}.gp.hl>circle:first-child{stroke:#3DDC97;stroke-width:6;animation:hlp 1s ease-in-out infinite}
+@keyframes hlp{50%{stroke:#fff}}
+.holdb.on{background:#E7EDFF;box-shadow:0 5px 0 var(--cobalt)}
+.gamecard{background:linear-gradient(#1B2A66,#0D1330);border:4px solid #FFC23D;border-radius:26px;padding:10px;margin-bottom:16px;box-shadow:0 6px 0 #B97800,0 10px 24px rgba(18,26,62,.35)}
+.gamecard .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:6px 18px;margin-top:10px;padding:0 6px}
+.stat{display:flex;align-items:center;gap:8px;color:#fff;font-size:18px}.stat .si{width:26px;text-align:center}.stat .sl{width:62px}
+.stat .sb{flex:1;height:14px;border-radius:9px;background:rgba(255,255,255,.15);overflow:hidden;display:block}
+.stat .sb i{display:block;height:100%;border-radius:9px;background:linear-gradient(90deg,#3DDC97,#FFC23D)}
+.stat .sv{width:70px;text-align:right;color:#FFC23D}
+@media(max-width:700px){
+  body{font-size:18px}
+  #shell{flex-direction:column-reverse}
+  #side{width:100%;height:auto;position:fixed;bottom:0;left:0;right:0;flex-direction:row;justify-content:space-around;padding:6px;z-index:8;border-top:2px solid rgba(255,255,255,.12)}
+  #side .logo{display:none}.nav{width:auto;flex:1;padding:6px 2px;font-size:12px}.nav .i{font-size:24px}
+  #main{border-radius:0}
+  #body{flex-direction:column}
+  #guide{position:fixed;left:0;right:0;bottom:62px;width:auto;margin:0;border-radius:20px 20px 0 0;flex-direction:row;align-items:center;padding:8px 12px;gap:10px;z-index:7;background:#fff}
+  #orb{width:64px;height:76px}#say{font-size:16px;padding:8px 12px;text-align:left}
+  #screen{padding:14px 12px 170px;width:100%}
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px}.cb b{font-size:17px}.thumb{height:84px;font-size:44px}
+  .avatar{width:58px;height:58px}.nameplate b{font-size:20px}.xpbar{min-width:150px}
+}
+</style>
+</head>
+<body>
+<div id="startov">
+  <div class="big" id="startOrb"></div>
+  <h1>Orbit's Sky Lab</h1>
+  <button class="btn gold" id="startBtn" style="font-size:30px;padding:20px 34px">🚀 Let's go!</button>
+  <div style="display:flex;align-items:center;gap:10px;opacity:.9;font-size:16px"><img src="img/owl-64.png" alt="" width="40" height="40" style="border-radius:10px">Made by Akra Technologies</div>
+</div>
+
+<div id="shell">
+  <nav id="side" aria-label="Main menu">
+    <div class="logo"><img src="img/owl-180.png" alt="Akra Technologies owl logo"><span>ORBIT'S<br>SKY LAB</span></div>
+    <button class="nav on" data-go="home"><span class="i">🏠</span>Home</button>
+    <button class="nav" data-go="library"><span class="i">📚</span>Library</button>
+    <button class="nav" data-go="design"><span class="i">✈️</span>Design Lab</button>
+    <button class="nav" data-go="trivia"><span class="i">🧠</span>Trivia</button>
+    <button class="nav" data-go="ask"><span class="i">💬</span>Ask Orbit</button>
+    <button class="nav" data-go="profile"><span class="i">👤</span>Profile</button>
+  </nav>
+  <div id="main">
+    <header id="hd">
+      <div class="me">
+        <div class="avatar" id="avatar"></div>
+        <div>
+          <div class="nameplate"><b id="pname">Explorer</b><span id="prank">Cadet · Level 1</span></div>
+          <div class="xpbar"><i id="xpfill" style="width:0"></i><span id="xptext">0/100 XP</span></div>
+        </div>
+      </div>
+      <div class="chips">
+        <div class="chip">🔥 Day <span id="streak">1</span></div>
+        <div class="chip">⚙️ <span id="gears">0</span></div>
+        <button class="chip" id="soundBtn" aria-label="Voice on or off">🔊 Voice On</button>
+      </div>
+    </header>
+    <div id="body">
+      <main id="screen"></main>
+      <aside id="guide" aria-label="Orbit, your guide. Tap to hear again." title="Tap Orbit to hear it again">
+        <div id="orb" aria-hidden="true"></div>
+        <div id="say">Tap a card to start!</div>
+      </aside>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= CONTENT (edit me) ================= */
+const FACTS=[
+ "Mach 1 is the speed of sound. Near the ground on a mild day, it is about 761 miles per hour. Way up high where the air is very cold, it is only about 660. Temperature changes it.",
+ "Sound travels faster in warm air than in cold air. That is why Mach 1 is not one fixed number. Air temperature sets it, not how sticky the air is.",
+ "Viscosity means how sticky a fluid is. It changes the drag on a wing, but it does not set the speed of sound.",
+"Wings make planes fly by pushing air down. When the wing pushes the air down, the air pushes the wing up. That push is called lift.",
+"The Wright brothers flew the first airplane on December 17, 1903. Their first flight lasted just 12 seconds.",
+"A big jumbo jet can weigh as much as 60 elephants. It still flies, because its wings make enough lift.",
+"A jet engine does four jobs. It sucks air in. It squeezes the air. It adds fuel and goes bang. Then it blows hot air out the back.",
+"The black box on an airplane is really bright orange. That makes it easy to find after an accident.",
+"A helicopter has wings too. They spin around really fast, so they are called rotor blades.",
+"In 1947, pilot Chuck Yeager flew faster than sound. His rocket plane was called the Bell X-1.",
+"On the Moon in 1971, astronaut Dave Scott dropped a hammer and a feather. With no air, they landed at the same time!",
+"Astronauts float on the space station because they are falling around Earth. Gravity is not gone. It is still almost as strong as it is on the ground.",
+"A small gear turning a big gear gives more turning power. But the big gear spins slower. Bikes use this trick.",
+"A lever lets a small push move something heavy. A seesaw, a wheelbarrow, and a bottle opener are all levers.",
+"The triangle is a super strong shape. That is why you see triangles in bridges, cranes, and airplane wings.",
+"Friction is the rubbing force between two things. Rub your hands together fast and feel the heat it makes!",
+"Engineers test new airplane shapes in a wind tunnel. A giant fan blows air over a small model of the plane.",
+"The white lines behind a jet are called contrails. They are made of tiny ice crystals from the hot engine air.",
+"The Concorde jet flew at twice the speed of sound. It could cross the Atlantic Ocean in about three and a half hours.",
+"A hot air balloon floats because hot air is lighter than the cold air around it.",
+"The skyscraper Taipei 101 has a giant steel ball that hangs inside. It swings the other way to keep the building steady in wind.",
+"The longest paper airplane flight on record is over 226 feet. It was thrown in 2012 by Joe Ayoob.",
+"An engineer is someone who solves problems by building things. Planes, phones, and bridges all started as ideas."
+];
+const TOPICS=[
+{id:"planes",icon:"✈️",name:"Planes & Flight",cards:[
+ {t:"Four forces",x:"Four forces act on a plane. Lift pushes it up. Weight pulls it down. Thrust pushes it forward. Drag slows it down. To fly level, lift must equal weight.",ask:"What are the four forces of flight?"},
+ {t:"Why wings work",x:"A wing is curved on top and tilted a little. It sends air downward. The air pushes back up on the wing. That lifts the plane.",ask:"Why do airplane wings make lift?"},
+ {t:"How pilots steer",x:"Flaps on the wings and tail tilt to steer. Ailerons roll the plane. The elevator points the nose up or down. The rudder turns the nose left or right.",ask:"How do pilots steer a plane?"}]},
+{id:"mech",icon:"⚙️",name:"Machines & Mechanics",cards:[
+ {t:"Simple machines",x:"There are six simple machines. Lever, wheel and axle, pulley, ramp, wedge, and screw. Big machines are made of these small ones.",ask:"What are the six simple machines?"},
+ {t:"Gears",x:"Gears have teeth that lock together. When one turns, the next one turns the other way. Different sizes change speed and power.",ask:"How do gears work?"},
+ {t:"Engines",x:"A car engine burns fuel in small bangs inside cylinders. Each bang pushes a piston. The pistons turn a shaft, and that spins the wheels.",ask:"How does a car engine work?"}]},
+{id:"physics",icon:"🧲",name:"Physics Power",cards:[
+ {t:"Gravity",x:"Gravity is a pull between things. Earth is huge, so it pulls you down. The Moon has less gravity, so you could jump much higher there.",ask:"What is gravity?"},
+ {t:"Newton's push rule",x:"Something at rest stays still until a force pushes it. A moving thing keeps going until a force stops it. That is why you need seat belts.",ask:"What is Newton's first law?"},
+ {t:"Energy",x:"Energy is the power to make things happen. A roller coaster at the top has stored energy. As it drops, that turns into speed.",ask:"What is energy and how does it change?"}]},
+{id:"space",icon:"🚀",name:"Rockets & Space",cards:[
+ {t:"How rockets launch",x:"A rocket shoots hot gas down very fast. The gas pushes the rocket up. This is action and reaction, and it even works in space where there is no air.",ask:"How does a rocket work?"},
+ {t:"Orbit",x:"A satellite in orbit is falling. But it moves sideways so fast that it keeps missing the Earth. That is my favorite trick. It is also my name!",ask:"What is an orbit?"},
+ {t:"Engineering teams",x:"A rocket takes thousands of people. Some design engines. Some build computers. Some test parts. Engineers work together and fix problems one step at a time.",ask:"What kinds of engineers build rockets?"}]}
+];
+const TRIVIA=[
+ {q:"Which force pushes a plane forward?",o:["Thrust","Weight","Drag"],a:0},
+ {q:"What makes a plane go up?",o:["Drag","Lift","Friction"],a:1},
+ {q:"What is a ramp?",o:["A simple machine","A kind of engine","A type of gear"],a:0},
+ {q:"What do pistons do?",o:["Cool the engine","Get pushed by the bangs","Hold the gas"],a:1},
+ {q:"Where could you jump higher?",o:["On the Moon","On Earth","They are the same"],a:0},
+ {q:"A roller coaster at the top has…",o:["No energy","Stored energy","Only friction"],a:1},
+ {q:"What pushes a rocket up?",o:["Hot gas shooting down","A big propeller","Wind"],a:0},
+ {q:"A satellite in orbit is…",o:["Standing still","Falling and moving sideways","Glued to the Moon"],a:1},
+ {q:"What is the name for the force that slows a plane down?",o:["Lift","Drag","Thrust"],a:1},
+ {q:"Which shape is super strong in bridges?",o:["Triangle","Circle","Wavy line"],a:0}
+];
+/* Hands-on challenges: safe home materials. Add a grown-up note where needed. */
+const CHALLENGES=[
+{id:"c-paper",icon:"✈️",title:"Paper Airplane Test",xp:40,min:20,diff:"Easy",
+ intro:"Which paper plane flies farther? Build two and test them like a real engineer.",
+ mats:[["📄","2 sheets of paper"],["📏","Tape measure or steps"],["✏️","Pencil and paper"]],
+ steps:["Fold one plane with a pointy nose. This is Plane A.","Fold a second plane with wide wings. This is Plane B.","Throw Plane A five times. Count the steps it flew each time.","Throw Plane B five times. Count the steps too.","Which plane flew farther? Write it down."],
+ why:"Narrow planes have less drag, so they glide far. Wide wings make more lift, so they float longer. Engineers balance lift and drag.",ask:"Why does a pointy paper plane fly farther than a wide one?"},
+{id:"c-balloon",icon:"🎈",title:"Balloon Rocket",xp:50,min:25,diff:"Medium",
+ intro:"Make a rocket that zooms along a string. This shows action and reaction.",
+ mats:[["🎈","Balloon"],["🥤","Straw"],["🧵","String, 3 meters"],["🩹","Tape"]],
+ steps:["Thread the string through the straw. Tie the string between two chairs.","Blow up the balloon but do not tie it. Pinch the end.","Tape the balloon to the straw.","Let go! Watch the balloon zoom along the string.","Try a bigger balloon. Does it go farther?"],
+ why:"Air shoots out the back, and that pushes the balloon forward. A real rocket does the same with hot gas.",ask:"Why does a balloon rocket move forward when air goes out the back?",adult:"A grown-up should help with the balloon."},
+{id:"c-ramp",icon:"🚗",title:"Ramp Race",xp:40,min:20,diff:"Easy",
+ intro:"Does a steeper ramp make a toy car go faster? Test it!",
+ mats:[["📚","Books"],["🛹","Board or tray"],["🚗","Toy car"],["📏","Measuring tape"]],
+ steps:["Build a ramp with one book. Roll the car down.","Measure how far the car rolls past the ramp.","Add another book to make the ramp steeper. Roll again.","Add a third book. Roll again.","Which ramp sent the car farthest?"],
+ why:"A steeper ramp turns more stored energy into speed. That is gravity at work.",ask:"Why does a steeper ramp make a car go faster?"},
+{id:"c-bike",icon:"🚲",title:"Bike Gear Spy",xp:50,min:15,diff:"Easy",
+ intro:"Find the gears on a bike and see how they trade speed for power.",
+ mats:[["🚲","A bike"],["🧑","A grown-up helper"]],
+ steps:["Ask a grown-up to hold the back wheel off the ground.","Find the big gear by the pedals and the small gear by the back wheel.","Turn the pedal once. Count how many times the back wheel spins.","Switch gears if your bike has them. Count again.","Which gear spun the wheel more?"],
+ why:"A big gear turning a small gear makes the small gear spin faster. Gears trade power for speed.",ask:"How do bike gears work?",adult:"A grown-up must hold the bike."},
+{id:"c-fold",icon:"📄",title:"Fold Your Design",xp:40,min:20,diff:"Easy",
+ intro:"Turn your Design Lab plane into a real paper plane. Then test it and make it better.",
+ mats:[["📄","Paper"],["🖍️","Markers"],["📏","A measuring tape or a step count"]],
+ steps:["Look at your Design Lab plane. Pick the colors you used.","Fold a paper plane. Fold the paper in half, open it, then fold the top corners to the middle.","Color the wings and tail with your markers. Add your stickers with a pen.","Throw it three times. Count the steps it flew each time.","Bend the back edge of the wings a little up. Throw again. Did it fly farther?"],
+ why:"Engineers build a model, test it, change one thing, and test again. That is called iteration. It means trying again to make it better.",ask:"Why do engineers test and change their designs?",adult:"Work in an open space away from people's faces."},
+{id:"c-straw",icon:"🚀",title:"Straw Rocket",xp:50,min:25,diff:"Medium",
+ intro:"Build a paper rocket and launch it with your breath. Change the fins and compare.",
+ mats:[["📄","Paper"],["🥤","Straw"],["✂️","Scissors (careful!)"],["🩹","Tape"]],
+ steps:["Roll a paper tube that slides loosely over the straw. Tape it.","Pinch and tape one end shut. That is the nose.","Add small paper fins near the bottom.","Blow hard through the straw to launch it.","Make bigger fins. Does it fly straighter?"],
+ why:"Fins keep a rocket pointing straight, like feathers on an arrow.",ask:"Why do rockets have fins?",adult:"Ask a grown-up to help with scissors."}
+];
+const VIDEOS=[
+ {id:"v1",t:"How airplanes fly",icon:"✈️",q:"how do airplanes fly for kids"},
+ {id:"v2",t:"How jet engines work",icon:"🔥",q:"how a jet engine works animation"},
+ {id:"v3",t:"Gears in action",icon:"⚙️",q:"how gears work for kids"},
+ {id:"v4",t:"Rocket launches",icon:"🚀",q:"how rockets work for kids"},
+ {id:"v5",t:"Physics experiments",icon:"🧪",q:"easy physics experiments for kids"},
+ {id:"v6",t:"Building big things",icon:"🏗️",q:"engineering projects for kids"}
+];
+const SUGGESTED=["Why do planes stay up?","How fast is a rocket?","How do gears work?","What does an engineer do?","Why is the sky blue?","How does a jet engine work?"];
+const RANKS=["Cadet","Trooper","Sergeant","Commander","Fleet Admiral"];
+const SYSTEM=`You are Orbit, a friendly space-robot buddy who helps a 12-year-old boy who loves planes, machines, physics and space. He finds reading hard and will HEAR your answer, so write for the ear.
+Science notes: the speed of sound in air depends mainly on air temperature, not viscosity, so Mach 1 is about 761 mph at sea level on a mild day and about 660 mph at airliner height. Viscosity affects drag and airflow near the wing, not the speed of sound. Rules: use simple, short sentences and everyday words. Explain with one fun comparison. Maximum 5 sentences and under 550 characters. No lists, no markdown, no emojis, no symbols. If a hard word is needed, explain it right away. Be honest; if unsure, say so. End with one short question that makes him curious, to keep him exploring. Stay on science, engineering, aeronautics and how things work, and kindly steer other topics back. Never give anything unsafe; for experiments say to ask a grown-up first.`;
+
+/* ================= orbit art =================
+   Drop real art in /img/orbit-main.jpeg (and orbit-wave / orbit-cheer files). Falls back to the built-in robot. */
+const ORBIT_SVG=`<svg viewBox="0 0 120 120" aria-hidden="true"><ellipse cx="60" cy="108" rx="26" ry="5" fill="rgba(0,0,0,.25)"/><line x1="60" y1="14" x2="60" y2="28" stroke="#FFC23D" stroke-width="4" stroke-linecap="round"/><circle cx="60" cy="12" r="6" fill="#FFC23D"/><rect x="22" y="28" width="76" height="62" rx="26" fill="#EAF0F8"/><rect x="30" y="38" width="60" height="38" rx="18" fill="#121A3E"/><circle cx="47" cy="55" r="7" fill="#FFC23D"/><circle cx="73" cy="55" r="7" fill="#FFC23D"/><circle cx="49" cy="53" r="2.2" fill="#fff"/><circle cx="75" cy="53" r="2.2" fill="#fff"/><ellipse class="mouth" cx="60" cy="68" rx="9" ry="4" fill="#E39A00"/><rect x="10" y="50" width="12" height="22" rx="6" fill="#2F4BDB"/><rect x="98" y="50" width="12" height="22" rx="6" fill="#2F4BDB"/><ellipse cx="60" cy="96" rx="30" ry="9" fill="none" stroke="#FFC23D" stroke-width="3" stroke-dasharray="6 5"/></svg>`;
+window.ORBIT_SVG=ORBIT_SVG;
+const orbitImg=`<div class="ow"><img class="ob" src="img/orbit-body.png" alt="" onerror="this.parentNode.outerHTML=window.ORBIT_SVG"><img class="owing" src="img/orbit-wing.png" alt=""></div>`;
+const headImg=`<img src="img/orbit-head.png" alt="" onerror="this.outerHTML=window.ORBIT_SVG">`;
+document.getElementById("orb").innerHTML=orbitImg;
+document.getElementById("avatar").innerHTML=headImg;
+document.getElementById("startOrb").innerHTML=orbitImg;
+function cheer(){const im=document.querySelector("#orb img.ob");if(!im||!im.src)return;const o=$("#orb");o.classList.add("cheering");im.src="img/orbit-cheer.png";clearTimeout(cheer.t);cheer.t=setTimeout(()=>{im.src="img/orbit-body.png";o.classList.remove("cheering")},3500)}
+function waveHi(){const o=$("#orb");if(!o)return;o.classList.add("waving");clearTimeout(waveHi.t);waveHi.t=setTimeout(()=>o.classList.remove("waving"),2600)}
+setInterval(()=>{if(!document.hidden&&!$("#orb").classList.contains("talking"))waveHi()},14000);setTimeout(waveHi,1200);
+
+/* ================= state ================= */
+const $=s=>document.querySelector(s);
+const todayStr=()=>{const d=new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
+const yesterdayStr=()=>{const d=new Date(Date.now()-864e5);return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()};
+let S={xp:0,done:{},name:"Explorer",streak:{last:"",n:0},best:0};
+try{S=Object.assign(S,JSON.parse(localStorage.getItem("orbit2")||"{}"))}catch(e){}
+function save(){try{localStorage.setItem("orbit2",JSON.stringify(S))}catch(e){}}
+if(S.streak.last!==todayStr()){S.streak.n=(S.streak.last===yesterdayStr())?S.streak.n+1:1;S.streak.last=todayStr();save()}
+const V={on:true,tts:null,dict:null,sample:null,ctx:null,audio:null};
+function level(){return Math.floor(S.xp/100)+1}
+function rank(){return RANKS[Math.min(level()-1,RANKS.length-1)]}
+function addXP(n,id){ if(id){if(S.done[id])return false;S.done[id]=1}S.xp+=n;save();hud();if(n>0)cheer();return true}
+function hud(){
+  $("#pname").textContent=S.name;
+  $("#prank").textContent=rank()+" · Level "+level();
+  const inl=S.xp%100;$("#xpfill").style.width=inl+"%";$("#xptext").textContent=inl+"/100 XP";
+  $("#streak").textContent=S.streak.n;$("#gears").textContent=Math.floor(S.xp/5);
+}
+
+/* ================= voice ================= */
+const ROBOT={mix:0.4,freq:60,speed:1.1};
+function talking(b){$("#orb").classList.toggle("talking",b)}
+function stopVoice(){try{V.tts&&V.tts.stop()}catch(e){}try{speechSynthesis.cancel()}catch(e){}if(V.audio){try{V.audio.pause()}catch(e){}V.audio=null}talking(false)}
+async function clip(id){if(!id)return null;try{const r=await fetch("audio/"+id+".mp3",{method:"HEAD"});if(r.ok)return "audio/"+id+".mp3"}catch(e){}return null}
+async function playClip(url){
+  const a=new Audio(url);V.audio=a;a.preservesPitch=true;a.playbackRate=ROBOT.speed;let osc=null;
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;V.ctx=V.ctx||new AC();const ctx=V.ctx;
+    if(ctx.state==="suspended")await ctx.resume();
+    const src=ctx.createMediaElementSource(a);
+    const dry=ctx.createGain();dry.gain.value=1-ROBOT.mix;const wet=ctx.createGain();wet.gain.value=ROBOT.mix;
+    const ring=ctx.createGain();ring.gain.value=0;osc=ctx.createOscillator();osc.type="sine";osc.frequency.value=ROBOT.freq;osc.connect(ring.gain);osc.start();
+    const dl=ctx.createDelay(.05);dl.delayTime.value=.011;const fb=ctx.createGain();fb.gain.value=.35;
+    src.connect(dry);dry.connect(ctx.destination);src.connect(ring);ring.connect(dl);dl.connect(fb);fb.connect(dl);ring.connect(wet);dl.connect(wet);wet.connect(ctx.destination);
+  }catch(e){}
+  await new Promise((res,rej)=>{a.onended=res;a.onerror=rej;a.play().catch(rej)});
+  try{osc&&osc.stop()}catch(e){}
+}
+async function say(text,id){
+  if(text)V.last={text,id};
+  stopVoice();if(!V.on||!text)return;talking(true);
+  try{
+    const url=await clip(id);
+    if(url){await playClip(url);talking(false);return}
+    if(V.tts){await V.tts.speak(text.slice(0,1900),{rate:.95,language:"en"});talking(false);return}
+    if("speechSynthesis" in window){const u=new SpeechSynthesisUtterance(text);u.rate=.95;u.onend=()=>talking(false);u.onerror=()=>talking(false);speechSynthesis.speak(u);return}
+  }catch(e){}
+  talking(false);
+}
+function orbitSays(t,id){$("#say").textContent=t;say(t,id)}
+function speak(bubble,text,id){$("#say").textContent=bubble;say(text,id)}
+$("#guide").onclick=()=>{if(V.last)say(V.last.text,V.last.id)};
+$("#soundBtn").onclick=()=>{V.on=!V.on;$("#soundBtn").textContent=V.on?"🔊 Voice On":"🔇 Voice Off";if(!V.on)stopVoice()};
+
+/* ================= building blocks ================= */
+function el(html){const d=document.createElement("div");d.innerHTML=html.trim();return d.firstChild}
+const screen=$("#screen");
+function card({tag,type,icon,title,sub,done,go,speak,sid}){
+  const c=el(`<div class="cardx" role="button" tabindex="0"><div class="thumb t-${type}">${icon}<span class="tag tg-${type}">${tag}</span>${done?'<span class="done-mark">✓</span>':''}</div><div class="cb"><b></b><small></small></div><button class="spk" aria-label="Hear this">🔊</button></div>`);
+  c.querySelector("b").textContent=title;c.querySelector("small").textContent=sub||"";
+  c.onclick=e=>{if(e.target.closest(".spk"))return;go()};
+  c.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}};
+  c.querySelector(".spk").onclick=e=>{e.stopPropagation();say(speak||title,sid)};
+  return c;
+}
+function backBtn(to,label="⬅️ Back"){const b=el(`<button class="btn ghost" style="margin-bottom:14px">${label}</button>`);b.onclick=()=>go(to);return b}
+
+/* ================= router ================= */
+let current="home";
+function go(name,arg){
+  stopVoice();current=name;screen.innerHTML="";window.scrollTo(0,0);
+  document.querySelectorAll(".nav").forEach(n=>n.classList.toggle("on",n.dataset.go===({lesson:"library",topic:"library",challenge:"library",videos:"library",fact:"home",quiz:"trivia",sim:"design",cockpit:"design"}[name]||name)));
+  ({home,library,trivia,ask,profile,fact,lessons,topic,challenge,videos,design,sim,cockpit})[name](arg);
+}
+document.querySelectorAll(".nav").forEach(n=>n.onclick=()=>go(n.dataset.go));
+
+/* ================= Design Lab (Flying High style project) ================= */
+const DL={
+ bodies:[["airliner","Airliner","🛫"],["jet","Jet","✈️"],["prop","Prop plane","🛩️"],["rocket","Rocket plane","🚀"]],
+ wings:[["straight","Straight","▬"],["swept","Swept back","◢"],["delta","Delta","◣"]],
+ engines:[["none","No engines","⭕"],["jets","Jet engines","🔥"],["prop","Propeller","🌀"]],
+ colors:["#F5F7FB","#FFC23D","#E39A00","#E06A00","#C23B3B","#D93E75","#7A5AF0","#2F4BDB","#0E8FA8","#12936F","#121A3E"],
+ scenes:[["sky","Blue sky","☁️"],["sunset","Sunset","🌅"],["space","Space","🌌"],["runway","Runway","🛣️"],["ocean","Ocean","🌊"]],
+ stickers:[["windows","Windows","🪟"],["stripe","Racing stripe","🏁"],["stars","Stars","⭐"],["number","Number 7","7️⃣"],["flames","Flames","🔥"]]
+};
+const DEF_PLANE={name:"Sky Jet",body:"jet",wings:"swept",engines:"jets",cBody:"#F5F7FB",cWing:"#2F4BDB",cTail:"#FFC23D",scene:"sky",st:["windows"],step:0};
+function getPlane(){S.plane=Object.assign({},DEF_PLANE,S.plane||{});if(!Array.isArray(S.plane.st))S.plane.st=[];return S.plane}
+let dlUid=0;
+function planeSVG(p){
+  const u="pl"+(++dlUid),N="#121A3E";
+  const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const bodyPath={airliner:"M40,124 L70,112 L318,112 Q358,114 358,130 Q358,146 318,148 L70,148 L40,136 Z",
+    jet:"M46,122 C80,114 220,110 330,122 L376,130 L330,138 C220,150 80,146 46,138 Z",
+    prop:"M50,124 Q50,104 90,104 L260,104 Q340,106 346,130 Q340,154 260,156 L90,156 Q50,156 50,136 Z",
+    rocket:"M36,122 L60,119 L320,123 L388,130 L320,137 L60,141 Z"}[p.body];
+  const nose={airliner:358,jet:376,prop:346,rocket:388}[p.body];
+  const wingPoly={straight:"190,124 245,124 235,30 205,30",swept:"255,124 195,124 100,42 135,42",delta:"270,124 90,124 90,52"}[p.wings];
+  const starPos={straight:[220,72],swept:[165,78],delta:[140,95]}[p.wings];
+  const engPos={straight:[198,78,36],swept:[150,78,36],delta:[112,84,44]}[p.wings];
+  const mir=s=>`<g>${s}</g><g transform="translate(0,260) scale(1,-1)">${s}</g>`;
+  let scene="";
+  if(p.scene==="sky")scene=`<defs><linearGradient id="${u}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4C9BFF"/><stop offset="1" stop-color="#C6E6FF"/></linearGradient></defs><rect width="400" height="260" fill="url(#${u}g)"/><g fill="#fff" opacity=".9"><ellipse cx="60" cy="40" rx="38" ry="14"/><ellipse cx="90" cy="32" rx="24" ry="12"/><ellipse cx="330" cy="215" rx="42" ry="15"/><ellipse cx="300" cy="224" rx="26" ry="11"/><ellipse cx="350" cy="50" rx="26" ry="10"/></g>`;
+  else if(p.scene==="sunset")scene=`<defs><linearGradient id="${u}g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A1F6B"/><stop offset=".6" stop-color="#D9548A"/><stop offset="1" stop-color="#FFA84A"/></linearGradient></defs><rect width="400" height="260" fill="url(#${u}g)"/><circle cx="330" cy="220" r="34" fill="#FFD36B" opacity=".9"/><g fill="#FFC1D9" opacity=".6"><ellipse cx="70" cy="50" rx="40" ry="10"/><ellipse cx="110" cy="205" rx="46" ry="10"/></g>`;
+  else if(p.scene==="space")scene=`<rect width="400" height="260" fill="#05071A"/><g fill="#fff">${[[30,30],[80,200],[140,60],[210,230],[260,24],[330,90],[370,180],[50,120],[300,240],[180,15],[385,35],[120,150]].map(([x,y],i)=>`<circle cx="${x}" cy="${y}" r="${i%3?1.3:2}"/>`).join("")}</g><circle cx="335" cy="205" r="30" fill="#7A5AF0"/><ellipse cx="335" cy="205" rx="48" ry="9" fill="none" stroke="#FFC23D" stroke-width="3"/>`;
+  else if(p.scene==="runway")scene=`<rect width="400" height="260" fill="#4A4F5C"/><rect y="14" width="400" height="5" fill="#fff"/><rect y="241" width="400" height="5" fill="#fff"/><g fill="#fff">${[0,1,2,3,4,5,6,7].map(i=>`<rect x="${12+i*52}" y="127" width="30" height="6"/>`).join("")}</g>`;
+  else scene=`<rect width="400" height="260" fill="#1F6FB5"/><g fill="none" stroke="#7FC4F5" stroke-width="3" stroke-linecap="round" opacity=".8"><path d="M20,40 q15,-10 30,0 t30,0"/><path d="M280,60 q15,-10 30,0 t30,0"/><path d="M40,210 q15,-10 30,0 t30,0"/><path d="M250,225 q15,-10 30,0 t30,0"/><path d="M170,30 q15,-10 30,0 t30,0"/></g>`;
+  const wing=mir(`<polygon points="${wingPoly}" fill="${p.cWing}" stroke="${N}" stroke-width="3" stroke-linejoin="round"/>`);
+  const stab=mir(`<polygon points="108,126 64,126 48,86 76,86" fill="${p.cTail}" stroke="${N}" stroke-width="3" stroke-linejoin="round"/>`);
+  let eng="";
+  if(p.engines==="jets"){const[ex,ey,ew]=engPos;eng=mir(`<rect x="${ex}" y="${ey}" width="${ew}" height="15" rx="7" fill="#C9D1E3" stroke="${N}" stroke-width="3"/><rect x="${ex+ew-5}" y="${ey+2}" width="5" height="11" rx="2" fill="${N}"/>`)}
+  const st=p.st;
+  const clip=`<clipPath id="${u}c"><path d="${bodyPath}"/></clipPath>`;
+  let fus=`<defs>${clip}</defs><path d="${bodyPath}" fill="${p.cBody}" stroke="${N}" stroke-width="3" stroke-linejoin="round"/>`;
+  fus+=`<g clip-path="url(#${u}c)">`;
+  if(st.includes("stripe"))fus+=`<rect x="205" y="90" width="22" height="80" fill="#FFC23D"/><rect x="232" y="90" width="8" height="80" fill="#FFC23D"/>`;
+  fus+=`</g>`;
+  fus+=`<ellipse cx="${nose-44}" cy="130" rx="16" ry="8" fill="#7FE6F0" stroke="${N}" stroke-width="3"/>`;
+  if(st.includes("windows")){let w="";for(let x=132;x<nose-90;x+=20)w+=`<circle cx="${x}" cy="130" r="4.5" fill="#7FE6F0" stroke="${N}" stroke-width="2"/>`;fus+=w}
+  if(st.includes("number"))fus+=`<text x="266" y="141" text-anchor="middle" font-family="Nunito,Arial,sans-serif" font-weight="900" font-size="30" fill="${N}">7</text>`;
+  fus+=`<rect x="44" y="127" width="74" height="6" rx="3" fill="${p.cTail}" stroke="${N}" stroke-width="2"/>`;
+  let stars="";
+  if(st.includes("stars")){const[sx,sy]=starPos;const pts=[...Array(10)].map((_,i)=>{const r=i%2?4.5:11,a=-Math.PI/2+i*Math.PI/5;return(sx+r*Math.cos(a)).toFixed(1)+","+(sy+r*Math.sin(a)).toFixed(1)}).join(" ");stars=mir(`<polygon points="${pts}" fill="#FFC23D" stroke="${N}" stroke-width="2" stroke-linejoin="round"/>`)}
+  let flames="";
+  if(st.includes("flames"))flames=`<path d="M40,130 L4,116 L20,130 L4,144 Z" fill="#FF7A00" stroke="${N}" stroke-width="2" stroke-linejoin="round"/><path d="M38,130 L16,124 L26,130 L16,136 Z" fill="#FFE066"/>`;
+  let prop="";
+  if(p.engines==="prop")prop=`<rect x="${nose-4}" y="92" width="8" height="76" rx="4" fill="${N}"/><circle cx="${nose}" cy="130" r="8" fill="#FFC23D" stroke="${N}" stroke-width="3"/>`;
+  const label=`<text x="200" y="250" text-anchor="middle" font-family="Nunito,Arial,sans-serif" font-weight="900" font-size="20" fill="#fff" stroke="${N}" stroke-width="5" paint-order="stroke" stroke-linejoin="round">${esc(p.name||"My plane")}</text>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" role="img" aria-label="Your plane design, seen from above">${scene}${flames}${wing}${stab}${eng}${fus}${stars}${prop}${label}</svg>`;
+}
+function planeSummary(p){
+  const b=DL.bodies.find(x=>x[0]===p.body)[1].toLowerCase(),w=DL.wings.find(x=>x[0]===p.wings)[1].toLowerCase(),e=DL.engines.find(x=>x[0]===p.engines)[1].toLowerCase();
+  return `I designed a plane called ${p.name}. It is a ${b} with ${w} wings and ${e}.`;
+}
+function savePlanePNG(p,out){
+  const c=document.createElement("canvas");c.width=1200;c.height=780;
+  const cx=c.getContext("2d");let url="";
+  try{renderPlane3D(cx,1200,780,p,buildPlane(p),{yaw:-.7,pitch:.34},0.5);url=c.toDataURL("image/png")}catch(e){}
+  if(!url){out.textContent="I could not make the picture. Take a screenshot instead!";return}
+  out.innerHTML="";
+  const im=document.createElement("img");im.src=url;im.alt="Your plane picture";im.style.cssText="width:100%;max-width:520px;border-radius:16px;display:block;margin:10px 0";
+  const t=document.createElement("p");t.className="hint";t.textContent="Here is your picture! You can also take a screenshot.";
+  out.append(im,t);
+  const fname=(p.name||"my-plane").replace(/[^\w-]+/g,"-")+".png";
+  c.toBlob(async blob=>{
+    try{
+      if(!V.dl)V.dl=await claude.use("downloads");
+      if(V.dl&&blob){await V.dl.save({filename:fname,data:blob});t.textContent="Saved! Your plane picture is on your device."}
+    }catch(e){if(!e||e.code!=="declined")t.textContent="I could not save it here. Take a screenshot of the picture instead."}
+  },"image/png");
+}
+/* ================= 3D plane (software renderer, game style) ================= */
+const P3={bodies:{airliner:{L:8,R:.72,tf:.3,nf:.18,np:2.2,ct:.74},jet:{L:8,R:.5,tf:.3,nf:.36,np:1.5,ct:.7},prop:{L:6,R:.75,tf:.45,nf:.14,np:2.2,ct:.6},rocket:{L:9,R:.42,tf:.2,nf:.5,np:1.2,ct:.72}},
+ wing:{straight:[[-.5,.15],[.875,.15],[.625,2.5],[-.125,2.5]],swept:[[1.125,.15],[-.375,.15],[-2.75,2.2],[-1.875,2.2]],delta:[[1.5,.15],[-3,.15],[-3,1.95]]},
+ star:{straight:[.25,1.45],swept:[-1.1,1.3],delta:[-1.75,.88]},eng:{straight:[.15,1.1],swept:[-1.05,1.0],delta:[-1.9,1.0]}};
+const hexRGB=h=>{h=(h||"#888").replace("#","");return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]};
+const v3n=v=>{const l=Math.hypot(v[0],v[1],v[2])||1;return[v[0]/l,v[1]/l,v[2]/l]};
+function lathe(faces,x0,x1,rf,NR,NS,col,opt={}){
+  const V=(i,j)=>{const t=i/NR,x=x0+(x1-x0)*t,r=rf(t),a=j/NS*Math.PI*2;return[x,r*Math.cos(a),r*Math.sin(a)]};
+  for(let i=0;i<NR;i++)for(let j=0;j<NS;j++){
+    const r0=rf(i/NR),r1=rf((i+1)/NR),dx=(x1-x0)/NR,am=(j+.5)/NS*Math.PI*2,slope=(r1-r0)/dx;
+    const n=v3n([-slope,Math.cos(am),Math.sin(am)]);
+    const c=opt.color?opt.color(i,j,NR,NS):col;
+    faces.push({pts:[V(i,j),V(i+1,j),V(i+1,j+1),V(i,j+1)],col:hexRGB(c),n,gloss:!!opt.gloss,edge:!!opt.edge});
+  }
+}
+function slab(faces,poly,toWorld,th,col,topCol){
+  const top=poly.map(([a,b])=>toWorld(a,b,th/2)),bot=poly.map(([a,b])=>toWorld(a,b,-th/2));
+  const cx=poly.reduce((s,p)=>s+p[0],0)/poly.length,cz=poly.reduce((s,p)=>s+p[1],0)/poly.length;
+  faces.push({pts:top,col:hexRGB(topCol||col),n:v3n(toWorld(0,0,1).map((x,i)=>x-toWorld(0,0,0)[i])),gloss:false,edge:true});
+  faces.push({pts:bot.slice().reverse(),col:hexRGB(col),n:v3n(toWorld(0,0,-1).map((x,i)=>x-toWorld(0,0,0)[i])),gloss:false,edge:true});
+  for(let i=0;i<poly.length;i++){const k=(i+1)%poly.length,[a0,b0]=poly[i],[a1,b1]=poly[k];
+    let na=b1-b0,nb=-(a1-a0);const mx=(a0+a1)/2-cx,mz=(b0+b1)/2-cz;if(na*mx+nb*mz<0){na=-na;nb=-nb}
+    const w0=toWorld(na,nb,0),o=toWorld(0,0,0);faces.push({pts:[top[i],top[k],bot[k],bot[i]],col:hexRGB(col),n:v3n(w0.map((x,q)=>x-o[q])),gloss:false,edge:true});}
+}
+function buildPlane(p){
+  const B=P3.bodies[p.body],faces=[],L=B.L,R=B.R;
+  const rf=t=>{if(t<B.tf){const u=t/B.tf;return R*(0.18+0.82*Math.pow(u,.75))}if(t>1-B.nf){const u=(t-(1-B.nf))/B.nf;return R*Math.pow(1-Math.pow(u,B.np),.6)}return R};
+  const st=p.st||[];
+  lathe(faces,-L/2,L/2,rf,28,20,p.cBody,{color:(i,j,NR,NS)=>{const t=(i+.5)/NR;
+    if(st.includes("stripe")&&((t>.44&&t<.5)||(t>.53&&t<.56)))return"#FFC23D";
+    if(st.includes("windows")&&(j===5||j===15)&&t>.32&&t<.74&&i%2===0)return"#7FE6F0";
+    if(t<.3&&(j===0||j===1||j===19))return p.cTail;return p.cBody}});
+  /* canopy */
+  const ct=B.ct,xc=-L/2+L*ct,yc=rf(ct)*.62,rx=.9,ry=R*.62,rz=R*.7;
+  const canopy=(()=>{const NR=8,NS=12,Vx=(i,j)=>{const a=(i/NR)*Math.PI,b=j/NS*Math.PI*2;return[xc+rx*Math.cos(a),yc+ry*Math.sin(a)*Math.cos(b),rz*Math.sin(a)*Math.sin(b)]};
+    for(let i=0;i<NR;i++)for(let j=0;j<NS;j++){const am=(j+.5)/NS*Math.PI*2,a=((i+.5)/NR)*Math.PI;faces.push({pts:[Vx(i,j),Vx(i+1,j),Vx(i+1,j+1),Vx(i,j+1)],col:hexRGB("#59d3e3"),n:v3n([Math.cos(a)/rx,Math.sin(a)*Math.cos(am)/ry,Math.sin(a)*Math.sin(am)/rz]),gloss:true})}})();
+  /* wings (low wing, slight dihedral) */
+  const W=P3.wing[p.wings];
+  for(const sg of[1,-1]){
+    slab(faces,W,(a,b,h)=>[a,-.15+.09*b+h,sg*b],.14,p.cWing);
+    if(st.includes("stars")){const[sx,sz]=P3.star[p.wings],pts=[];for(let i=0;i<10;i++){const r=i%2?.17:.4,an=-Math.PI/2+i*Math.PI/5;pts.push([sx+r*Math.cos(an),-.15+.09*(sz+r*Math.sin(an))+.085,sg*(sz+r*Math.sin(an))])}
+      faces.push({pts,col:hexRGB("#FFC23D"),n:[0,1,0],gloss:false,edge:true})}
+  }
+  /* tail */
+  const sx=-(L/2)+4,TS=[[-2.55+sx,.1],[-3.65+sx,.1],[-4.05+sx,1.1],[-3.35+sx,1.1]];
+  for(const sg of[1,-1])slab(faces,TS,(a,b,h)=>[a,.05+h,sg*b],.09,p.cTail);
+  slab(faces,[[-2.3+sx,.3],[-3.8+sx,.3],[-4.1+sx,1.9],[-3.55+sx,1.9]],(a,b,h)=>[a,b,h],.12,p.cTail);
+  /* engines */
+  if(p.engines==="jets"){const[ex,ez]=P3.eng[p.wings];for(const sg of[1,-1])lathe(faces,ex-.5,ex+.5,t=>.2*(t<.1?.8+2*t:1)*(t>.9?.8:1),3,10,"#C9D1E3",{edge:true,color:(i)=>i===0?"#2a3350":"#C9D1E3"}),faces.slice(-30).forEach(f=>{f.pts=f.pts.map(q=>[q[0],q[1]-.42,q[2]+sg*ez])});}
+  if(p.engines==="prop"){const nx=L/2;lathe(faces,nx-.05,nx+.45,t=>.22*(1-t*t),4,10,"#FFC23D",{edge:true})}
+  return {faces,L,nx:L/2,rfTail:-L/2,prop:p.engines==="prop",flames:st.includes("flames"),num:st.includes("number"),R,xNum:.7};
+}
+function drawScene3D(ctx,W,H,sc,t){
+  const g=(a,b)=>{const q=ctx.createLinearGradient(0,0,0,H);q.addColorStop(0,a);q.addColorStop(1,b);return q};
+  if(sc==="space"){ctx.fillStyle="#05071A";ctx.fillRect(0,0,W,H);ctx.fillStyle="#fff";for(let i=0;i<46;i++){const x=(i*97)%W,y=(i*57)%H,tw=1+Math.sin(t*2+i)*.5;ctx.globalAlpha=.5+.3*Math.sin(t*2+i);ctx.beginPath();ctx.arc(x,y,tw,0,7);ctx.fill()}ctx.globalAlpha=1;
+    ctx.fillStyle="#7A5AF0";ctx.beginPath();ctx.arc(W*.86,H*.8,W*.07,0,7);ctx.fill();ctx.strokeStyle="#FFC23D";ctx.lineWidth=4;ctx.beginPath();ctx.ellipse(W*.86,H*.8,W*.11,W*.02,-.2,0,7);ctx.stroke();return}
+  if(sc==="sunset"){ctx.fillStyle=g("#2A1F6B","#FFA84A");ctx.fillRect(0,0,W,H);ctx.fillStyle="#FFD36B";ctx.beginPath();ctx.arc(W*.8,H*.72,W*.06,0,7);ctx.fill()}
+  else if(sc==="ocean"){ctx.fillStyle=g("#7FC4F5","#E8F6FF");ctx.fillRect(0,0,W,H*.55);ctx.fillStyle=g("#1F6FB5","#0d3f73");ctx.fillRect(0,H*.55,W,H*.45);ctx.fillStyle="rgba(255,255,255,.25)";for(let i=0;i<14;i++){const y=H*.58+((i*37)%(H*.4)),x=((i*113+t*20*(1+y/H))%(W+80))-40;ctx.fillRect(x,y,30+y/H*40,3)}}
+  else if(sc==="runway"){ctx.fillStyle=g("#5BA8FF","#D6EDFF");ctx.fillRect(0,0,W,H*.55);ctx.fillStyle="#4F8A3C";ctx.fillRect(0,H*.55,W,H*.45);ctx.fillStyle="#3A3F4C";ctx.beginPath();ctx.moveTo(W*.46,H*.55);ctx.lineTo(W*.54,H*.55);ctx.lineTo(W*.95,H);ctx.lineTo(W*.05,H);ctx.closePath();ctx.fill();ctx.strokeStyle="#fff";ctx.lineWidth=4;ctx.setLineDash([22,26]);ctx.lineDashOffset=-(t*60%48);ctx.beginPath();ctx.moveTo(W/2,H*.55);ctx.lineTo(W/2,H);ctx.stroke();ctx.setLineDash([])}
+  else{ctx.fillStyle=g("#2F78D6","#CBE8FF");ctx.fillRect(0,0,W,H)}
+  if(sc==="sky"||sc==="sunset"||sc==="ocean"||sc==="runway"){ctx.fillStyle=sc==="sunset"?"rgba(255,190,220,.55)":"rgba(255,255,255,.85)";for(let i=0;i<4;i++){const x=((i*W/3.2+t*14)%(W+160))-80,y=H*(.12+.12*i%.4)+10,r=W*.055;ctx.beginPath();ctx.ellipse(x,y,r*1.4,r*.45,0,0,7);ctx.ellipse(x+r*.8,y-r*.2,r*.8,r*.35,0,0,7);ctx.fill()}}
+}
+function renderPlane3D(ctx,W,H,p,geo,view,t){
+  drawScene3D(ctx,W,H,p.scene,t);
+  const cy_=Math.cos(view.yaw),sy=Math.sin(view.yaw),cp=Math.cos(view.pitch),sp=Math.sin(view.pitch),D=17,F=880*W/640,OX=W/2,OY=H*.47;
+  const tf=([x,y,z])=>{const X=x*cy_+z*sy,Z=-x*sy+z*cy_;return[X,y*cp-Z*sp,y*sp+Z*cp]};
+  const rt=n=>{const X=n[0]*cy_+n[2]*sy,Z=-n[0]*sy+n[2]*cy_;return[X,n[1]*cp-Z*sp,n[1]*sp+Z*cp]};
+  const proj=q=>{const s=F/(D-q[2]);return[OX+q[0]*s,OY-q[1]*s,s]};
+  /* shadow */
+  if(p.scene!=="space"){const q=proj(tf([0,-3.6,0]));ctx.fillStyle="rgba(0,0,0,.22)";ctx.beginPath();ctx.ellipse(q[0],q[1]+10,geo.L*q[2]*.55,geo.L*q[2]*.55*(.1+.18*Math.abs(Math.sin(view.pitch))),0,0,7);ctx.fill()}
+  const dyn=[];
+  const t4=geo.faces.length;
+  let faces=geo.faces;
+  /* dynamic parts */
+  if(geo.flames){const len=1.5+.5*Math.sin(t*22),mk=(r0,len,col)=>lathe(dyn,-geo.L/2,-geo.L/2-len,u=>r0*(1-u),3,10,col,{edge:true});mk(.3,len,"#FF7A00");mk(.17,len*.7,"#FFE066")}
+  if(geo.prop){const th=t*14,x=geo.nx+.1;for(const k of[0,1]){const a=th+k*Math.PI,c=Math.cos(a),s=Math.sin(a),w=.09;dyn.push({pts:[[x,w*s,-w*c],[x,w*s+1.5*c,-w*c+1.5*s],[x,-w*s+1.5*c,w*c+1.5*s],[x,-w*s,w*c]],col:hexRGB("#121A3E"),n:[1,0,0],gloss:false,two:true,edge:true})}}
+  const draw=[];
+  for(const f of faces.concat(dyn)){
+    const pts=f.pts.map(tf),n=rt(f.n),c=[0,0,0];pts.forEach(q=>{c[0]+=q[0];c[1]+=q[1];c[2]+=q[2]});c[0]/=pts.length;c[1]/=pts.length;c[2]/=pts.length;
+    const to=[-c[0],-c[1],D-c[2]],facing=n[0]*to[0]+n[1]*to[1]+n[2]*to[2];
+    if(facing<=0&&!f.two)continue;
+    draw.push({pts,n:facing<0?[-n[0],-n[1],-n[2]]:n,z:c[2],f});
+  }
+  draw.sort((a,b)=>a.z-b.z);
+  const Lg=v3n([-.4,.8,.6]);
+  ctx.lineJoin="round";ctx.lineCap="round";
+  const path=d=>{ctx.beginPath();d.pts.forEach((q,ix)=>{const s=proj(q);ix?ctx.lineTo(s[0],s[1]):ctx.moveTo(s[0],s[1])});ctx.closePath()};
+  ctx.strokeStyle="#121A3E";ctx.lineWidth=Math.max(4,W/110);
+  for(const d of draw){path(d);ctx.stroke()}
+  for(const d of draw){
+    const i=Math.max(0,d.n[0]*Lg[0]+d.n[1]*Lg[1]+d.n[2]*Lg[2]);const k=i<.18?.5:i<.45?.72:i<.75?.92:1.12;
+    let[r,g,b]=d.f.col;r*=k;g*=k;b*=k;
+    if(d.f.gloss&&i>.86){r+=(255-r)*.35;g+=(255-g)*.35;b+=(255-b)*.35}
+    const col=`rgb(${Math.min(255,r)|0},${Math.min(255,g)|0},${Math.min(255,b)|0})`;
+    ctx.fillStyle=col;path(d);ctx.fill();
+    if(d.f.edge){ctx.strokeStyle="#121A3E";ctx.lineWidth=Math.max(1.5,W/400)}else{ctx.strokeStyle=col;ctx.lineWidth=1}
+    ctx.stroke();
+  }
+  /* number decal on both sides */
+  if(geo.num)for(const sg of[1,-1]){const q=tf([geo.xNum,0,sg*geo.R*1.02]),nn=rt([0,0,sg]);if(nn[0]*(-q[0])+nn[1]*(-q[1])+nn[2]*(D-q[2])>0){const s=proj(q);ctx.fillStyle="#121A3E";ctx.font=`900 ${Math.round(s[2]*.9)}px Nunito,Arial`;ctx.textAlign="center";ctx.textBaseline="middle";ctx.fillText("7",s[0],s[1]);ctx.textBaseline="alphabetic";ctx.textAlign="left"}}
+  /* name banner */
+  ctx.font=`900 ${Math.round(W*.04)}px Nunito,Arial`;ctx.textAlign="center";ctx.lineWidth=6;ctx.strokeStyle="#121A3E";ctx.fillStyle="#FFC23D";ctx.strokeText(p.name||"My plane",W/2,H-14);ctx.fillText(p.name||"My plane",W/2,H-14);ctx.textAlign="left";
+}
+function planeView(cv,p){
+  const ctx=cv.getContext&&cv.getContext("2d");let geo=buildPlane(p);const view={yaw:-.7,pitch:.34};let drag=null,idle=0,t0=performance.now(),last=t0;
+  const ctl={rebuild(){geo=buildPlane(p)},reset(){view.yaw=-.7;view.pitch=.34;idle=0}};
+  cv.style.touchAction="none";cv.style.cursor="grab";
+  cv.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY};idle=0;try{cv.setPointerCapture(e.pointerId)}catch(_){}};
+  cv.onpointermove=e=>{if(!drag)return;view.yaw+=(e.clientX-drag.x)*.012;view.pitch=Math.max(-.2,Math.min(1.1,view.pitch+(e.clientY-drag.y)*.01));drag={x:e.clientX,y:e.clientY}};
+  cv.onpointerup=cv.onpointercancel=()=>{drag=null};
+  cv.ondblclick=()=>ctl.reset();
+  (function f(now){if(!cv.isConnected)return;const dt=Math.min(.05,(now-last)/1000);last=now;if(!drag){idle+=dt;if(idle>1.5)view.yaw+=.45*dt}
+    if(ctx)renderPlane3D(ctx,cv.width,cv.height,p,geo,view,(now-t0)/1000);requestAnimationFrame(f)})(t0);
+  return ctl;
+}
+function takeoffDist(p,boxes){
+  const sp=planeSpecs(p,boxes);let v=0,x=0;const m=sp.W/9.8,{cl,stalled}=liftCoef(8,sp.cam,sp.stall);
+  for(let i=0;i<40000;i++){const q=.5*SIM.rho*v*v,L=q*sp.S*cl;if(L>=sp.W)return x;const D=q*sp.S*dragCoef(cl,sp.cd0,stalled,8,sp.stall),a=(sp.T-D-.03*Math.max(0,sp.W-L))/m;v=Math.max(0,v+a*.01);x+=v*.01;if(x>SIM.runway)return null}
+  return null;
+}
+function planeStats(p){
+  const sp=planeSpecs(p,0);let cargo=-1;for(let n=0;n<=8;n++){if(takeoffDist(p,n)!=null)cargo=n;else break}
+  return [["⚡","Power",Math.min(100,sp.T/4200*100)],["🪽","Lift",Math.min(100,sp.S/11.5*100)],["💨","Sleek",Math.max(5,Math.min(100,(0.045-sp.cd0)/0.025*100))],["📦","Cargo",cargo<0?0:Math.min(100,cargo/6*100),cargo<0?"can't fly":cargo+" boxes"]];
+}
+
+const DL_STEPS=[["🗣️","Think"],["🔧","Shape It"],["🎨","Style It"],["🖨️","Print It"],["🎓","Careers"]];
+const DL_THINK=[
+ ["How do airplanes change the way we shop and travel?","Think about a package from far away, or a trip to see family."],
+ ["What problems do engineers face when they build spacecraft?","Think about heat, cold, and no air in space."],
+ ["Why is exploring space important?","Think about new discoveries and new ideas."]];
+const DL_CAREERS=[
+ ["🛠️","Aerospace engineer","Designs planes and spacecraft, then tests them to make sure they are safe and strong."],
+ ["🎨","Industrial designer","Shapes how things look and feel, so they are easy and fun to use. Your Style It step is this job!"],
+ ["📦","Logistics planner","Plans how people and packages get where they need to go, by plane, truck, and ship."]];
+const DL_REFLECT=[
+ "Why did you pick those wings? How do they help your plane fly?",
+ "Why did you pick those colors and stickers for the job your plane does?",
+ "What would you change if you built it again?"];
+function design(){
+  const p=getPlane(),step=Math.min(Math.max(p.step|0,0),4);
+  const tabs=el(`<div class="tabs"></div>`);
+  DL_STEPS.forEach(([i,l],n)=>{const b=el(`<button class="tab ${n===step?"on":""}"></button>`);b.textContent=i+" "+l;b.onclick=()=>{p.step=n;save();go("design")};tabs.append(b)});
+  screen.append(tabs);
+  const next=(label,n)=>{const b=el(`<button class="btn gold" style="margin-top:6px"></button>`);b.textContent=label;b.onclick=()=>{p.step=n;save();go("design")};return b};
+  const prev=n=>{const b=el(`<button class="btn ghost" style="margin-top:6px">⬅️ Back</button>`);b.onclick=()=>{p.step=n;save();go("design")};return b};
+  const row=(...k)=>{const r=el(`<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px"></div>`);r.append(...k);return r};
+  const prevBox=()=>{const d=el(`<div class="gamecard printable"><canvas width="640" height="400" style="width:100%;border-radius:16px;display:block" role="img" aria-label="3D model of your plane. Drag to spin it."></canvas><div class="stats"></div><p class="hint" style="margin:6px 0 0;color:#B9C6EA">👆 Drag to spin your plane. Double tap to reset.</p></div>`);
+    const cv=d.querySelector("canvas"),ctl=planeView(cv,p);
+    const draw=()=>{ctl.rebuild();const st=d.querySelector(".stats");st.innerHTML="";planeStats(p).forEach(([ic,l,v,txt])=>{const r=el(`<div class="stat"><span class="si"></span><span class="sl"></span><span class="sb"><i></i></span><span class="sv"></span></div>`);r.querySelector(".si").textContent=ic;r.querySelector(".sl").textContent=l;r.querySelector("i").style.width=Math.round(v)+"%";r.querySelector(".sv").textContent=txt||Math.round(v);st.append(r)})};
+    draw();d.draw=draw;return d};
+
+  if(step===0){
+    speak("Let's think like an engineer!","Welcome to the Design Lab! Engineers think first, then build. Here are three big questions. "+DL_THINK.map((q,i)=>"Question "+(i+1)+". "+q[0]).join(" ")+" Talk about them with someone. Then tap Start designing.","design-0");
+    screen.append(el(`<div class="panel"><h1 style="margin-top:0">✈️ Plane Design Lab</h1><p style="margin:0">You will design your own aircraft. Think. Shape it. Style it. Print it. Then learn about the jobs that build planes. 🚀</p></div>`));
+    screen.append(el(`<h2>🤔 Consider This</h2>`));
+    DL_THINK.forEach(([q,h],i)=>{
+      const c=el(`<div class="panel"><p class="fact" style="margin:0 0 6px"></p><p class="hint" style="margin:0 0 10px"></p></div>`);
+      c.querySelector(".fact").textContent=q;c.querySelector(".hint").textContent=h;
+      const s=el(`<button class="btn ghost">🔊 Hear it</button>`);s.onclick=()=>say(q+" "+h,"design-q"+i);
+      const a=el(`<button class="btn ghost">💬 Ask Orbit</button>`);a.onclick=()=>go("ask",q);
+      c.append(row(s,a));screen.append(c);
+    });
+    screen.append(next("🛠️ Start designing ➡️",1));
+  }
+  else if(step===1){
+    speak("Shape It! Pick a body, wings, and engines.","Shape It! Pick a body, wings, and engines for your plane. Try lots of shapes. Engineers try, test, and try again. That is how great planes are made.","design-1");
+    const pv=prevBox();screen.append(pv);
+    const nm=el(`<div class="panel"><h2 style="margin-top:0">Name your plane</h2><input type="text" maxlength="14" aria-label="Plane name"></div>`);
+    const ni=nm.querySelector("input");ni.value=p.name;ni.oninput=e=>{p.name=e.target.value||"My plane";save();pv.draw()};screen.append(nm);
+    const groups=[["Body","body",DL.bodies],["Wings","wings",DL.wings],["Engines","engines",DL.engines]];
+    const btns=[];
+    groups.forEach(([title,key,list])=>{
+      const g=el(`<div class="panel"><h2 style="margin-top:0"></h2><div class="chips"></div></div>`);g.querySelector("h2").textContent=title;
+      list.forEach(([v,l,ic])=>{const b=el(`<button class="dopt"></button>`);b.textContent=ic+" "+l;b.dataset.k=key;b.dataset.v=v;
+        b.onclick=()=>{p[key]=v;save();pv.draw();paint();say(l,"dl-"+key+"-"+v)};g.querySelector(".chips").append(b);btns.push(b)});
+      screen.append(g);
+    });
+    const paint=()=>btns.forEach(b=>b.classList.toggle("on",p[b.dataset.k]===b.dataset.v));paint();
+    screen.append(row(prev(0),next("🎨 Style It ➡️",2)));
+  }
+  else if(step===2){
+    speak("Style It! Add color and stickers.","Style It! Pick a part, then pick a color. Add stickers. Then choose where your plane flies. Think about how your style fits the job of your plane.","design-2");
+    const pv=prevBox();screen.append(pv);
+    let part="cBody";
+    const pg=el(`<div class="panel"><h2 style="margin-top:0">🪣 Bucket: color a part</h2><div class="chips" id="parts"></div><div class="chips" id="sw" style="margin-top:12px"></div></div>`);
+    const partBtns=[];
+    [["cBody","Body"],["cWing","Wings"],["cTail","Tail"]].forEach(([k,l])=>{const b=el(`<button class="dopt"></button>`);b.textContent=l;b.onclick=()=>{part=k;paint()};pg.querySelector("#parts").append(b);partBtns.push([k,b])});
+    const swBtns=[];
+    DL.colors.forEach(c=>{const b=el(`<button class="swatch" aria-label="Color ${c}"></button>`);b.style.background=c;b.onclick=()=>{p[part]=c;save();pv.draw();paint()};pg.querySelector("#sw").append(b);swBtns.push([c,b])});
+    screen.append(pg);
+    const sg=el(`<div class="panel"><h2 style="margin-top:0">⭐ Stickers</h2><div class="chips"></div></div>`);
+    const stBtns=[];
+    DL.stickers.forEach(([v,l,ic])=>{const b=el(`<button class="dopt"></button>`);b.textContent=ic+" "+l;b.onclick=()=>{const i=p.st.indexOf(v);if(i<0)p.st.push(v);else p.st.splice(i,1);save();pv.draw();paint()};sg.querySelector(".chips").append(b);stBtns.push([v,b])});
+    screen.append(sg);
+    const cg=el(`<div class="panel"><h2 style="margin-top:0">🌍 Scene</h2><div class="chips"></div></div>`);
+    const scBtns=[];
+    DL.scenes.forEach(([v,l,ic])=>{const b=el(`<button class="dopt"></button>`);b.textContent=ic+" "+l;b.onclick=()=>{p.scene=v;save();pv.draw();paint()};cg.querySelector(".chips").append(b);scBtns.push([v,b])});
+    screen.append(cg);
+    function paint(){
+      partBtns.forEach(([k,b])=>b.classList.toggle("on",k===part));
+      swBtns.forEach(([c,b])=>b.classList.toggle("on",p[part]===c));
+      stBtns.forEach(([v,b])=>b.classList.toggle("on",p.st.includes(v)));
+      scBtns.forEach(([v,b])=>b.classList.toggle("on",p.scene===v));
+    }
+    paint();
+    const tst=el(`<button class="btn mint">🌬️ Test it in the Sim Lab</button>`);tst.onclick=()=>{simTab="tunnel";go("sim")};
+    screen.append(row(prev(1),tst,next("🖨️ Print It ➡️",3)));
+  }
+  else if(step===3){
+    speak("Print It! Make your plane real.","Print It! Save a picture of your plane. Or print it. No 3D printer? No problem. You can fold a paper plane and test it for real.","design-3");
+    const pv=prevBox();screen.append(pv);
+    const out=el(`<div></div>`);
+    const sv=el(`<button class="btn mint">💾 Save picture</button>`);sv.onclick=()=>{out.textContent="Making your picture...";savePlanePNG(p,out);addXP(10,"design-saved")};
+    const pr=el(`<button class="btn ghost">🖨️ Print</button>`);
+    pr.onclick=()=>{document.body.classList.add("printing");const done=()=>{document.body.classList.remove("printing");window.removeEventListener("afterprint",done)};window.addEventListener("afterprint",done);try{window.print()}catch(e){done();out.textContent="Printing is not allowed here. Use Save picture instead."}};
+    const mk=el(`<button class="btn gold">📄 Make it real: fold a paper plane</button>`);mk.onclick=()=>go("challenge","c-fold");
+    screen.append(el(`<div class="panel"><h2 style="margin-top:0">Make it real</h2><p style="margin:0 0 6px">Engineers turn ideas on a screen into things you can hold.</p></div>`));
+    const last=screen.lastChild;last.append(row(sv,pr,mk),out);
+    screen.append(row(prev(2),next("🎓 Careers ➡️",4)));
+  }
+  else{
+    speak("Meet the people who build planes.","Careers! Here are jobs that use what you just did. "+DL_CAREERS.map(c=>c[1]+". "+c[2]).join(" ")+" Then think back about your design.","design-4");
+    screen.append(el(`<h2 style="margin-top:0">🎓 Jobs like this</h2>`));
+    DL_CAREERS.forEach(([ic,t,x])=>{const c=el(`<div class="panel" style="display:flex;gap:14px;align-items:center"><div style="font-size:44px"></div><div style="flex:1"><b style="font-size:22px"></b><p style="margin:4px 0 0"></p></div></div>`);
+      c.firstChild.textContent=ic;c.querySelector("b").textContent=t;c.querySelector("p").textContent=x;
+      const s=el(`<button class="mini" aria-label="Hear it">🔊</button>`);s.onclick=()=>say(t+". "+x,"design-c-"+t);c.append(s);screen.append(c)});
+    screen.append(el(`<h2>🔍 Think back</h2>`));
+    DL_REFLECT.forEach((q,i)=>{const c=el(`<div class="panel"><p class="fact" style="margin:0 0 10px"></p></div>`);c.querySelector(".fact").textContent=q;
+      const s=el(`<button class="btn ghost">🔊 Hear it</button>`);s.onclick=()=>say(q,"design-r"+i);
+      const a=el(`<button class="btn ghost">💬 Tell Orbit</button>`);a.onclick=()=>go("ask",planeSummary(p)+" "+q+" Please help me think about it.");
+      c.append(row(s,a));screen.append(c)});
+    const fin=el(`<button class="btn mint" style="margin-top:6px">🏁 Finish project +40 XP</button>`);
+    fin.onclick=()=>{if(addXP(40,"design-done"))orbitSays("Wow! You designed a plane like a real engineer. 40 XP!");else orbitSays("You already finished this project. Design a new plane any time!");fin.disabled=true};
+    screen.append(row(prev(3),fin));
+  }
+}
+
+/* ================= Sim Lab: wind tunnel + takeoff test ================= */
+const SIM={rho:1.225,mph:0.44704,W0:8000,S0:10,runway:300};
+const WSHAPE={flat:{n:"Flat wing",cam:0,stall:13,ic:"▬"},curved:{n:"Curved wing",cam:0.4,stall:16,ic:"🌙"}};
+const WSIZE=[["Small",0.6],["Medium",1],["Large",1.4]];
+function liftCoef(a,cam,stallA){
+  let cl=cam+0.105*a,stalled=false;
+  if(a>stallA){stalled=true;const cmax=cam+0.105*stallA;cl=Math.max(cmax*0.45,cmax*(1-0.07*(a-stallA)))}
+  return {cl,stalled};
+}
+function dragCoef(cl,cd0,stalled,a,stallA){return cd0+0.045*cl*cl+(stalled?0.035*(a-stallA):0)}
+function aero(vMph,a,cam,stallA,S,cd0){
+  const v=vMph*SIM.mph,q=0.5*SIM.rho*v*v,{cl,stalled}=liftCoef(a,cam,stallA);
+  return {lift:q*S*cl,drag:q*S*dragCoef(cl,cd0,stalled,a,stallA),cl,stalled};
+}
+const fmtN=n=>Math.round(n/10)*10;
+let simTab="tunnel";
+function sim(){
+  const tabs=el(`<div class="tabs"></div>`);
+  [["tunnel","🌬️ Wind Tunnel"],["takeoff","🛫 Takeoff Test"],["sound","🔊 Speed of Sound"],["cockpit","🛩️ Cockpit"]].forEach(([k,l])=>{const b=el(`<button class="tab ${simTab===k?"on":""}"></button>`);b.textContent=l;b.onclick=()=>{if(k==="cockpit")go("cockpit");else{simTab=k;go("sim")}};tabs.append(b)});
+  screen.append(tabs);
+  const back=el(`<button class="btn ghost" style="margin-bottom:14px">✈️ Back to Design Lab</button>`);back.onclick=()=>{getPlane().step=2;save();go("design")};
+  if(simTab==="tunnel")windTunnel();else if(simTab==="sound")soundLab();else takeoffTest();
+  screen.append(back);
+}
+function missionList(items){
+  const m=el(`<div class="panel"><h2 style="margin-top:0">🎯 Missions</h2></div>`);
+  items.forEach(([id,t,xp])=>{const r=el(`<div class="mission" style="display:flex;gap:10px;align-items:center;margin:6px 0"><span class="mk"></span><span></span></div>`);
+    r.querySelector(".mk").textContent=S.done[id]?"✅":"⬜";r.lastChild.textContent=t+" (+"+xp+" XP)";r.dataset.id=id;m.append(r)});
+  m.refresh=()=>m.querySelectorAll(".mission").forEach(r=>r.querySelector(".mk").textContent=S.done[r.dataset.id]?"✅":"⬜");
+  return m;
+}
+function slider(label,min,max,step,val,unit,onchange){
+  const w=el(`<div class="panel" style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:22px"><span></span><b></b></div><input type="range" style="width:100%;height:40px"></div>`);
+  const r=w.querySelector("input"),b=w.querySelector("b");w.firstChild.firstChild.textContent=label;
+  r.min=min;r.max=max;r.step=step;r.value=val;r.setAttribute("aria-label",label);
+  const upd=()=>{b.textContent=r.value+unit;onchange(+r.value)};r.oninput=upd;b.textContent=val+unit;
+  return {w,r,set:v=>{r.value=v;b.textContent=v+unit}};
+}
+/* ---------- Wind tunnel ---------- */
+function windTunnel(){
+  speak("Welcome to the Wind Tunnel!","Welcome to the Wind Tunnel! Air flows over a wing. Move the sliders. Make the lift, the gold arrow, bigger than the weight, the red arrow. Then the wing can fly. Careful! If you tilt the wing too far, the air breaks away. That is called a stall.","sim-tunnel");
+  const st={v:0,a:6,shape:"curved",size:1};
+  const cv=el(`<canvas width="640" height="320" style="width:100%;border-radius:18px;background:#0D1330;display:block" role="img" aria-label="Wind tunnel animation of air flowing over a wing"></canvas>`);
+  const box=el(`<div class="panel" style="padding:10px"></div>`);box.append(cv);screen.append(box);
+  const read=el(`<div class="panel"><div class="simread" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;text-align:center;font-size:20px"><div>⬆️ Lift<br><b id="rL">0</b></div><div>⬇️ Weight<br><b id="rW">0</b></div><div>⬅️ Drag<br><b id="rD">0</b></div></div><p id="verdict" style="font-size:24px;margin:12px 0 0;text-align:center"></p></div>`);
+  screen.append(read);
+  const mis=missionList([["sim-lift","Make lift beat weight",15],["sim-stall","Find the stall: tilt the wing too far at 30+ mph",15],["sim-slow","Fly slow: lift beats weight at 65 mph or less",25]]);
+  const sp=slider("💨 Wind speed",0,120,5,0,"  mph",v=>{st.v=v;judge()});
+  const an=slider("📐 Wing tilt",-5,25,1,6,"°",v=>{st.a=v;judge()});
+  screen.append(sp.w,an.w);
+  const shp=el(`<div class="panel"><h2 style="margin-top:0">Wing shape</h2><div class="chips"></div></div>`);
+  const shB=[];Object.entries(WSHAPE).forEach(([k,o])=>{const b=el(`<button class="dopt"></button>`);b.textContent=o.ic+" "+o.n;b.onclick=()=>{st.shape=k;judge();say(o.n,"sim-shape-"+k)};shp.querySelector(".chips").append(b);shB.push([k,b])});
+  const szB=[];const szp=el(`<div class="panel"><h2 style="margin-top:0">Wing size</h2><div class="chips"></div></div>`);
+  WSIZE.forEach(([n,f])=>{const b=el(`<button class="dopt"></button>`);b.textContent=n;b.onclick=()=>{st.size=f;judge();say(n+" wing","sim-size-"+n)};szp.querySelector(".chips").append(b);szB.push([f,b])});
+  screen.append(shp,szp,mis);
+  const why=el(`<div class="panel"><h2 style="margin-top:0">🧠 Why?</h2><p style="margin:0 0 10px">Moving air pushes a tilted wing up. Faster air means more lift. A bigger or curved wing means more lift. Tilt too far and the air breaks away. The wing stalls.</p></div>`);
+  const hw=el(`<button class="btn ghost">🔊 Hear it</button>`);hw.onclick=()=>say("Moving air pushes a tilted wing up. Faster air means more lift. A bigger or curved wing means more lift. Tilt too far and the air breaks away. The wing stalls.","sim-why");
+  const aw=el(`<button class="btn ghost" style="margin-left:10px">💬 Ask Orbit</button>`);aw.onclick=()=>go("ask","Why does a wing make lift, and what is a stall?");
+  why.append(hw,aw);screen.append(why);
+  let res=null,lastStall=false;
+  function calc(){const sh=WSHAPE[st.shape];return aero(st.v,st.a,sh.cam,sh.stall,SIM.S0*st.size,0.03)}
+  function judge(){
+    res=calc();const W=SIM.W0;
+    shB.forEach(([k,b])=>b.classList.toggle("on",st.shape===k));szB.forEach(([f,b])=>b.classList.toggle("on",st.size===f));
+    $("#rL").textContent=fmtN(Math.max(0,res.lift));$("#rW").textContent=fmtN(W);$("#rD").textContent=fmtN(res.drag);
+    const v=$("#verdict");
+    if(res.stalled&&st.v>=10){v.textContent="⚠️ STALL! The air broke away. Lift drops!";v.style.color="#C23B3B"}
+    else if(res.lift>=W){v.textContent="✅ Lift beats weight. It can fly!";v.style.color="#0b6b52"}
+    else if(st.v===0){v.textContent="Turn up the wind!";v.style.color="var(--ink)"}
+    else{v.textContent="⬇️ Not enough lift yet.";v.style.color="var(--ink)"}
+    let msg="";
+    if(res.lift>=W&&!res.stalled&&addXP(15,"sim-lift"))msg="Lift beats weight! You earned 15 XP.";
+    if(res.lift>=W&&!res.stalled&&st.v<=65&&addXP(25,"sim-slow"))msg="Slow and still flying! You earned 25 XP. Big curved wings do that.";
+    if(res.stalled&&st.v>=30&&addXP(15,"sim-stall"))msg="That was a stall! The air broke away from the wing. 15 XP.";
+    else if(res.stalled&&st.v>=30&&!lastStall&&!msg)msg="Stall! Tilt the wing back down.";
+    lastStall=res.stalled;
+    if(msg){orbitSays(msg);mis.refresh()}
+  }
+  judge();
+  /* animation */
+  const ctx=cv.getContext&&cv.getContext("2d");if(!ctx)return;
+  const P=[...Array(110)].map((_,i)=>({x:Math.random()*640,l:-135+270*((i*0.618)%1)}));
+  let t0=performance.now();
+  function frame(now){
+    if(!cv.isConnected)return;
+    const dt=Math.min(0.05,(now-t0)/1000);t0=now;
+    ctx.clearRect(0,0,640,320);
+    ctx.strokeStyle="rgba(255,255,255,.06)";ctx.lineWidth=1;for(let x=0;x<640;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,320);ctx.stroke()}
+    const cx=320,cy=160,c=190*(0.75+0.25*st.size),sh=WSHAPE[st.shape],ar=-st.a*Math.PI/180;
+    const sp=st.v*5.2,clN=Math.max(-1,Math.min(2,res.cl)),stall=res.stalled;
+    ctx.lineCap="round";
+    P.forEach(p=>{
+      p.x+=sp*dt;if(p.x>660){p.x=-20;p.l=-135+270*Math.random()}
+      const x=p.x-cx,yl=p.l;
+      const near=Math.max(0,1-Math.abs(yl)/70),shape=Math.exp(-Math.pow(x/(c*.7),2));
+      let y=yl+(yl<0?-1:1)*18*near*shape;
+      const dw=1-Math.min(1,Math.abs(yl)/120);y+=clN*16*dw*Math.max(0,Math.min(1,(x+20)/160));
+      if(stall&&yl<=10&&yl>-90&&x>-10)y+=Math.sin(now/90+yl*0.2+x*0.05)*Math.min(1,(x+10)/140)*26;
+      const len=Math.max(3,sp*0.05);
+      ctx.strokeStyle=stall&&yl<=10&&yl>-90&&x>0?"rgba(255,170,120,.85)":"rgba(127,230,240,.8)";ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(p.x,cy+y);ctx.lineTo(p.x-len,cy+y);ctx.stroke();
+    });
+    /* wing */
+    ctx.save();ctx.translate(cx,cy);ctx.rotate(ar);
+    const cam=sh.cam*22,th=15*(0.75+0.25*st.size);
+    ctx.beginPath();
+    for(let i=0;i<=24;i++){const u=i/24,x=-c/2+c*u,b=4*u*(1-u);ctx.lineTo(x,-(cam*b)-th*Math.sqrt(b)*1.0)}
+    for(let i=24;i>=0;i--){const u=i/24,x=-c/2+c*u,b=4*u*(1-u);ctx.lineTo(x,-(cam*b)+th*0.35*Math.sqrt(b))}
+    ctx.closePath();ctx.fillStyle="#E39A00";ctx.fill();ctx.lineWidth=3;ctx.strokeStyle="#FFC23D";ctx.stroke();
+    ctx.restore();
+    /* stand */
+    ctx.fillStyle="#56637F";ctx.fillRect(cx-4,cy+8,8,150);
+    /* arrows */
+    const W=SIM.W0,Lh=Math.max(0,Math.min(130,res.lift/W*70)),Wh=70;
+    const arrow=(x,y,dx,dy,col,label)=>{ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=7;ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(x+dx,y+dy);ctx.stroke();
+      const a=Math.atan2(dy,dx);ctx.beginPath();ctx.moveTo(x+dx,y+dy);ctx.lineTo(x+dx-16*Math.cos(a-.5),y+dy-16*Math.sin(a-.5));ctx.lineTo(x+dx-16*Math.cos(a+.5),y+dy-16*Math.sin(a+.5));ctx.closePath();ctx.fill();
+      ctx.font="800 18px Nunito,Arial";ctx.fillText(label,x+(dx>0?dx+8:dx<0?dx-70:10),y+dy+(dy>0?20:dy<0?-8:6))};
+    if(Lh>4)arrow(cx+70,cy-30,0,-Lh,res.lift>=W&&!stall?"#3DDC97":"#FFC23D","Lift");
+    arrow(cx-70,cy+30,0,Wh,"#FF6B6B","Weight");
+    const Dh=Math.min(90,res.drag/W*400);if(Dh>4)arrow(cx+c/2+10,cy+60,-Dh,0,"#C9D1E3","Drag");
+    ctx.fillStyle="#fff";ctx.font="800 20px Nunito,Arial";ctx.fillText("💨 "+st.v+" mph",14,28);
+    if(stall&&st.v>=10){ctx.fillStyle="#FF6B6B";ctx.font="900 28px Nunito,Arial";ctx.fillText("STALL!",cx+c/2-10,60)}
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+/* ---------- Speed of sound / Mach lab ---------- */
+const machMph=T=>20.0468*Math.sqrt(273.15+T)*2.23694;
+const SOUND_TXT="Great question about Mach one! Mach one is the speed of sound. It changes with the temperature of the air. Warm air makes sound go faster. Cold air makes sound go slower. At sea level on a mild day, Mach one is about 761 miles per hour. Way up high where it is very cold, it is only about 660. Viscosity is how sticky the air is. It changes drag, but it does not set the speed of sound. Air over land or water can be warmer or colder. So Mach one can change a little. The temperature is what matters.";
+function soundLab(){
+  speak("Mach 1 changes with air temperature!",SOUND_TXT,"sim-sound");
+  const st={T:15,v:600};
+  const cv=el(`<canvas width="640" height="300" style="width:100%;border-radius:18px;background:#0D1330;display:block" role="img" aria-label="Sound waves spreading from a flying plane"></canvas>`);
+  const box=el(`<div class="panel" style="padding:10px"></div>`);box.append(cv);screen.append(box);
+  const read=el(`<div class="panel"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;text-align:center;font-size:20px"><div>🔊 Mach 1 here<br><b id="mC">0 mph</b></div><div>✈️ Your plane<br><b id="mV">0 mph</b></div><div>🎯 Mach number<br><b id="mM">0</b></div></div><p id="mTxt" style="font-size:24px;margin:12px 0 0;text-align:center"></p></div>`);screen.append(read);
+  const tp=slider("🌡️ Air temperature",-60,45,1,15,"°C",v=>{st.T=v;upd()});
+  const vp=slider("✈️ Plane speed",100,2000,10,600,"  mph",v=>{st.v=v;upd()});
+  screen.append(tp.w,vp.w);
+  const pre=el(`<div class="panel"><h2 style="margin-top:0">Pick the air</h2><div class="chips"></div></div>`);
+  [["🌊 Sea level, mild",15],["🏜️ Hot day",40],["🧊 Very cold day",-20],["✈️ Airliner height (36,000 ft)",-56]].forEach(([l,T])=>{const b=el(`<button class="dopt"></button>`);b.textContent=l;b.onclick=()=>{st.T=T;tp.set(T);upd()};pre.querySelector(".chips").append(b)});
+  screen.append(pre);
+  const mis=missionList([["sim-cold","Find Mach 1 at airliner height (about 660 mph)",10],["sim-super","Fly faster than sound (Mach 1.05 or more)",15]]);screen.append(mis);
+  const why=el(`<div class="panel"><h2 style="margin-top:0">🧠 Myth buster</h2><p style="margin:0 0 10px">Mach 1 is the speed of sound. It changes because of the <b>temperature</b> of the air. <b>Viscosity</b> means how sticky air is. It changes drag, but not the speed of sound. Land and water matter only because they make the air warmer or cooler.</p></div>`);
+  const hw=el(`<button class="btn ghost">🔊 Hear it</button>`);hw.onclick=()=>say(SOUND_TXT,"sim-sound");
+  const aw=el(`<button class="btn ghost" style="margin-left:10px">💬 Ask Orbit</button>`);aw.onclick=()=>go("ask","Why does the speed of sound change with temperature, and what is viscosity?");
+  why.append(hw,aw);screen.append(why);
+  let c=machMph(15),M=0;
+  function upd(){
+    c=machMph(st.T);M=st.v/c;
+    $("#mC").textContent=Math.round(c)+" mph";$("#mV").textContent=st.v+" mph";$("#mM").textContent="Mach "+M.toFixed(2);
+    const t=$("#mTxt");
+    if(M<0.8){t.textContent="🐢 Slower than sound (subsonic)";t.style.color="var(--ink)"}
+    else if(M<1.05&&M>=0.8){t.textContent="💥 Right near the speed of sound (transonic)";t.style.color="#C25E00"}
+    else{t.textContent="🚀 Faster than sound! (supersonic) A shock wave trails behind.";t.style.color="#0b6b52"}
+    let msg="";
+    if(st.T<=-50&&Math.abs(c-660)<=25&&addXP(10,"sim-cold"))msg="Up high the air is cold, so Mach one is only about 660 miles per hour. 10 XP!";
+    if(M>=1.05&&addXP(15,"sim-super"))msg="Supersonic! You passed the speed of sound. 15 XP!";
+    if(msg){orbitSays(msg);mis.refresh()}
+  }
+  upd();
+  const ctx=cv.getContext&&cv.getContext("2d");if(!ctx)return;
+  let t0=performance.now(),age0=0;
+  function frame(now){
+    if(!cv.isConnected)return;
+    const t=(now-t0)/1000;ctx.clearRect(0,0,640,300);
+    const cx=420,cy=150,cpx=70,vpx=cpx*M;
+    ctx.strokeStyle="rgba(127,230,240,.55)";ctx.lineWidth=2;
+    for(let i=0;i<14;i++){const age=((t*0.9+i*0.35)%4.9);const rx=cx-vpx*age,r=cpx*age;if(r>2){ctx.globalAlpha=Math.max(0,1-age/4.9);ctx.beginPath();ctx.arc(rx,cy,r,0,7);ctx.stroke()}}
+    ctx.globalAlpha=1;
+    if(M>1.02){const mu=Math.asin(1/M),L=420;ctx.strokeStyle="#FFC23D";ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(cx-L*Math.cos(mu),cy-L*Math.sin(mu));ctx.lineTo(cx,cy);ctx.lineTo(cx-L*Math.cos(mu),cy+L*Math.sin(mu));ctx.stroke();ctx.fillStyle="#FFC23D";ctx.font="800 18px Nunito,Arial";ctx.fillText("shock wave",cx-250,cy-Math.min(120,Math.tan(mu)*250)-8)}
+    ctx.fillStyle="#E8EEFF";ctx.strokeStyle="#121A3E";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(cx+46,cy);ctx.quadraticCurveTo(cx+20,cy-12,cx-30,cy-10);ctx.lineTo(cx-44,cy-26);ctx.lineTo(cx-34,cy-26);ctx.lineTo(cx-24,cy-10);ctx.lineTo(cx-30,cy+10);ctx.quadraticCurveTo(cx+20,cy+12,cx+46,cy);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.fillStyle="#2F4BDB";ctx.beginPath();ctx.moveTo(cx+4,cy+4);ctx.lineTo(cx-24,cy+4);ctx.lineTo(cx-38,cy+34);ctx.lineTo(cx-20,cy+34);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.fillStyle="#fff";ctx.font="800 18px Nunito,Arial";ctx.fillText("Rings = sound waves. Each ring spreads at the speed of sound.",14,28);
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- Takeoff test ---------- */
+const BODYS={airliner:{w:900,cd:0.035,n:"Airliner"},jet:{w:700,cd:0.025,n:"Jet"},prop:{w:600,cd:0.03,n:"Prop plane"},rocket:{w:650,cd:0.02,n:"Rocket plane"}};
+const WNG={straight:{S:10,cd:1,n:"straight"},swept:{S:8.5,cd:0.85,n:"swept"},delta:{S:11.5,cd:1.15,n:"delta"}};
+const ENG={none:{T:900,n:"no engines (hand launch)"},jets:{T:4200,n:"jet engines"},prop:{T:2600,n:"a propeller"}};
+function planeSpecs(p,boxes){
+  const b=BODYS[p.body],w=WNG[p.wings],e=ENG[p.engines];
+  return {W:SIM.W0+b.w*0+(b.w-700)+boxes*600,S:w.S,cd0:(b.cd)*w.cd,T:e.T,cam:0.35,stall:15};
+}
+function takeoffTest(){
+  const p=getPlane();let boxes=0,running=false,raf=0;
+  speak("Takeoff Test!","Takeoff Test! This is your plane from the Design Lab. Add cargo boxes. Then start the engines. Your plane must lift off before the runway ends.","sim-takeoff");
+  const info=el(`<div class="panel"><h2 style="margin-top:0">✈️ Your plane</h2><p id="spec" style="margin:0 0 10px"></p></div>`);
+  const ch=el(`<button class="btn ghost">🔧 Change design</button>`);ch.onclick=()=>{p.step=1;save();go("design")};
+  info.append(ch);screen.append(info);
+  const box=el(`<div class="panel" style="padding:10px"></div>`);
+  const cv=el(`<canvas width="640" height="300" style="width:100%;border-radius:18px;display:block;background:#8FD0FF" role="img" aria-label="Side view of your plane on a runway"></canvas>`);box.append(cv);screen.append(box);
+  const live=el(`<div class="panel"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;text-align:center;font-size:20px"><div>💨 Speed<br><b id="tS">0 mph</b></div><div>📏 Distance<br><b id="tD">0 m</b></div><div>⬆️ Lift / ⬇️ Weight<br><b id="tL">0%</b></div></div><p id="tRes" style="font-size:24px;margin:12px 0 0;text-align:center"></p></div>`);screen.append(live);
+  const cg=el(`<div class="panel"><h2 style="margin-top:0">📦 Cargo boxes</h2><div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap"><button class="btn ghost" id="bm" aria-label="Fewer boxes">➖</button><b id="bn" style="font-size:28px;min-width:150px;text-align:center"></b><button class="btn ghost" id="bp" aria-label="More boxes">➕</button></div></div>`);
+  screen.append(cg);
+  const go2=el(`<button class="btn gold" style="font-size:26px">🚀 Start engines!</button>`),rs=el(`<button class="btn ghost" style="margin-left:10px">🔄 Reset</button>`);
+  screen.append(el(`<div style="margin-bottom:16px"></div>`));screen.lastChild.append(go2,rs);
+  const mis=missionList([["sim-to","Take off before the runway ends",20],["sim-heavy","Take off with 4 or more cargo boxes",25]]);screen.append(mis);
+  const tips=el(`<div class="panel"><h2 style="margin-top:0">💡 Try this</h2><p style="margin:0">Too heavy? Use fewer boxes, add engines, or pick bigger wings in the Design Lab. A delta wing is big, so it lifts at lower speed.</p></div>`);screen.append(tips);
+  const specTxt=()=>{const b=BODYS[p.body],w=WNG[p.wings],e=ENG[p.engines];$("#spec").textContent=`${b.n} with ${w.n} wings and ${e.n}.`;$("#bn").textContent="📦 × "+boxes};
+  specTxt();
+  $("#bm").onclick=()=>{if(!running){boxes=Math.max(0,boxes-1);specTxt();reset()}};
+  $("#bp").onclick=()=>{if(!running){boxes=Math.min(6,boxes+1);specTxt();reset()}};
+  const ctx=cv.getContext&&cv.getContext("2d");
+  let s=null;
+  function fresh(){s={x:0,v:0,alt:0,up:false,done:false,t:0,vTo:0,dTo:0,spec:planeSpecs(p,boxes),shown:false}}
+  function reset(){running=false;fresh();$("#tRes").textContent="";$("#tS").textContent="0 mph";$("#tD").textContent="0 m";$("#tL").textContent="0%";if(ctx)drawScene()}
+  fresh();
+  go2.onclick=()=>{if(running)return;reset();running=true;say("Engines on!","sim-go")};
+  rs.onclick=reset;
+  const X0=40,X1=600,sc=(X1-X0)/SIM.runway;
+  function sprite(x,y,pitch){
+    const body=p.cBody,wing=p.cWing,tail=p.cTail;
+    ctx.save();ctx.translate(x,y);ctx.rotate(-pitch);
+    ctx.fillStyle="#121A3E";ctx.beginPath();ctx.arc(-14,12,6,0,7);ctx.arc(16,12,6,0,7);ctx.fill();
+    ctx.fillStyle=tail;ctx.strokeStyle="#121A3E";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-40,-2);ctx.lineTo(-52,-26);ctx.lineTo(-30,-26);ctx.lineTo(-18,-2);ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.fillStyle=body;ctx.beginPath();ctx.ellipse(0,0,46,13,0,0,7);ctx.fill();ctx.stroke();
+    ctx.fillStyle=wing;ctx.beginPath();
+    if(p.wings==="swept"){ctx.moveTo(-6,2);ctx.lineTo(22,2);ctx.lineTo(-14,-22);ctx.lineTo(-30,-22)}
+    else if(p.wings==="delta"){ctx.moveTo(-34,2);ctx.lineTo(24,2);ctx.lineTo(-34,-24)}
+    else{ctx.moveTo(-8,2);ctx.lineTo(18,2);ctx.lineTo(14,-22);ctx.lineTo(-8,-22)}
+    ctx.closePath();ctx.fill();ctx.stroke();
+    ctx.fillStyle="#7FE6F0";ctx.beginPath();ctx.ellipse(28,-3,9,5,0,0,7);ctx.fill();ctx.stroke();
+    if(p.engines==="jets"){ctx.fillStyle="#C9D1E3";ctx.beginPath();ctx.roundRect?ctx.roundRect(-4,6,26,9,4):ctx.rect(-4,6,26,9);ctx.fill();ctx.stroke()}
+    if(p.engines==="prop"){ctx.fillStyle="#121A3E";ctx.fillRect(44,-20,5,40)}
+    for(let i=0;i<boxes;i++){ctx.fillStyle="#C99A5B";ctx.strokeStyle="#6b4a1d";ctx.lineWidth=2;ctx.fillRect(-40+i*13,-30-(i>3?12:0),12,12);ctx.strokeRect(-40+i*13,-30-(i>3?12:0),12,12)}
+    ctx.restore();
+  }
+  function drawScene(){
+    ctx.clearRect(0,0,640,300);
+    ctx.fillStyle="#8FD0FF";ctx.fillRect(0,0,640,300);
+    ctx.fillStyle="rgba(255,255,255,.85)";[[90,50,38],[330,36,30],[520,70,36]].forEach(([x,y,r])=>{ctx.beginPath();ctx.ellipse(x,y,r,r*.4,0,0,7);ctx.fill()});
+    ctx.fillStyle="#5a9b4a";ctx.fillRect(0,236,640,64);
+    ctx.fillStyle="#4A4F5C";ctx.fillRect(X0-10,236,X1-X0+30,18);
+    ctx.fillStyle="#fff";for(let m=0;m<=SIM.runway;m+=50){const x=X0+m*sc;ctx.fillRect(x-1,238,3,14);ctx.font="800 13px Nunito,Arial";ctx.fillText(m+"m",x-10,272)}
+    ctx.fillStyle="#E06A00";for(let i=0;i<3;i++){ctx.beginPath();ctx.moveTo(X1+14+i*10,236);ctx.lineTo(X1+8+i*10,236);ctx.lineTo(X1+11+i*10,218);ctx.closePath();ctx.fill()}
+    ctx.fillStyle="#C23B3B";ctx.font="900 14px Nunito,Arial";ctx.fillText("END",X1-6,208);
+    const px=X0+s.x*sc,py=236-14-s.alt*2.2;
+    sprite(px,py,s.up?0.14:Math.min(0.14,s.v/Math.max(1,s.vTo||30)*0.1));
+  }
+  function stepSim(dt){
+    const sp=s.spec,v=s.v,q=0.5*SIM.rho*v*v,{cl,stalled}=liftCoef(8,sp.cam,sp.stall);
+    const rot=s.up?1:(v>0?1:0);const lift=q*sp.S*cl,drag=q*sp.S*dragCoef(cl,sp.cd0,stalled,8,sp.stall);
+    const m=sp.W/9.8,fr=s.up?0:0.03*Math.max(0,sp.W-lift);
+    const a=(sp.T-drag-fr)/m;s.v=Math.max(0,s.v+a*dt);s.x+=s.v*dt;s.t+=dt;
+    if(!s.up&&lift>=sp.W){s.up=true;s.vTo=s.v;s.dTo=s.x}
+    if(s.up)s.alt+=Math.min(14,Math.max(4,(lift-sp.W)/sp.W*60+6))*dt;
+    s.ratio=lift/sp.W;
+    if(s.up&&s.alt>=45){s.done=true;s.ok=true}
+    if(!s.up&&s.x>=SIM.runway){s.done=true;s.ok=false}
+  }
+  let tl=performance.now();
+  function loop(now){
+    if(!cv.isConnected)return;
+    const dt=Math.min(0.05,(now-tl)/1000);tl=now;
+    if(running&&!s.done){for(let i=0;i<3;i++)stepSim(dt*1.2);
+      $("#tS").textContent=Math.round(s.v/SIM.mph)+" mph";$("#tD").textContent=Math.round(s.x)+" m";$("#tL").textContent=Math.round(Math.min(999,s.ratio*100))+"%";
+      if(s.up&&!s.shown){s.shown=true;orbitSays("Liftoff!")}
+      if(s.done){running=false;finish()}}
+    if(ctx)drawScene();
+    raf=requestAnimationFrame(loop);
+  }
+  function finish(){
+    const r=$("#tRes");let msg;
+    if(s.ok){msg=`🎉 Takeoff! It lifted off after ${Math.round(s.dTo)} meters at ${Math.round(s.vTo/SIM.mph)} miles per hour.`;r.style.color="#0b6b52";
+      let x=0;if(addXP(20,"sim-to"))x+=20;if(boxes>=4&&addXP(25,"sim-heavy"))x+=25;if(x)msg+=` You earned ${x} XP!`;mis.refresh()}
+    else{msg="💥 Oh no! The runway ended before the plane could lift off. Not enough lift yet. Try fewer boxes, more engine power, or bigger wings.";r.style.color="#C23B3B"}
+    r.textContent=msg;
+    say(msg.replace(/[🎉💥]/gu,"").trim(),"sim-res-"+(s.ok?"ok":"no"));
+  }
+  if(ctx){drawScene();raf=requestAnimationFrame(loop)}
+}
+
+/* ================= Cockpit trainer ================= */
+const PARTS={
+ asi:{n:"Airspeed Indicator",ic:"💨",k:"g",what:"Shows how fast the air moves past your plane, in knots. A knot is a little faster than one mile per hour.",tip:"Too slow and the wings stop lifting. That is a stall. The red line means too fast!",q:"Which gauge tells you how fast you are flying?"},
+ att:{n:"Attitude Indicator",ic:"🧭",k:"g",what:"Shows if the nose is up or down, and if the wings are tilted. Blue is sky. Brown is ground.",tip:"Keep the little gold plane on the line to fly level. It helps most in clouds.",q:"Which gauge shows if your nose is up or down and your wings are tilted?"},
+ alt:{n:"Altimeter",ic:"⛰️",k:"g",what:"Shows how high you are, in feet. The long hand counts hundreds. The short hand counts thousands.",tip:"It works like a clock, but for height.",q:"Which gauge tells you how high you are?"},
+ tc:{n:"Turn Coordinator",ic:"🔄",k:"g",what:"Shows how fast you are turning. The little ball shows if the turn is smooth.",tip:"Step on the ball! If the ball slides right, press the right pedal.",q:"Which gauge has a little ball and shows your turn?"},
+ hi:{n:"Heading Indicator",ic:"🧭",k:"g",what:"A spinning compass. It shows which way the nose points. North is 360. East is 90. South is 180. West is 270.",tip:"The numbers are missing a zero. A 9 means 90 degrees, which is east.",q:"Which gauge is the spinning compass that shows your direction?"},
+ vsi:{n:"Vertical Speed Indicator",ic:"↕️",k:"g",what:"Shows how fast you are climbing or sinking, in feet per minute.",tip:"If the needle points at zero, you are flying level.",q:"Which gauge shows how fast you climb or sink?"},
+ tach:{n:"Tachometer",ic:"⚙️",k:"g",what:"Shows how fast the engine spins, in turns per minute. That is called RPM.",tip:"Push the throttle in and the needle goes up. Keep it out of the red.",q:"Which gauge shows how fast the engine spins?"},
+ fuel:{n:"Fuel Gauge",ic:"⛽",k:"g",what:"Shows how much gas is in the tank. E means empty. F means full.",tip:"Always check it before you fly. A plane cannot pull over!",q:"Which gauge shows how much gas you have?"},
+ oil:{n:"Oil Pressure",ic:"🛢️",k:"g",what:"Shows if oil is flowing through the engine. Oil keeps the parts slippery so they do not wear out.",tip:"Keep the needle in the green part.",q:"Which gauge shows that oil is flowing in the engine?"},
+ yoke:{n:"Yoke (Control Stick)",ic:"🕹️",k:"c",what:"The yoke is like a steering wheel on a stick. Pull back and the nose goes up. Push forward and the nose goes down. Turn it to tilt the wings. Some planes use a stick instead.",tip:"Pull to climb. Push to dive. Turn to bank.",q:"Which control do you pull back to raise the nose?"},
+ rudder:{n:"Rudder Pedals",ic:"🦶",k:"c",what:"The pedals are under your feet. Push the left pedal and the nose swings left. Push the right pedal and it swings right.",tip:"Use them to keep turns smooth and to steer on the runway.",q:"Which controls are under your feet and swing the nose left and right?"},
+ throttle:{n:"Throttle",ic:"🔴",k:"c",what:"The throttle sets how much power the engine makes. Push it in for more power. Pull it out for less.",tip:"In means go. Out means slow.",q:"Which control gives the engine more power?"},
+ mixture:{n:"Mixture",ic:"🟥",k:"c",what:"The mixture controls how much gas mixes with the air. Push it in, rich, for takeoff. Pull it out a little, lean, to save fuel when cruising.",tip:"It is the red knob. Too lean and the engine quits!",q:"Which control mixes gas and air in the engine?"},
+ flaps:{n:"Flaps",ic:"🪽",k:"c",what:"Flaps are parts of the wings that swing down. They let the plane fly slower, which helps for takeoff and landing.",tip:"More flaps means more lift, but more drag too.",q:"Which control swings parts of the wings down so you can fly slower?"},
+ trim:{n:"Trim Wheel",ic:"🎛️",k:"c",what:"The trim wheel takes the push or pull off the yoke. The plane holds its nose angle by itself, so your hand can relax.",tip:"Trim it, then let go. That is hands free flying.",q:"Which control lets the plane hold its nose angle by itself?"}
+};
+const PGAUGES=["asi","att","alt","tc","hi","vsi","tach","fuel","oil"],PCONTROLS=["yoke","rudder","throttle","mixture","flaps","trim"];
+/* ---- gauge drawing ---- */
+const gpt=(cx,cy,r,d)=>[+(cx+r*Math.sin(d*Math.PI/180)).toFixed(1),+(cy-r*Math.cos(d*Math.PI/180)).toFixed(1)];
+const garc=(cx,cy,r,d0,d1,col,w)=>{const[a,b]=gpt(cx,cy,r,d0),[c,d]=gpt(cx,cy,r,d1);return `<path d="M${a},${b} A${r},${r} 0 ${d1-d0>180?1:0} 1 ${c},${d}" fill="none" stroke="${col}" stroke-width="${w}"/>`};
+const gtick=(cx,cy,r,d,len,w,col="#fff")=>{const[a,b]=gpt(cx,cy,r,d),[c,e]=gpt(cx,cy,r-len,d);return `<line x1="${a}" y1="${b}" x2="${c}" y2="${e}" stroke="${col}" stroke-width="${w}"/>`};
+const gtxt=(cx,cy,r,d,t,sz=13,col="#fff")=>{const[x,y]=gpt(cx,cy,r,d);return `<text x="${x}" y="${y+sz*0.35}" text-anchor="middle" font-size="${sz}" font-weight="800" fill="${col}" font-family="Nunito,Arial,sans-serif">${t}</text>`};
+const gneedle=(id,cx,cy,len,col,w,tail=12)=>`<g id="${id}" transform="rotate(0 ${cx} ${cy})"><line x1="${cx}" y1="${cy+tail}" x2="${cx}" y2="${cy-len}" stroke="${col}" stroke-width="${w}" stroke-linecap="round"/></g><circle cx="${cx}" cy="${cy}" r="${w+2}" fill="#0b1026" stroke="${col}" stroke-width="2"/>`;
+const gface=(cx,cy,r,id,inner)=>`<g class="gp" data-part="${id}"><circle cx="${cx}" cy="${cy}" r="${r+7}" fill="#0b1026" stroke="#56637F" stroke-width="3"/><circle cx="${cx}" cy="${cy}" r="${r}" fill="#141C3F"/>${inner}</g>`;
+function panelSVG(){
+  const R=78,r2=47;let s=`<svg id="panel" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 660 510" style="width:100%;max-width:640px;display:block;margin:0 auto;background:#1B2540;border-radius:20px" role="img" aria-label="Airplane cockpit gauges">`;
+  s+=`<defs><clipPath id="attclip"><circle cx="330" cy="95" r="${R}"/></clipPath></defs>`;
+  /* airspeed */
+  {const cx=110,cy=95,a=v=>-135+v/160*270;let i="";
+   i+=garc(cx,cy,R-9,a(40),a(85),"#fff",4)+garc(cx,cy,R-14,a(48),a(110),"#3DDC97",5)+garc(cx,cy,R-9,a(110),a(140),"#FFC23D",4);i+=gtick(cx,cy,R,a(140),14,5,"#FF4D4D");
+   for(let v=0;v<=160;v+=10)i+=gtick(cx,cy,R-1,a(v),v%20?6:11,v%20?1.5:2.5);for(let v=20;v<=160;v+=20)i+=gtxt(cx,cy,R-26,a(v),v,12);
+   i+=`<text x="${cx}" y="${cy+34}" text-anchor="middle" font-size="12" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">KNOTS</text>`+gneedle("asi-n",cx,cy,R-12,"#fff",4);
+   s+=gface(cx,cy,R,"asi",i)}
+  /* attitude */
+  {const cx=330,cy=95;let i=`<g clip-path="url(#attclip)"><g id="att-h" transform="rotate(0 ${cx} ${cy})"><rect x="${cx-220}" y="${cy-400}" width="440" height="400" fill="#3E8EDE"/><rect x="${cx-220}" y="${cy}" width="440" height="400" fill="#8B5A2B"/><line x1="${cx-220}" y1="${cy}" x2="${cx+220}" y2="${cy}" stroke="#fff" stroke-width="3"/>`;
+   for(const p of[10,20])for(const sg of[-1,1])i+=`<line x1="${cx-(p===10?18:28)}" y1="${cy-sg*p*2.2}" x2="${cx+(p===10?18:28)}" y2="${cy-sg*p*2.2}" stroke="#fff" stroke-width="2"/>`;
+   i+=`</g></g><path d="M${cx-46},${cy} h30 v8 M${cx+46},${cy} h-30 v8" fill="none" stroke="#FFC23D" stroke-width="5" stroke-linejoin="round"/><circle cx="${cx}" cy="${cy}" r="4" fill="#FFC23D"/><path d="M${cx},${cy-R+3} l-7,-12 h14 z" fill="#FFC23D"/>`;
+   s+=gface(cx,cy,R,"att",i)}
+  /* altimeter */
+  {const cx=550,cy=95;let i="";for(let n=0;n<10;n++){i+=gtick(cx,cy,R-1,n*36,10,2.5)+gtxt(cx,cy,R-24,n*36,n,15)}for(let n=0;n<50;n++)if(n%5)i+=gtick(cx,cy,R-1,n*7.2,5,1);
+   i+=`<rect x="${cx-34}" y="${cy+22}" width="68" height="22" rx="5" fill="#0b1026" stroke="#56637F"/><text id="alt-t" x="${cx}" y="${cy+38}" text-anchor="middle" font-size="15" font-weight="800" fill="#7FE6F0" font-family="Nunito,Arial">0</text><text x="${cx}" y="${cy-30}" text-anchor="middle" font-size="11" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">FEET</text>`+gneedle("alt-k",cx,cy,R-34,"#FFC23D",7,8)+gneedle("alt-h",cx,cy,R-14,"#fff",3.5,12);
+   s+=gface(cx,cy,R,"alt",i)}
+  /* turn coordinator */
+  {const cx=110,cy=270;let i=`<text x="${cx-60}" y="${cy-8}" font-size="14" font-weight="900" fill="#fff" font-family="Nunito,Arial">L</text><text x="${cx+50}" y="${cy-8}" font-size="14" font-weight="900" fill="#fff" font-family="Nunito,Arial">R</text><line x1="${cx-64}" y1="${cy}" x2="${cx-52}" y2="${cy}" stroke="#fff" stroke-width="3"/><line x1="${cx+52}" y1="${cy}" x2="${cx+64}" y2="${cy}" stroke="#fff" stroke-width="3"/><text x="${cx}" y="${cy-40}" text-anchor="middle" font-size="10" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">2 MIN TURN</text>`;
+   i+=`<g id="tc-p" transform="rotate(0 ${cx} ${cy})"><path d="M${cx-48},${cy} h96 M${cx},${cy-6} v-16 M${cx-12},${cy-20} h24" stroke="#FFC23D" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="${cx}" cy="${cy}" r="8" fill="#FFC23D"/></g>`;
+   i+=`<rect x="${cx-42}" y="${cy+36}" width="84" height="20" rx="10" fill="#0b1026" stroke="#56637F" stroke-width="2"/><line x1="${cx-9}" y1="${cy+36}" x2="${cx-9}" y2="${cy+56}" stroke="#fff" stroke-width="2"/><line x1="${cx+9}" y1="${cy+36}" x2="${cx+9}" y2="${cy+56}" stroke="#fff" stroke-width="2"/><circle id="tc-b" cx="${cx}" cy="${cy+46}" r="7" fill="#fff"/>`;
+   s+=gface(cx,cy,R,"tc",i)}
+  /* heading */
+  {const cx=330,cy=270;let c="";for(let d=0;d<360;d+=10){c+=gtick(cx,cy,R-1,d,d%30?6:11,d%30?1.5:2.5)}
+   ["N","3","6","E","12","15","S","21","24","W","30","33"].forEach((t,k)=>{c+=`<g transform="rotate(${k*30} ${cx} ${cy})"><text x="${cx}" y="${cy-R+30}" text-anchor="middle" font-size="${t.length===1&&isNaN(+t)?17:13}" font-weight="900" fill="${t==="N"?"#FF6B6B":"#fff"}" font-family="Nunito,Arial">${t}</text></g>`});
+   let i=`<g id="hi-c" transform="rotate(0 ${cx} ${cy})">${c}</g><path d="M${cx},${cy-R+2} l-7,-11 h14 z" fill="#FFC23D"/><path d="M${cx-30},${cy+4} h60 M${cx},${cy-24} v46 M${cx-12},${cy+20} h24" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/><text id="hi-t" x="${cx}" y="${cy+52}" text-anchor="middle" font-size="14" font-weight="800" fill="#7FE6F0" font-family="Nunito,Arial">360°</text>`;
+   s+=gface(cx,cy,R,"hi",i)}
+  /* vertical speed */
+  {const cx=550,cy=270,a=v=>-90+Math.max(-2000,Math.min(2000,v))/2000*170;let i="";
+   for(let v=-2000;v<=2000;v+=250)i+=gtick(cx,cy,R-1,a(v),v%500?6:11,v%500?1.5:2.5);
+   [[0,"0"],[1000,"1"],[2000,"2"],[-1000,"1"],[-2000,"2"]].forEach(([v,t])=>i+=gtxt(cx,cy,R-24,a(v),t,15));
+   i+=`<text x="${cx+22}" y="${cy-26}" font-size="11" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">UP</text><text x="${cx+22}" y="${cy+36}" font-size="11" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">DN</text><text x="${cx+8}" y="${cy+4}" font-size="10" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">x1000 ft/min</text>`+gneedle("vsi-n",cx,cy,R-12,"#fff",4);
+   s+=gface(cx,cy,R,"vsi",i)}
+  /* tach */
+  {const cx=130,cy=430,r=r2+4,a=v=>-135+v/3000*270;let i=garc(cx,cy,r-7,a(2100),a(2500),"#3DDC97",5)+garc(cx,cy,r-7,a(2700),a(3000),"#FF4D4D",5);
+   for(let v=0;v<=3000;v+=250)i+=gtick(cx,cy,r,a(v),v%1000?4:8,v%1000?1:2);for(let v=0;v<=3000;v+=1000)i+=gtxt(cx,cy,r-20,a(v),v/1000,13);
+   i+=`<text x="${cx}" y="${cy+32}" text-anchor="middle" font-size="10" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">RPM x1000</text>`+gneedle("tach-n",cx,cy,r-8,"#fff",3);
+   s+=gface(cx,cy,r,"tach",i)}
+  /* fuel */
+  {const cx=330,cy=430,r=r2+4,a=v=>-70+v/40*140;let i=garc(cx,cy,r-7,a(0),a(5),"#FF4D4D",5)+garc(cx,cy,r-7,a(5),a(40),"#3DDC97",5);
+   [[0,"E"],[20,"½"],[40,"F"]].forEach(([v,t])=>i+=gtick(cx,cy,r,a(v),8,2)+gtxt(cx,cy,r-20,a(v),t,14));
+   i+=`<text x="${cx}" y="${cy+32}" text-anchor="middle" font-size="10" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">FUEL</text>`+gneedle("fuel-n",cx,cy,r-8,"#fff",3);
+   s+=gface(cx,cy,r,"fuel",i)}
+  /* oil */
+  {const cx=530,cy=430,r=r2+4,a=v=>-120+v/100*240;let i=garc(cx,cy,r-7,a(0),a(25),"#FF4D4D",5)+garc(cx,cy,r-7,a(50),a(90),"#3DDC97",5)+garc(cx,cy,r-7,a(90),a(100),"#FF4D4D",5);
+   for(let v=0;v<=100;v+=25)i+=gtick(cx,cy,r,a(v),7,2)+gtxt(cx,cy,r-19,a(v),v,11);
+   i+=`<text x="${cx}" y="${cy+32}" text-anchor="middle" font-size="10" font-weight="800" fill="#9fb0d6" font-family="Nunito,Arial">OIL PSI</text>`+gneedle("oil-n",cx,cy,r-8,"#fff",3);
+   s+=gface(cx,cy,r,"oil",i)}
+  return s+`</svg>`;
+}
+function updatePanel(root,v){
+  const rot=(id,deg,cx,cy)=>{const e=root.querySelector("#"+id);if(e)e.setAttribute("transform",`rotate(${deg} ${cx} ${cy})`)};
+  rot("asi-n",-135+Math.max(0,Math.min(170,v.ias))/160*270,110,95);
+  const att=root.querySelector("#att-h");if(att)att.setAttribute("transform",`rotate(${-v.roll} 330 95) translate(0 ${(v.pitch*2.2).toFixed(1)})`);
+  rot("alt-h",(v.alt%1000+1000)%1000/1000*360,550,95);rot("alt-k",(v.alt/10000)*360,550,95);
+  const at=root.querySelector("#alt-t");if(at)at.textContent=Math.round(v.alt/10)*10;
+  rot("tc-p",Math.max(-30,Math.min(30,v.turn/3*20)),110,270);
+  const tb=root.querySelector("#tc-b");if(tb)tb.setAttribute("cx",110+Math.max(-1,Math.min(1,v.ball))*30);
+  rot("hi-c",-v.hdg,330,270);const ht=root.querySelector("#hi-t");if(ht)ht.textContent=String(Math.round(((v.hdg%360)+360)%360)||360).padStart(3,"0")+"°";
+  rot("vsi-n",-90+Math.max(-2000,Math.min(2000,v.vs))/2000*170,550,270);
+  rot("tach-n",-135+Math.max(0,Math.min(3000,v.rpm))/3000*270,130,430);
+  rot("fuel-n",-70+Math.max(0,Math.min(40,v.fuel))/40*140,330,430);
+  rot("oil-n",-120+Math.max(0,Math.min(100,v.oil))/100*240,530,430);
+}
+/* ---- flight model ---- */
+function newFlight(){return {pitch:0,roll:0,hdg:360,ias:0,alt:0,vs:0,thr:0,mix:1,flaps:0,trim:0,ground:true,fuel:40,pi:0,ri:0,ru:0,stalled:false,over:false,touch:null,crashed:false,turn:0,ball:0,rpm:0,oil:0,t:0,lesson:0,lvl:0,lvlT:0,msgT:0}}
+function stepFlight(F,dt,assist){
+  const fd=F.flaps;F.t+=dt;
+  const run=F.fuel>0&&F.mix>0.12;const pow=run?F.thr*(0.7+0.3*Math.min(1,F.mix/0.8)):0;
+  F.fuel=Math.max(0,F.fuel-0.022*F.thr*(0.5+0.5*F.mix)*dt);
+  const rpmT=run?800+pow*1800:0;F.rpm+=(rpmT-F.rpm)*Math.min(1,3*dt);F.oil=F.rpm>200?35+F.rpm/2600*45:0;
+  if(F.crashed)return;
+  if(F.ground){
+    const tgt=pow*80;if(F.ias<tgt)F.ias=Math.min(tgt,F.ias+(7*pow+0.3)*dt);else F.ias=Math.max(tgt,F.ias-5*dt);
+    if(F.ias>35){F.pitch=Math.max(0,Math.min(14,F.pitch+F.pi*20*dt-(F.pi===0?8*dt:0)))}else F.pitch=Math.max(0,F.pitch-8*dt);
+    F.roll=0;F.hdg=(F.hdg+(F.ias>3?F.ru*6*dt:0)+720)%360;F.vs=0;F.alt=0;F.turn=0;F.ball=0;
+    const rotV=fd>=1?50:55;
+    if(F.ias>=rotV-4&&F.pitch>=5){F.ground=false;F.vs=200}
+    return;
+  }
+  const peq=2+F.trim*3;
+  F.pitch+=((peq+F.pi*12)-F.pitch)*Math.min(1,1.3*dt);
+  F.roll+=F.ri*35*dt;if(assist&&F.ri===0)F.roll-=Math.sign(F.roll)*Math.min(Math.abs(F.roll),10*dt);F.roll=Math.max(-60,Math.min(60,F.roll));
+  const stallV=48-3*fd;F.stalled=F.ias<stallV;
+  if(F.stalled)F.pitch-=22*dt;
+  const Vt=62+pow*48-2.4*F.pitch-5*fd;F.ias+=(Vt-F.ias)*0.18*dt;F.ias=Math.max(0,F.ias);F.over=F.ias>135;
+  const aoa=Math.max(0,Math.min(14,2+(100-F.ias)*0.12-1.2*fd)),bankLoss=(1/Math.cos(F.roll*Math.PI/180)-1)*3;
+  let gam=F.pitch-aoa-bankLoss;const vsT=F.ias*101.27*Math.sin(gam*Math.PI/180)-(F.stalled?500:0);
+  F.vs+=(vsT-F.vs)*Math.min(1,0.9*dt);F.alt+=F.vs/60*dt;
+  const rate=(9.81*Math.tan(F.roll*Math.PI/180)/Math.max(30,F.ias*0.5144))*180/Math.PI;
+  F.turn=rate;F.hdg=((F.hdg+rate*dt+F.ru*1.5*dt)%360+360)%360;
+  F.ball=Math.max(-1,Math.min(1,F.roll/30*0.9-F.ru*0.9));
+  if(F.alt<=0){
+    const v=F.vs;F.alt=0;F.ground=true;const bad=Math.abs(F.roll)>12;
+    let kind=v>-300&&!bad?"smooth":v>-600&&!bad?"firm":v>-900&&!bad?"hard":"crash";
+    F.touch={vs:Math.round(v),kind};if(kind==="crash")F.crashed=true;
+    if(kind==="hard"){F.ground=false;F.alt=15;F.vs=250}
+    F.roll=0;F.pitch=Math.min(F.pitch,6);
+  }
+}
+const LESSONS=[
+ {id:"L1",t:"Start the engine",say:"Lesson one. Push the throttle all the way in. Watch the tachometer. The needle shows the engine speeding up.",watch:["tach"],xp:10,ok:F=>F.ground&&F.thr>=0.9},
+ {id:"L2",t:"Take off",say:"Lesson two. You are rolling! Watch the airspeed indicator. At 55 knots, pull back the yoke to lift off.",watch:["asi"],xp:10,ok:F=>!F.ground},
+ {id:"L3",t:"Climb to 1,500 feet",say:"Lesson three. Keep pulling back a little to climb. Watch the altimeter go up and the vertical speed needle point up. Do not let the airspeed get too low.",watch:["alt","vsi"],xp:10,ok:F=>!F.ground&&F.alt>=1500},
+ {id:"L4",t:"Level off",say:"Lesson four. Level off. Push the yoke forward a little, and pull the throttle back some. When the vertical speed needle sits near zero for a few seconds, you are level.",watch:["vsi","att"],xp:10,ok:F=>!F.ground&&F.alt>=1200&&F.lvl>=4},
+ {id:"L5",t:"Turn right to 090",say:"Lesson five. Turn right to heading zero nine zero, east. Bank right and watch the turn coordinator and the heading indicator. Level the wings when you get close.",watch:["tc","hi"],xp:10,ok:F=>!F.ground&&Math.abs(((F.hdg-90+540)%360)-180)<9&&Math.abs(F.roll)<8},
+ {id:"L6",t:"Flaps and slow down",say:"Lesson six. Pull the throttle back and set the flaps to 20 degrees. Watch the airspeed. The white arc is the flap speed.",watch:["asi"],xp:10,ok:F=>!F.ground&&F.flaps>=2&&F.ias<85&&F.ias>45},
+ {id:"L7",t:"Land the plane",say:"Lesson seven. Land! Keep the nose a little up, keep the wings level, and sink slowly. Try to touch down with a vertical speed under 300 feet per minute.",watch:["vsi","alt"],xp:20,ok:F=>F.ground&&F.touch&&F.touch.kind==="smooth"&&F.t>5}
+];
+let ckTab="learn";
+function cockpit(){
+  const tabs=el(`<div class="tabs"></div>`);
+  [["learn","🔍 Learn the Cockpit"],["find","🎯 Find It"],["fly","🛩️ Fly"]].forEach(([k,l])=>{const b=el(`<button class="tab ${ckTab===k?"on":""}"></button>`);b.textContent=l;b.onclick=()=>{ckTab=k;go("cockpit")};tabs.append(b)});
+  screen.append(tabs);
+  if(ckTab==="fly")ckFly();else ckLearn(ckTab==="find");
+  const back=el(`<button class="btn ghost" style="margin:14px 0">🌬️ Back to Sim Lab</button>`);back.onclick=()=>go("sim");screen.append(back);
+}
+function demoLoop(root){
+  const t0=performance.now();
+  (function f(now){if(!root.isConnected)return;const t=(now-t0)/1000;
+    updatePanel(root,{ias:92+8*Math.sin(t/3),roll:12*Math.sin(t/5),pitch:3*Math.sin(t/4),alt:3400+300*Math.sin(t/7),vs:500*Math.sin(t/4),hdg:(t*6)%360,turn:2*Math.sin(t/5),ball:0.3*Math.sin(t/6),rpm:2300+100*Math.sin(t/2),fuel:28,oil:68});
+    requestAnimationFrame(f)})(t0);
+}
+function ckLearn(quiz){
+  if(!S.ck)S.ck={};
+  const holder=el(`<div class="panel" style="padding:10px"></div>`);holder.innerHTML=panelSVG();screen.append(holder);
+  const root=holder.querySelector("#panel");demoLoop(root);
+  const info=el(`<div class="panel"><h2 id="pn" style="margin-top:0"></h2><p id="pw" class="fact" style="margin:0 0 8px"></p><p id="pt" class="hint" style="margin:0 0 10px"></p><div id="pb"></div></div>`);
+  const cards=el(`<div class="panel"><h2 style="margin-top:0">🕹️ Controls</h2><div class="chips"></div></div>`);
+  const btnMap={};
+  const sel=id=>{root.querySelectorAll(".gp").forEach(g=>g.classList.toggle("sel",g.dataset.part===id));Object.entries(btnMap).forEach(([k,b])=>b.classList.toggle("on",k===id))};
+  let target=null,round=0,score=0;
+  const prog=el(`<p class="hint" style="margin:0"></p>`);
+  const progress=()=>{const n=Object.keys(S.ck).length;prog.textContent=`⭐ Explored ${n} of ${PGAUGES.length+PCONTROLS.length}`};
+  function show(id){
+    const P=PARTS[id];sel(id);$("#pn").textContent=P.ic+" "+P.n;$("#pw").textContent=P.what;$("#pt").textContent="💡 "+P.tip;
+    const pb=$("#pb");pb.innerHTML="";
+    const h=el(`<button class="btn ghost">🔊 Hear it</button>`);h.onclick=()=>say(P.n+". "+P.what+" "+P.tip,"ck-"+id);
+    const a=el(`<button class="btn ghost" style="margin-left:10px">💬 Ask Orbit</button>`);a.onclick=()=>go("ask","What does the "+P.n+" do in a small airplane?");pb.append(h,a);
+    say(P.n+". "+P.what+" "+P.tip,"ck-"+id);
+    if(!S.ck[id]){S.ck[id]=1;save();progress();if(Object.keys(S.ck).length>=PGAUGES.length+PCONTROLS.length&&addXP(30,"ck-tour"))orbitSays("You learned every part! Great job. 30 XP!")}
+  }
+  function pick(id){
+    if(!quiz){show(id);return}
+    if(!target)return;
+    if(id===target){score++;sel(id);addXP(5,"cq-"+id);orbitSays("Yes! That is the "+PARTS[id].n+".");setTimeout(next,1400)}
+    else{orbitSays("Not that one. Try again!");}
+  }
+  function next(){
+    if(!root.isConnected)return;
+    if(round>=5){const m=`You found ${score} of 5. `+(score>=4?"You are a cockpit expert!":"Keep practicing in Learn mode!");$("#pn").textContent="🏁 Quiz done";$("#pw").textContent=m;$("#pt").textContent="";$("#pb").innerHTML="";const r=el(`<button class="btn gold">🔄 Play again</button>`);r.onclick=()=>go("cockpit");$("#pb").append(r);
+      if(score>=4&&addXP(25,"ck-quiz"))say(m+" You earned 25 XP.","ck-qdone");else say(m,"ck-qdone");sel("");target=null;return}
+    const ids=[...PGAUGES,...PCONTROLS],pool=ids.filter(i=>i!==target);target=pool[Math.floor(Math.random()*pool.length)];round++;
+    sel("");$("#pn").textContent=`🎯 Question ${round} of 5`;$("#pw").textContent=PARTS[target].q;$("#pt").textContent="Tap a gauge on the panel, or a control below.";$("#pb").innerHTML="";
+    const h=el(`<button class="btn ghost">🔊 Hear it</button>`);h.onclick=()=>say(PARTS[target].q,"cq-"+target);$("#pb").append(h);
+    say(PARTS[target].q,"cq-"+target);
+  }
+  PCONTROLS.forEach(id=>{const b=el(`<button class="dopt"></button>`);b.textContent=PARTS[id].ic+" "+PARTS[id].n;b.onclick=()=>pick(id);cards.querySelector(".chips").append(b);btnMap[id]=b});
+  root.querySelectorAll(".gp").forEach(g=>g.onclick=()=>pick(g.dataset.part));
+  screen.append(info,cards,prog);progress();
+  if(quiz){speak("Find it!","Find it! I will ask five questions. Tap the right gauge or control.","ck-find");setTimeout(()=>{if(root.isConnected)next()},3500)}
+  else{speak("Tap any gauge to learn.","Welcome to the cockpit! Tap any gauge or control and I will tell you what it does.","ck-learn");$("#pn").textContent="👆 Tap a part";$("#pw").textContent="Tap any round gauge above, or a control below, to hear what it does.";$("#pt").textContent="The gauges are moving so you can see them work.";}
+}
+/* ---- flying ---- */
+function drawView(ctx,F){
+  const W=640,H=250,cx=320,cy=125;ctx.clearRect(0,0,W,H);ctx.save();ctx.beginPath();ctx.rect(0,0,W,H);ctx.clip();
+  ctx.translate(cx,cy);ctx.rotate(-F.roll*Math.PI/180);const hy=F.pitch*5;
+  const sk=ctx.createLinearGradient(0,-500,0,hy);sk.addColorStop(0,"#2F78D6");sk.addColorStop(1,"#BFE3FF");ctx.fillStyle=sk;ctx.fillRect(-700,-700,1400,700+hy);
+  ctx.fillStyle="rgba(255,255,255,.85)";for(let i=0;i<5;i++){const x=(((i*260-F.hdg*5)%1300)+1300)%1300-650,y=hy-70-i*22%90;ctx.beginPath();ctx.ellipse(x,y,50,13,0,0,7);ctx.fill()}
+  ctx.fillStyle="#4F8A3C";ctx.fillRect(-700,hy,1400,700);
+  ctx.strokeStyle="rgba(255,255,255,.18)";ctx.lineWidth=2;for(let i=-9;i<=9;i++){ctx.beginPath();ctx.moveTo(0,hy);ctx.lineTo(i*150,hy+320);ctx.stroke()}
+  const k=Math.max(0.35,1-Math.min(F.alt,2000)/2200);ctx.fillStyle="#3A3F4C";ctx.beginPath();ctx.moveTo(-5*k,hy);ctx.lineTo(5*k,hy);ctx.lineTo(120*k+30,hy+320);ctx.lineTo(-120*k-30,hy+320);ctx.closePath();ctx.fill();
+  ctx.strokeStyle="#fff";ctx.lineWidth=3;ctx.setLineDash([14,16]);ctx.lineDashOffset=-(F.t*80%30);ctx.beginPath();ctx.moveTo(0,hy);ctx.lineTo(0,hy+320);ctx.stroke();ctx.setLineDash([]);
+  ctx.restore();
+  ctx.fillStyle="#121A3E";ctx.beginPath();ctx.moveTo(0,H);ctx.lineTo(0,H-34);ctx.quadraticCurveTo(cx,H-62,W,H-34);ctx.lineTo(W,H);ctx.closePath();ctx.fill();
+  ctx.strokeStyle="#FFC23D";ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(cx-24,cy);ctx.lineTo(cx-8,cy);ctx.moveTo(cx+8,cy);ctx.lineTo(cx+24,cy);ctx.moveTo(cx,cy-8);ctx.lineTo(cx,cy+8);ctx.stroke();
+  if(F.stalled){ctx.fillStyle=(Math.floor(F.t*4)%2)?"#FF4D4D":"#fff";ctx.font="900 34px Nunito,Arial";ctx.textAlign="center";ctx.fillText("STALL!",cx,60);ctx.textAlign="left"}
+  if(F.over){ctx.fillStyle="#FFC23D";ctx.font="900 26px Nunito,Arial";ctx.textAlign="center";ctx.fillText("TOO FAST!",cx,60);ctx.textAlign="left"}
+}
+function ckFly(){
+  const F=newFlight();window.__F=F;let assist=true;
+  speak("Let's fly!","Let's fly! I will teach you one lesson at a time. Use the buttons to fly. Tap any gauge to hear what it does.","ck-fly");
+  const lesson=el(`<div class="panel" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="flex:1 1 220px"><div class="hint" id="lN" style="margin:0"></div><b id="lT" style="font-size:24px"></b><p id="lS" style="margin:6px 0 0;font-size:19px"></p></div></div>`);
+  const lh=el(`<button class="btn ghost">🔊</button>`);lh.setAttribute("aria-label","Hear the lesson");lesson.append(lh);screen.append(lesson);
+  const split=el(`<div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start"><div id="fl" style="flex:1 1 380px;min-width:0"></div><div id="fr" style="flex:1 1 380px;min-width:0"></div></div>`);screen.append(split);
+  const L=$("#fl"),R=$("#fr");
+  const cv=el(`<canvas width="640" height="250" style="width:100%;border-radius:18px;display:block" role="img" aria-label="View out the cockpit window"></canvas>`);const cb=el(`<div class="panel" style="padding:8px"></div>`);cb.append(cv);L.append(cb);
+  const ph=el(`<div class="panel" style="padding:10px"></div>`);ph.innerHTML=panelSVG();R.append(ph);const root=ph.querySelector("#panel");
+  root.querySelectorAll(".gp").forEach(g=>g.onclick=()=>{const P=PARTS[g.dataset.part];say(P.n+". "+P.what,"ck-"+g.dataset.part)});
+  /* controls */
+  const pad=el(`<div class="panel"><h2 style="margin-top:0">🕹️ Yoke and pedals (hold the buttons)</h2><div class="padg" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px"></div></div>`);
+  const hold=(label,key,val,aria)=>{const b=el(`<button class="btn ghost holdb" style="justify-content:center;padding:14px 8px;font-size:19px;touch-action:none;user-select:none"></button>`);b.textContent=label;b.setAttribute("aria-label",aria);
+    const on=e=>{e.preventDefault();F[key]=val;b.classList.add("on")},off=()=>{if(F[key]===val)F[key]=0;b.classList.remove("on")};
+    b.onpointerdown=on;b.onpointerup=off;b.onpointerleave=off;b.onpointercancel=off;b.holdKey=[key,val];return b};
+  const g=pad.querySelector(".padg");
+  const hb={};[["pi",1,"⬇️ Pull back: nose up","Pull back"],["ri",-1,"↶ Bank left","Bank left"],["ri",1,"↷ Bank right","Bank right"],["pi",-1,"⬆️ Push: nose down","Push forward"],["ru",-1,"◀ Left pedal","Left pedal"],["ru",1,"Right pedal ▶","Right pedal"]].forEach(([k,v,l,a])=>{const b=hold(l,k,v,a);g.append(b);hb[k+v]=b});
+  L.append(pad);
+  const thr=slider("🔴 Throttle",0,100,5,0,"%",v=>{F.thr=v/100}),mix=slider("🟥 Mixture (rich → lean)",0,100,5,100,"%",v=>{F.mix=v/100});
+  L.append(thr.w,mix.w);
+  const fl=el(`<div class="panel"><h2 style="margin-top:0">🪽 Flaps</h2><div class="chips"></div></div>`);const fb=[];
+  [["Up",0],["10°",1],["20°",2],["30°",3]].forEach(([n,v])=>{const b=el(`<button class="dopt"></button>`);b.textContent=n;b.onclick=()=>{F.flaps=v;paint()};fl.querySelector(".chips").append(b);fb.push([v,b])});
+  const tr=el(`<div class="panel"><h2 style="margin-top:0">🎛️ Trim</h2><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><button class="btn ghost" id="trd">⬇️ Nose down</button><b id="trv"></b><button class="btn ghost" id="tru">⬆️ Nose up</button></div></div>`);
+  const as=el(`<div class="panel"><div class="chips"><button class="dopt" id="asb"></button><button class="dopt" id="rst">🔄 Restart flight</button></div><p class="hint" style="margin:10px 0 0">Keys: S or ↓ pull back, W or ↑ push, A and D or ← → bank, Q and E pedals.</p></div>`);
+  L.append(fl,tr,as);
+  const paint=()=>{fb.forEach(([v,b])=>b.classList.toggle("on",F.flaps===v));$("#trv").textContent=(F.trim>0?"+":"")+F.trim;$("#asb").textContent=assist?"✅ Helper: wings level themselves":"⬜ Helper: wings level themselves";$("#asb").classList.toggle("on",assist)};
+  tr.querySelector("#trd").onclick=()=>{F.trim=Math.max(-3,F.trim-1);paint()};tr.querySelector("#tru").onclick=()=>{F.trim=Math.min(3,F.trim+1);paint()};
+  $("#asb").onclick=()=>{assist=!assist;paint()};
+  $("#rst").onclick=()=>{go("cockpit")};
+  paint();
+  const keys={ArrowDown:["pi",1],s:["pi",1],ArrowUp:["pi",-1],w:["pi",-1],ArrowLeft:["ri",-1],a:["ri",-1],ArrowRight:["ri",1],d:["ri",1],q:["ru",-1],e:["ru",1]};
+  const kd=e=>{if(!cv.isConnected){window.removeEventListener("keydown",kd);window.removeEventListener("keyup",ku);return}
+    if(/INPUT|TEXTAREA/.test((e.target.tagName||"")))return;const m=keys[e.key]||keys[(e.key||"").toLowerCase()];if(m){e.preventDefault();F[m[0]]=m[1];const b=hb[m[0]+m[1]];if(b)b.classList.add("on")}};
+  const ku=e=>{const m=keys[e.key]||keys[(e.key||"").toLowerCase()];if(m){F[m[0]]=0;const b=hb[m[0]+m[1]];if(b)b.classList.remove("on")}};
+  window.addEventListener("keydown",kd);window.addEventListener("keyup",ku);
+  /* lessons */
+  let spoke=-1,hintT=0;
+  const showLesson=()=>{const ls=LESSONS[Math.min(F.lesson,LESSONS.length-1)];
+    if(F.lesson>=LESSONS.length){$("#lN").textContent="🏆 All lessons done";$("#lT").textContent="You are a pilot!";$("#lS").textContent="Keep flying and try your own flight. Tap any gauge to hear it again.";root.querySelectorAll(".gp").forEach(g=>g.classList.remove("hl"));return}
+    $("#lN").textContent=`Lesson ${F.lesson+1} of ${LESSONS.length}`;$("#lT").textContent=ls.t;$("#lS").textContent=ls.say.replace(/^Lesson \w+\. /,"");
+    root.querySelectorAll(".gp").forEach(gp=>gp.classList.toggle("hl",ls.watch.includes(gp.dataset.part)));
+    if(spoke!==F.lesson){spoke=F.lesson;say(ls.say,"ck-"+ls.id)}};
+  lh.onclick=()=>{const ls=LESSONS[Math.min(F.lesson,LESSONS.length-1)];say(ls.say,"ck-"+ls.id)};
+  showLesson();
+  const hint=(txt,id)=>{if(F.t-hintT<7)return;hintT=F.t;orbitSays(txt,id)};
+  const ctx=cv.getContext&&cv.getContext("2d");
+  let tl=performance.now(),acc=0,done=false;
+  function loop(now){
+    if(!cv.isConnected)return;
+    const dt=Math.min(0.05,(now-tl)/1000);tl=now;
+    for(let i=0;i<2;i++)stepFlight(F,dt*1.25,assist);
+    updatePanel(root,F);if(ctx)drawView(ctx,F);
+    /* lesson logic */
+    if(!F.ground&&F.alt>=1200&&Math.abs(F.vs)<150)F.lvlT+=dt;else F.lvlT=0;F.lvl=F.lvlT;
+    if(F.lesson<LESSONS.length){const ls=LESSONS[F.lesson];
+      if(ls.ok(F)){if(addXP(ls.xp,"ck-"+ls.id)){}F.lesson++;orbitSays("Lesson done! "+(F.lesson<LESSONS.length?"Next one!":"You did them all!"));if(F.lesson>=LESSONS.length&&addXP(30,"ck-done"))say("You finished every lesson. You are a pilot! 30 bonus XP.","ck-pilot");setTimeout(()=>{if(cv.isConnected)showLesson()},2200)}}
+    if(F.touch&&!F.touch.said){F.touch.said=1;const k=F.touch.kind;const m=k==="smooth"?"Smooth landing! Great job.":k==="firm"?"A firm landing. Try to sink slower next time.":k==="hard"?"Bounce! That was a hard landing. Add power and try again.":"Crash! You came down too fast. Press Restart flight to try again.";orbitSays(m,"ck-land-"+k)}
+    if(F.stalled)hint("Stall warning! Push the nose down and add power.","ck-h-stall");
+    else if(F.over)hint("Too fast! Pull the throttle back.","ck-h-over");
+    else if(!F.ground&&F.alt<400&&F.vs<-900)hint("Sinking too fast! Pull back a little.","ck-h-sink");
+    else if(F.fuel<=0&&F.t>2)hint("Out of fuel! Glide down and land.","ck-h-fuel");
+    raf=requestAnimationFrame(loop);
+  }
+  let raf=requestAnimationFrame(loop);
+}
+
+/* ================= daily picks ================= */
+function dayIndex(){const d=new Date();return Math.floor((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(d.getFullYear(),0,0))/864e5)}
+let factOffset=0;
+const factIdx=()=>(dayIndex()+factOffset)%FACTS.length;
+function todayItems(){
+  const di=dayIndex(),fi=factIdx(),ch=CHALLENGES[di%CHALLENGES.length],tp=TOPICS[di%TOPICS.length],lc=tp.cards[di%tp.cards.length],vd=VIDEOS[di%VIDEOS.length];
+  return [
+   {tag:"Fact",type:"fact",icon:"💡",title:"Fact of the Day",sub:"+10 XP",id:"fact-"+todayStr(),go:()=>go("fact"),speak:"Fact of the Day"},
+   {tag:"Challenge",type:"challenge",icon:ch.icon,title:ch.title,sub:`+${ch.xp} XP · ${ch.min} min`,id:ch.id,go:()=>go("challenge",ch.id),speak:ch.title+". A hands on challenge."},
+   {tag:"Lesson",type:"lesson",icon:tp.icon,title:lc.t,sub:"+10 XP",id:"l-"+tp.id+"-"+lc.t,go:()=>go("topic",tp.id),speak:lc.t},
+   {tag:"Video",type:"video",icon:vd.icon,title:vd.t,sub:"+15 XP",id:vd.id,go:()=>go("videos"),speak:vd.t},
+   {tag:"Trivia",type:"trivia",icon:"🧠",title:"Trivia Round",sub:"+10 XP each right answer",id:"trivia-"+todayStr(),go:()=>go("trivia"),speak:"Trivia round"},
+   {tag:"Design",type:"design",icon:"✈️",title:"Plane Design Lab",sub:"+10 to +40 XP",id:"design-card",go:()=>go("design"),speak:"Plane Design Lab. Design your own plane."},
+   {tag:"Cockpit",type:"design",icon:"🛩️",title:"Cockpit Trainer",sub:"Learn the gauges and fly",id:"ck-card",go:()=>go("cockpit"),speak:"Cockpit Trainer. Learn the gauges and fly a plane."},
+   {tag:"Ask",type:"ask",icon:"💬",title:"Ask Orbit anything",sub:"Talk or type",id:"ask-x",go:()=>go("ask"),speak:"Ask Orbit anything"}
+  ];
+}
+
+/* ================= screens ================= */
+let homeTab="today";
+function home(){
+  orbitSays(S.xp===0?"Hi! I'm Orbit. Pick a mission card to start. Tap the speaker to hear it.":"Welcome back! Pick a mission.","welcome");
+  const tabs=el(`<div class="tabs"><button class="tab ${homeTab==="today"?"on":""}" data-t="today">Today's Missions</button><button class="tab ${homeTab==="done"?"on":""}" data-t="done">Completed</button><button class="tab ${homeTab==="results"?"on":""}" data-t="results">Quiz Results</button></div>`);
+  tabs.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{homeTab=b.dataset.t;go("home")});
+  screen.append(tabs);
+  if(homeTab==="today"){
+    const g=el(`<div class="grid"></div>`);
+    todayItems().forEach(it=>g.append(card({...it,done:S.done[it.id]})));
+    screen.append(g);
+  }else if(homeTab==="done"){
+    const items=[...todayItems(),...CHALLENGES.map(c=>({tag:"Challenge",type:"challenge",icon:c.icon,title:c.title,sub:"",id:c.id,go:()=>go("challenge",c.id),speak:c.title}))].filter(i=>S.done[i.id]);
+    if(!items.length)screen.append(el(`<div class="panel">Nothing yet. Finish a mission and it shows up here! ⭐</div>`));
+    const g=el(`<div class="grid"></div>`);items.forEach(it=>g.append(card({...it,done:true})));screen.append(g);
+  }else{
+    screen.append(el(`<div class="panel"><h2 style="margin-top:0">🧠 Best trivia score</h2><p class="fact" style="margin:0">${S.best} out of 5</p></div>`));
+  }
+}
+function library(){
+  orbitSays("This is the library. Pick a group.","library");
+  const cats=el(`<div class="cats"></div>`);
+  [["🎬","Videos","#C23B3B","videos"],["🧪","Challenges","#E06A00","#ch"],["📘","Lessons","#121A3E","lessons"],["✈️","Design Lab","#7A5AF0","design"],["🌬️","Sim Lab","#0E8FA8","sim"],["🛩️","Cockpit","#12936F","cockpit"],["🧠","Trivia","#0E8FA8","trivia"]].forEach(([i,l,c,to])=>{
+    const b=el(`<button class="cat" style="background:${c}">${i} ${l}</button>`);b.onclick=()=>{if(to==="#ch")document.getElementById("chrow").scrollIntoView({behavior:"smooth"});else go(to)};cats.append(b)});
+  screen.append(cats);
+  screen.append(el(`<h2 id="chrow">🧪 Challenges</h2>`));
+  const r1=el(`<div class="row-scroll"></div>`);
+  CHALLENGES.forEach(c=>r1.append(card({tag:"Challenge",type:"challenge",icon:c.icon,title:c.title,sub:`+${c.xp} XP · ${c.min} min`,done:S.done[c.id],go:()=>go("challenge",c.id),speak:c.title})));
+  screen.append(r1);
+  screen.append(el(`<h2>📘 Lessons</h2>`));
+  const r2=el(`<div class="row-scroll"></div>`);
+  TOPICS.forEach(t=>r2.append(card({tag:"Lesson",type:"lesson",icon:t.icon,title:t.name,sub:"3 cards",go:()=>go("topic",t.id),speak:t.name})));
+  screen.append(r2);
+  screen.append(el(`<h2>🎬 Videos</h2>`));
+  const r3=el(`<div class="row-scroll"></div>`);
+  VIDEOS.forEach(v=>r3.append(card({tag:"Video",type:"video",icon:v.icon,title:v.t,sub:"+15 XP",done:S.done[v.id],go:()=>go("videos"),speak:v.t})));
+  screen.append(r3);
+}
+function lessons(){go("library")}
+function fact(){
+  const i=factIdx(),f=FACTS[i];
+  speak("Here is today's fact!","Here is today's fact. "+f,"fact-"+i);
+  screen.append(backBtn("home"));
+  const p=el(`<div class="panel"><h1>💡 Fact of the Day</h1><p class="fact"></p></div>`);p.querySelector(".fact").textContent=f;
+  const r=el(`<div style="display:flex;gap:12px;flex-wrap:wrap"></div>`);
+  const more=el(`<button class="btn">➡️ Another fact</button>`);more.onclick=()=>{factOffset++;go("fact")};
+  const a=el(`<button class="btn ghost">💬 Ask Orbit about it</button>`);a.onclick=()=>go("ask",f);
+  const g=el(`<button class="btn mint">⭐ Got it! +10 XP</button>`);
+  g.onclick=()=>{if(addXP(10,"fact-"+todayStr()))orbitSays("Nice! You earned 10 XP.");else orbitSays("You already got today's star!");g.disabled=true};
+  r.append(more,a,g);p.append(r);screen.append(p);
+}
+function topic(id){
+  const t=TOPICS.find(x=>x.id===id);
+  speak(t.name,t.name+". "+t.cards.map(c=>c.t+". "+c.x).join(" "),id+"-all");
+  screen.append(backBtn("library"));
+  screen.append(el(`<div class="bighead"><h1>${t.icon} ${t.name}</h1><div class="pills"><span class="pill">3 cards</span><span class="pill">+10 XP each</span></div></div>`));
+  t.cards.forEach((c,i)=>{
+    const lid="l-"+id+"-"+c.t;
+    const d=el(`<div class="panel"><h2 style="margin-top:0"></h2><p class="fact" style="font-size:26px"></p></div>`);
+    d.querySelector("h2").textContent=(S.done[lid]?"✅ ":"")+c.t;d.querySelector("p").textContent=c.x;
+    const r=el(`<div style="display:flex;gap:12px;flex-wrap:wrap"></div>`);
+    const a=el(`<button class="btn ghost">💬 Ask Orbit more</button>`);a.onclick=()=>go("ask",c.ask);
+    const g=el(`<button class="btn mint">⭐ Got it</button>`);g.onclick=()=>{if(addXP(10,lid)){orbitSays("Nice! +10 XP.");d.querySelector("h2").textContent="✅ "+c.t}g.disabled=true};
+    r.append(a,g);d.append(r);screen.append(d);
+  });
+}
+function challenge(id){
+  const c=CHALLENGES.find(x=>x.id===id);
+  speak(c.title,c.title+". "+c.intro+(c.adult?" "+c.adult:"")+" Tap each step when you finish it.",id+"-intro");
+  screen.append(backBtn("library"));
+  screen.append(el(`<div class="bighead"><h1>${c.icon} ${c.title}</h1><div class="pills"><span class="pill">⭐ ${c.xp} XP</span><span class="pill">⏱ ${c.min} min</span><span class="pill">📶 ${c.diff}</span></div></div>`));
+  const intro=el(`<div class="panel"><p style="margin:0 0 10px;font-size:23px"></p></div>`);intro.querySelector("p").textContent=c.intro+(c.adult?" "+c.adult:"");
+  screen.append(intro);
+  screen.append(el(`<h2>Materials</h2>`));
+  const m=el(`<div class="mats"></div>`);c.mats.forEach(([e,l])=>{const x=el(`<div class="mat"><span class="e">${e}</span><span></span></div>`);x.lastChild.textContent=l;m.append(x)});screen.append(m);
+  screen.append(el(`<h2>Steps</h2>`));
+  const wrap=el(`<div></div>`);let n=0;const fin=el(`<button class="btn mint" disabled>🏁 I did it! +${c.xp} XP</button>`);
+  c.steps.forEach((s,i)=>{
+    const row=el(`<div style="display:flex;gap:8px;align-items:center"></div>`);
+    const b=el(`<button class="step"><span class="n">${i+1}</span><span class="tx"></span></button>`);b.querySelector(".tx").textContent=s;
+    b.onclick=()=>{const on=b.classList.toggle("on");n+=on?1:-1;fin.disabled=n<c.steps.length;if(on)say(s)};
+    const sp=el(`<button class="mini" aria-label="Hear step ${i+1}">🔊</button>`);sp.onclick=()=>say(s,id+"-s"+i);
+    row.append(b,sp);wrap.append(row);
+  });
+  screen.append(wrap);
+  const why=el(`<div class="panel hidden"><h2 style="margin-top:0">🔎 Why did it work?</h2><p class="fact" style="font-size:24px"></p></div>`);why.querySelector("p").textContent=c.why;
+  const wr=el(`<div style="display:flex;gap:12px;flex-wrap:wrap"></div>`);const ao=el(`<button class="btn ghost">💬 Ask Orbit</button>`);ao.onclick=()=>go("ask",c.ask);wr.append(ao);why.append(wr);
+  fin.onclick=()=>{addXP(c.xp,id);speak("Amazing work, engineer! +"+c.xp+" XP","Amazing work, engineer! You earned "+c.xp+" XP. "+c.why,id+"-why");why.classList.remove("hidden");fin.disabled=true;fin.textContent="✅ Done!"};
+  screen.append(el(`<div style="height:8px"></div>`),fin,el(`<div style="height:16px"></div>`),why);
+}
+function videos(){
+  orbitSays("Pick a video to watch. A grown-up may need to help.","videos");
+  screen.append(backBtn("library"));
+  screen.append(el(`<h1>🎬 Videos</h1>`));
+  const g=el(`<div class="grid"></div>`);
+  VIDEOS.forEach(v=>{
+    const c=card({tag:"Video",type:"video",icon:v.icon,title:v.t,sub:S.done[v.id]?"Watched ✓":"Opens YouTube",done:S.done[v.id],speak:v.t,go:()=>{}});
+    c.onclick=e=>{if(e.target.closest(".spk"))return;let w=null;try{w=window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(v.q),"_blank")}catch(x){}if(!w){orbitSays("Your screen would not open the video. Ask a grown-up to search YouTube for: "+v.t+".")}};
+    g.append(c);
+  });
+  screen.append(g);
+  const w=el(`<div class="panel" style="margin-top:16px"><b>Done watching?</b> Tap a button to earn XP.<div class="mats" style="margin-top:10px"></div></div>`);
+  VIDEOS.forEach(v=>{const b=el(`<button class="btn small ghost" style="font-size:18px;padding:10px 14px">${v.icon} I watched it</button>`);b.onclick=()=>{if(addXP(15,v.id)){orbitSays("Nice! +15 XP.");b.textContent="✅ "+v.t}};w.lastChild.append(b)});
+  screen.append(w,el(`<p class="hint">Parents: these open YouTube searches. Swap them for exact videos you choose in the VIDEOS list.</p>`));
+}
+let tq=null;
+function trivia(){
+  if(!tq||tq.i>=tq.q.length)tq={q:[...TRIVIA].sort(()=>Math.random()-.5).slice(0,5),i:0,score:0};
+  const t=tq,item=t.q[t.i];
+  speak(item.q,item.q+" "+item.o.map((x,k)=>"Choice "+(k+1)+": "+x).join(". "));
+  const p=el(`<div class="panel"><h1>🧠 Trivia · Question ${t.i+1} of 5</h1><p class="fact"></p></div>`);p.querySelector("p").textContent=item.q;
+  const o=el(`<div class="opts"></div>`);
+  item.o.forEach((txt,k)=>{
+    const b=el(`<button class="opt"></button>`);b.textContent=(k+1)+".  "+txt;
+    b.onclick=()=>{
+      if(o.dataset.done)return;
+      if(k===item.a){o.dataset.done=1;b.classList.add("good");t.score++;S.xp+=10;save();hud();cheer();orbitSays("Yes! "+txt+" is right. Plus 10 XP.");next()}
+      else{b.classList.add("bad");b.disabled=true;orbitSays("Not quite. Try another one!")}
+    };
+    o.append(b);
+  });
+  p.append(o);screen.append(p);
+  function next(){
+    const last=t.i+1>=t.q.length;
+    const nb=el(`<button class="btn gold" style="margin-top:14px">${last?"🏁 See my score":"➡️ Next question"}</button>`);
+    nb.onclick=()=>{t.i++;if(last){finish()}else go("trivia")};p.append(nb);
+  }
+  function finish(){
+    if(t.score>S.best){S.best=t.score;save()}
+    screen.innerHTML="";
+    orbitSays("You got "+t.score+" out of 5! "+(t.score>=4?"Awesome work, engineer!":"Nice try. Let's go again!"));
+    screen.append(el(`<div class="panel"><h1>🏁 Score: ${t.score} / 5</h1><p class="fact">${t.score>=4?"Amazing! 🌟":"Good try! Learn more and play again. 🚀"}</p></div>`));
+    const a=el(`<button class="btn mint">🔁 Play again</button>`);a.onclick=()=>{tq=null;go("trivia")};
+    const h=el(`<button class="btn ghost">🏠 Home</button>`);h.onclick=()=>go("home");
+    screen.append(a,el(`<span> </span>`),h);
+    addXP(0,"trivia-"+todayStr());tq=null;
+  }
+}
+const chat=[];
+function ask(prefill){
+  orbitSays("Ask me anything about planes, machines, or space!","ask");
+  screen.append(el(`<h1>💬 Ask Orbit</h1>`));
+  const msgs=el(`<div class="msgs"></div>`);screen.append(msgs);
+  chat.forEach(m=>{const b=el(`<div class="m ${m.who}"></div>`);b.textContent=m.t;msgs.append(b)});
+  const box=el(`<div class="panel"><textarea id="q" placeholder="Type here, or tap Talk" aria-label="Your question"></textarea><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px"><button class="btn mint hidden" id="mic">🎤 Talk</button><button class="btn gold" id="go">❓ Ask!</button></div><p class="hint" id="micHint"></p><h2>Try one:</h2><div class="opts" id="sug"></div></div>`);
+  screen.append(box);
+  const q=$("#q");
+  SUGGESTED.forEach(s=>{const b=el(`<button class="opt"></button>`);b.textContent="🔸 "+s;b.onclick=()=>{q.value=s;doAsk()};$("#sug").append(b)});
+  $("#go").onclick=doAsk;
+  if(V.dict){$("#mic").classList.remove("hidden");$("#mic").onclick=async()=>{stopVoice();try{await V.dict.start()}catch(e){$("#micHint").textContent="Mic is off. You can type instead."}}}
+  if(prefill){q.value=prefill;doAsk()}
+  async function doAsk(){
+    const text=q.value.trim();if(!text)return;q.value="";
+    chat.push({who:"me",t:text});const mb=el(`<div class="m me"></div>`);mb.textContent=text;msgs.append(mb);
+    const ob=el(`<div class="m orb"><span class="dots">Orbit is thinking</span></div>`);msgs.append(ob);ob.scrollIntoView({behavior:"smooth",block:"center"});
+    orbitSays("Hmm, let me think.");
+    try{
+      if(!V.sample)V.sample=await claude.use("sample");
+      if(!V.sample){ob.textContent="Ask Orbit works when this page is opened in Claude. Ask your dad to help!";return}
+      const r=await V.sample(SYSTEM+"\n\nHis question: "+text,{modelTier:"quick",cache:false,onText:({text})=>{ob.textContent=text}});
+      ob.textContent=r.text;chat.push({who:"orb",t:r.text});say(r.text);addXP(5,"ask-"+Date.now());
+      const rb=el(`<button class="mini" aria-label="Hear again" style="margin-left:10px">🔊</button>`);rb.onclick=()=>say(r.text);ob.append(rb);
+    }catch(e){ob.textContent=(e&&e.code==="rate_limited")?"Whoa, too many questions at once. Wait a moment and try again.":"I could not answer that right now. Try again in a moment."}
+  }
+}
+function profile(){
+  orbitSays("This is your profile. Look at your badges!");
+  const nm=el(`<div class="panel"><h2 style="margin-top:0">Your name</h2><input type="text" id="nm" maxlength="16" aria-label="Your name"></div>`);
+  nm.querySelector("#nm").value=S.name;nm.querySelector("#nm").oninput=e=>{S.name=e.target.value.trim()||"Explorer";save();hud()};
+  screen.append(nm);
+  const doneN=Object.keys(S.done).filter(k=>k.startsWith("c-")).length;
+  screen.append(el(`<div class="panel"><h2 style="margin-top:0">${rank()} · Level ${level()}</h2><p style="margin:0;font-size:22px">⭐ ${S.xp} XP total · 🔥 ${S.streak.n} day streak · 🧪 ${doneN} challenges · 🧠 best trivia ${S.best}/5</p></div>`));
+  const B=[["🚀","First mission",S.xp>0],["🧪","Builder: 3 challenges",doneN>=3],["🧠","Trivia whiz: 4+",S.best>=4],["✈️","Plane designer",!!S.done["design-done"]],["🛩️","Pilot",!!S.done["ck-done"]],["🌬️","Wind tester",!!(S.done["sim-stall"]||S.done["sim-to"])],["🔥","3-day streak",S.streak.n>=3],["🎖️","Sergeant: level 3",level()>=3],["🛰️","Commander: level 4",level()>=4]];
+  const g=el(`<div class="badges"></div>`);B.forEach(([e,l,on])=>{const b=el(`<div class="badge ${on?"":"off"}"><span class="e">${e}</span><span></span></div>`);b.lastChild.textContent=l;g.append(b)});
+  screen.append(el(`<h2>Badges</h2>`),g);
+  screen.append(el(`<p class="hint" style="margin-top:20px">Parents: progress is saved on this device only.</p>`));
+}
+
+/* ================= capabilities ================= */
+(async()=>{
+  try{V.tts=await claude.use("tts")}catch(e){}
+  try{V.dict=await claude.use("dictation");if(V.dict){
+    V.dict.onPartial(({text})=>{const q=$("#q");if(q)q.value=text});
+    V.dict.onFinal(({text})=>{const q=$("#q");if(q){q.value=text;const g=$("#go");g&&g.click()}});
+  }}catch(e){}
+})();
+hud();
+$("#startBtn").onclick=()=>{$("#startov").classList.add("hidden");go("home")};
+</script>
+</body>
+</html>
