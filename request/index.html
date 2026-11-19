@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Start a Training Project | Akra Technologies</title>
-<meta name="description" content="Tell Akra Technologies what your team needs to learn and see a price estimate right away. Custom courses, training games, simulators, videos and live classes.">
+<meta name="description" content="Tell Akra Technologies what your team needs to learn and get a custom estimate by email. Custom courses, training games, simulators, videos and live classes.">
 <link rel="canonical" href="https://www.akratechnologies.com/request/">
 <meta property="og:title" content="Start a Training Project | Akra Technologies">
 <meta property="og:image" content="https://www.akratechnologies.com/assets/og-image.png">
@@ -32,7 +32,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: guided request form on the left, a live estimate "receipt" pinned on the right; owner desk (#owner) appears below for Andrew */
+/* Layout: guided request form on the left, a live request summary pinned on the right; owner desk (#owner) appears below for Andrew */
 :root{
   --bg:#F3F5F9; --surface:#ffffff; --ink:#0F1B2D; --muted:#4A5568; --line:#E2E7EF;
   --navy:#0F1B2D; --navy-ink:#ffffff; --gold:#8A5A00; --gold-soft:#FDF3DE; --soft:#EEF2F8;
@@ -155,7 +155,7 @@ pre.prompt{margin:0;padding:14px;background:var(--soft);border-radius:8px;font-f
     <div>
       <div class="brand">Veteran-owned · Hodgenville, KY</div>
       <h1>Start a Training Project</h1>
-      <p class="lede">Tell me what your team needs to learn. You'll see a price estimate as you go, then send the request to me. I'll follow up within two business days with questions and a firm quote.</p>
+      <p class="lede">Tell me what your team needs to learn. Fill in the details, then send the request to me. I'll review it and follow up within two business days with questions and an estimate based on what you shared.</p>
     </div>
     <div class="toolbar">
       <button class="btn" id="loadEx" type="button">Show an example</button>
@@ -197,7 +197,7 @@ pre.prompt{margin:0;padding:14px;background:var(--soft);border-radius:8px;font-f
 
       <section class="step" data-for="course game sim unsure">
         <h2><span class="n">4</span>Size and style</h2>
-        <p class="sub">These two choices affect the price the most.</p>
+        <p class="sub">These two choices shape your project the most.</p>
         <div class="fields">
           <div class="field full"><span class="lbl">About how long should it take a learner?</span>
             <div class="chips" id="lenChips"></div></div>
@@ -254,7 +254,7 @@ pre.prompt{margin:0;padding:14px;background:var(--soft);border-radius:8px;font-f
       <section class="step" data-for="rai">
         <h2><span class="n">2</span>Responsible AI at Work</h2>
         <p class="sub">A 35-minute course that teaches your staff and volunteers to use AI safely and honestly. I customize it with your name, examples and AI rules. It includes a starter AI policy, a Do's and Don'ts card and certificates.</p>
-        <div class="chips"><label class="chk"><input type="checkbox" name="raiWs" value="yes">Add a live 60-minute workshop (+$300)</label>
+        <div class="chips"><label class="chk"><input type="checkbox" name="raiWs" value="yes">Add a live 60-minute workshop</label>
           <label class="chk"><input type="radio" name="raiPolicy" value="have">We have AI rules already</label>
           <label class="chk"><input type="radio" name="raiPolicy" value="need">We need a starter policy</label></div>
       </section>
@@ -286,13 +286,13 @@ pre.prompt{margin:0;padding:14px;background:var(--soft);border-radius:8px;font-f
 
     <aside class="out" id="outPanel">
       <div class="receipt">
-        <div class="r-head"><div class="k">Your estimate</div><div class="r-price" id="price">$0</div></div>
+        <div class="r-head"><div class="k">Your request</div><div class="r-price" id="price">Your project</div></div>
         <div class="r-body">
-          <div class="pkg"><b id="pkgName">—</b><span class="pill" id="founding" hidden>Founding Client price</span></div>
+          <div class="pkg"><b id="pkgName">—</b></div>
           <p class="fine" id="pkgNote"></p>
           <ul class="drivers" id="drivers"></ul>
           <div class="meta"><div><small>Typical timeline</small><span id="weeks">—</span></div><div><small>Format</small><span id="fmt">—</span></div></div>
-          <p class="fine">This is a ballpark, not a quote. Your firm price comes after a short call about your project.</p>
+          <p class="fine">No price yet. Send your request and Andrew will email you an estimate based on the details you provide.</p>
         </div>
       </div>
       <div class="send" id="sendBox">
@@ -334,7 +334,7 @@ pre.prompt{margin:0;padding:14px;background:var(--soft);border-radius:8px;font-f
   </div>
 </div>
 
-<div class="mbar"><div><small style="display:block;font-size:11px;opacity:.8">Estimate</small><b id="mPrice">$0</b></div><button class="btn" id="jump" type="button">Review and send</button></div>
+<div class="mbar"><div><small style="display:block;font-size:11px;opacity:.8">Your request</small><b id="mPrice">Your project</b></div><button class="btn" id="jump" type="button">Review and send</button></div>
 
 <script>
 /* ===== Pricing settings: edit these to change every estimate ===== */
@@ -358,7 +358,7 @@ const TYPES = [
   {v:"sim", t:"Software simulator", d:"Practice in a mock version of a system your team uses"},
   {v:"video", t:"Training video", d:"A short narrated how-to or welcome video"},
   {v:"workshop", t:"Live class", d:"A class taught live on Zoom or in person"},
-  {v:"rai", t:"Responsible AI at Work", d:"Ready-made AI safety course for your team", e:"$500"},
+  {v:"rai", t:"Responsible AI at Work", d:"Ready-made AI safety course for your team"},
   {v:"unsure", t:"Not sure yet", d:"Describe the problem and I'll suggest an approach"}
 ];
 const LENS = [{v:"5",t:"5–10 min",m:8},{v:"15",t:"10–15 min",m:13},{v:"30",t:"15–30 min",m:22},{v:"60",t:"30–60 min",m:45},{v:"90",t:"Over an hour",m:75}];
@@ -497,15 +497,12 @@ function estimate(d){
 /* ===== Customer side ===== */
 function renderEstimate(d,E){
   const P=PACKAGES[E.pkg];
-  const priceTxt=E.fixed?money(E.full):`${money(E.low)} – ${money(E.high)}`;
-  $("#price").textContent=priceTxt; $("#mPrice").textContent=E.fixed?money(E.full):money(E.low)+"+";
+  const TT=find(TYPES,d.type); const projName=TT?TT.t:"Your project";
+  $("#price").textContent=projName; $("#mPrice").textContent=projName;
   $("#pkgName").textContent=E.fixed?P.name:`Closest package: ${P.name}`;
-  $("#founding").hidden=!E.founding;
-  let note=P.note;
-  if(E.founding)note+=` Founding Client price: about ${money(E.founding)} for the first 3 clients through ${FOUNDING.until}.`;
-  $("#pkgNote").textContent=note;
+  $("#pkgNote").textContent=P.note;
   let drv;
-  if(E.fixed)drv=E.lines.map(l=>`<li><span>${esc(l.label)}</span><span>${money(l.usd)}</span></li>`);
+  if(E.fixed)drv=E.lines.map(l=>`<li><span>${esc(l.label)}</span><span>Included</span></li>`);
   else{const top=E.items.filter(i=>i.driver).sort((a,b)=>b.hrs-a.hrs).slice(0,5);const tot=E.items.reduce((n,i)=>n+i.hrs,0);
     drv=top.map(i=>`<li><span>${esc(i.label)}</span><span>${Math.round(i.hrs/tot*100)}% of work</span></li>`);}
   $("#drivers").innerHTML=drv.join("");
@@ -526,7 +523,6 @@ function requestText(d,E){
   if(d.type!=="rai"){if(d.topic)L.push(`Topic: ${d.topic}`);if(d.goal)L.push(`Goal: ${d.goal}`);}
   if(d.audience)L.push(`Learners: ${d.audience}${d.count?` (${d.count})`:""}`);
   if(d.when)L.push(`Timing: ${({flex:"Flexible","6wk":"Within 6 weeks",rush:"Rush, under 3 weeks"})[d.when]}${d.date?`, target ${d.date}`:""}`);
-  L.push(`Estimate shown: ${E.fixed?money(E.full):money(E.low)+" – "+money(E.high)} (${PACKAGES[E.pkg].name})`);
   if(d.notes)L.push(`Notes: ${d.notes}`);
   L.push("","Please keep the line below. It loads my answers into Akra's estimator.",encode(d));
   return L.join("\n");
@@ -574,7 +570,7 @@ function owner(d,E){
   let rows=E.items.map(i=>`<tr><td>${esc(i.label)}</td><td>${i.hrs.toFixed(1)} h</td></tr>`).join("");
   rows+=`<tr class="tot"><td>Total effort</td><td>${E.hrs.toFixed(1)} h</td></tr>`;
   if(E.fixed)rows+=`<tr class="tot"><td>Price</td><td>${money(E.full)}</td></tr>`;
-  else rows+=`<tr class="tot"><td>At ${money(RATE)}/hr</td><td>${money(E.full)}</td></tr><tr><td>Range shown to client</td><td>${money(E.low)} – ${money(E.high)}</td></tr>`;
+  else rows+=`<tr class="tot"><td>At ${money(RATE)}/hr</td><td>${money(E.full)}</td></tr><tr><td>Suggested range to quote</td><td>${money(E.low)} – ${money(E.high)}</td></tr>`;
   if(E.founding)rows+=`<tr><td>Founding Client estimate</td><td>${money(E.founding)}</td></tr>`;
   $("#hrsTbl").innerHTML=rows;
   $("#rateNote").textContent=`At about 6 hours a week of part-time work, this is roughly ${Math.ceil(E.hrs/6)} weeks of your time.`;
@@ -670,7 +666,7 @@ $("#sendReq").onclick=async()=>{
   const E=estimate(d);
   const payload={_subject:`Training request: ${d.org||d.name}`,_cc:CC_EMAIL,_template:"box",_captcha:"false",_honey:"",
     name:d.name,email:d.email,organization:d.org,phone:d.phone,project:(find(TYPES,d.type)||{t:""}).t,
-    estimate:E.fixed?money(E.full):`${money(E.low)} – ${money(E.high)} (${PACKAGES[E.pkg].name})`,
+    internal_estimate_for_andrew:E.fixed?money(E.full):`${money(E.low)} – ${money(E.high)} (${PACKAGES[E.pkg].name})`,
     request:requestText(d,E)};
   try{
     const r=await fetch(SUBMIT_URL,{method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(payload)});
